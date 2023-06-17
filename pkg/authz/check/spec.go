@@ -3,7 +3,7 @@ package authz
 import (
 	"fmt"
 
-	warrant "github.com/warrant-dev/warrant/pkg/authz/warrant"
+	warrant "github.com/auth4flow/auth4flow-core/pkg/authz/warrant"
 )
 
 const Authorized = "Authorized"

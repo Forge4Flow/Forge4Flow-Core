@@ -6,9 +6,9 @@ import (
 	"fmt"
 	"strings"
 
+	"github.com/auth4flow/auth4flow-core/pkg/database"
+	"github.com/auth4flow/auth4flow-core/pkg/service"
 	"github.com/pkg/errors"
-	"github.com/warrant-dev/warrant/pkg/database"
-	"github.com/warrant-dev/warrant/pkg/service"
 )
 
 const DateFormatRFC3339Micro = "2006-01-02T15:04:05.999999Z07:00"

@@ -4,9 +4,9 @@ import (
 	"context"
 	"fmt"
 
-	warrant "github.com/warrant-dev/warrant/pkg/authz/warrant"
-	"github.com/warrant-dev/warrant/pkg/event"
-	"github.com/warrant-dev/warrant/pkg/service"
+	warrant "github.com/auth4flow/auth4flow-core/pkg/authz/warrant"
+	"github.com/auth4flow/auth4flow-core/pkg/event"
+	"github.com/auth4flow/auth4flow-core/pkg/service"
 )
 
 type ObjectService struct {

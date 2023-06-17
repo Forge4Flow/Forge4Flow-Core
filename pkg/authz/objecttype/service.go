@@ -3,8 +3,8 @@ package authz
 import (
 	"context"
 
-	"github.com/warrant-dev/warrant/pkg/event"
-	"github.com/warrant-dev/warrant/pkg/service"
+	"github.com/auth4flow/auth4flow-core/pkg/event"
+	"github.com/auth4flow/auth4flow-core/pkg/service"
 )
 
 const ResourceTypeObjectType = "object-type"

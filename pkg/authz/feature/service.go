@@ -3,10 +3,10 @@ package authz
 import (
 	"context"
 
-	object "github.com/warrant-dev/warrant/pkg/authz/object"
-	objecttype "github.com/warrant-dev/warrant/pkg/authz/objecttype"
-	"github.com/warrant-dev/warrant/pkg/event"
-	"github.com/warrant-dev/warrant/pkg/service"
+	object "github.com/auth4flow/auth4flow-core/pkg/authz/object"
+	objecttype "github.com/auth4flow/auth4flow-core/pkg/authz/objecttype"
+	"github.com/auth4flow/auth4flow-core/pkg/event"
+	"github.com/auth4flow/auth4flow-core/pkg/service"
 )
 
 const ResourceTypeFeature = "feature"

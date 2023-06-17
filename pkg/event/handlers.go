@@ -5,7 +5,7 @@ import (
 	"strconv"
 	"time"
 
-	"github.com/warrant-dev/warrant/pkg/service"
+	"github.com/auth4flow/auth4flow-core/pkg/service"
 )
 
 const (

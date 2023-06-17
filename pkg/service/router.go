@@ -8,12 +8,12 @@ import (
 	"strings"
 	"time"
 
+	"github.com/auth4flow/auth4flow-core/pkg/config"
+	"github.com/auth4flow/auth4flow-core/pkg/stats"
 	"github.com/gorilla/mux"
 	"github.com/rs/zerolog"
 	"github.com/rs/zerolog/hlog"
 	"github.com/rs/zerolog/log"
-	"github.com/warrant-dev/warrant/pkg/config"
-	"github.com/warrant-dev/warrant/pkg/stats"
 )
 
 type RouteHandler[T Service] struct {

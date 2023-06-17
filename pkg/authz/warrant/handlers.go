@@ -3,7 +3,7 @@ package authz
 import (
 	"net/http"
 
-	"github.com/warrant-dev/warrant/pkg/service"
+	"github.com/auth4flow/auth4flow-core/pkg/service"
 )
 
 // GetRoutes registers all route handlers for this module

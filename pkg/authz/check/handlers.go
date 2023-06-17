@@ -3,9 +3,9 @@ package authz
 import (
 	"net/http"
 
-	objecttype "github.com/warrant-dev/warrant/pkg/authz/objecttype"
-	warrant "github.com/warrant-dev/warrant/pkg/authz/warrant"
-	"github.com/warrant-dev/warrant/pkg/service"
+	objecttype "github.com/auth4flow/auth4flow-core/pkg/authz/objecttype"
+	warrant "github.com/auth4flow/auth4flow-core/pkg/authz/warrant"
+	"github.com/auth4flow/auth4flow-core/pkg/service"
 )
 
 func (svc CheckService) Routes() ([]service.Route, error) {

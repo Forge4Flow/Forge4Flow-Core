@@ -2,7 +2,7 @@
 
 This guide covers how to set up SQLite as a datastore/eventstore for Warrant.
 
-Note: Please first refer to the [development guide](/development.md) to ensure that your Go environment is set up and you have checked out the Warrant source or [downloaded a binary](https://github.com/warrant-dev/warrant/releases).
+Note: Please first refer to the [development guide](/development.md) to ensure that your Go environment is set up and you have checked out the Warrant source or [downloaded a binary](https://github.com/auth4flow/auth4flow-core/releases).
 
 ## Install SQLite
 

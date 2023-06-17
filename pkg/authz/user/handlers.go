@@ -3,8 +3,8 @@ package authz
 import (
 	"net/http"
 
+	"github.com/auth4flow/auth4flow-core/pkg/service"
 	"github.com/gorilla/mux"
-	"github.com/warrant-dev/warrant/pkg/service"
 )
 
 func (svc UserService) Routes() ([]service.Route, error) {

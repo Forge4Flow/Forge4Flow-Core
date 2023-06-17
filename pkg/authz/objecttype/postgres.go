@@ -7,9 +7,9 @@ import (
 	"regexp"
 	"time"
 
+	"github.com/auth4flow/auth4flow-core/pkg/database"
+	"github.com/auth4flow/auth4flow-core/pkg/service"
 	"github.com/pkg/errors"
-	"github.com/warrant-dev/warrant/pkg/database"
-	"github.com/warrant-dev/warrant/pkg/service"
 )
 
 type PostgresRepository struct {

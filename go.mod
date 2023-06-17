@@ -1,4 +1,4 @@
-module github.com/warrant-dev/warrant
+module github.com/auth4flow/auth4flow-core
 
 go 1.20
 

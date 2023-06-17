@@ -1,11 +1,11 @@
 FROM alpine:3.17.2
 
-RUN addgroup -S warrant && adduser -S warrant -G warrant
-USER warrant
+RUN addgroup -S auth4flow-core && adduser -S auth4flow-core -G auth4flow-core
+USER auth4flow-core
 
 WORKDIR ./
-COPY ./warrant ./
+COPY ./auth4flow-core ./
 
-ENTRYPOINT ["./warrant"]
+ENTRYPOINT ["./auth4flow-core"]
 
 EXPOSE 8000
