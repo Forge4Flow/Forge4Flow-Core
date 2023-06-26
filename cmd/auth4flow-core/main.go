@@ -6,6 +6,7 @@ import (
 	"net/http"
 	"time"
 
+	"github.com/auth4flow/auth4flow-core/pkg/authn"
 	check "github.com/auth4flow/auth4flow-core/pkg/authz/check"
 	feature "github.com/auth4flow/auth4flow-core/pkg/authz/feature"
 	object "github.com/auth4flow/auth4flow-core/pkg/authz/object"
@@ -261,6 +262,9 @@ func main() {
 	}
 	userSvc := user.NewService(&svcEnv, userRepository, eventSvc, objectSvc)
 
+	// Init the authn repo and service
+	authnSvc := authn.NewService(&svcEnv, eventSvc)
+
 	svcs := []service.Service{
 		checkSvc,
 		eventSvc,
@@ -273,6 +277,7 @@ func main() {
 		tenantSvc,
 		userSvc,
 		warrantSvc,
+		authnSvc,
 	}
 
 	routes := make([]service.Route, 0)
