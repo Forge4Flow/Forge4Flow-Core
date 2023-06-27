@@ -24,7 +24,6 @@
 [![Stargazers][stars-shield]][stars-url]
 [![Issues][issues-shield]][issues-url]
 [![ELv2 License][license-shield]][license-url]
-[![LinkedIn][linkedin-shield]][linkedin-url]
 
 <!-- PROJECT LOGO -->
 <br />
@@ -211,10 +210,8 @@ Project Link: [https://github.com/Auth4Flow/Auth4Flow-Core](https://github.com/A
 [stars-url]: https://github.com/Auth4Flow/Auth4Flow-Core/stargazers
 [issues-shield]: https://img.shields.io/github/issues/Auth4Flow/Auth4Flow-Core.svg?style=for-the-badge
 [issues-url]: https://github.com/Auth4Flow/Auth4Flow-Core/issues
-[license-shield]: https://img.shields.io/github/license/Auth4Flow/Auth4Flow-Core.svg?style=for-the-badge
+[license-shield]: https://img.shields.io/badge/license-elv2-blue?style=for-the-badge
 [license-url]: https://github.com/Auth4Flow/Auth4Flow-Core/blob/master/LICENSE
-[linkedin-shield]: https://img.shields.io/badge/-LinkedIn-black.svg?style=for-the-badge&logo=linkedin&colorB=555
-[linkedin-url]: https://linkedin.com/in/linkedin_username
 [product-screenshot]: images/screenshot.png
 [Next.js]: https://img.shields.io/badge/next.js-000000?style=for-the-badge&logo=nextdotjs&logoColor=white
 [Next-url]: https://nextjs.org/
