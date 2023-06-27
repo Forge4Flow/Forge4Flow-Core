@@ -37,7 +37,7 @@ type AuthInfo struct {
 type AuthMiddlewareFunc func(config config.Config, next http.Handler) (http.Handler, error)
 
 func ApiKeyAuthMiddleware(cfg config.Config, next http.Handler) (http.Handler, error) {
-	warrantCfg, ok := cfg.(config.WarrantConfig)
+	warrantCfg, ok := cfg.(config.Auth4FlowConfig)
 	if !ok {
 		return nil, errors.New("cfg parameter on DefaultAuthMiddleware must be a WarrantConfig")
 	}
@@ -60,7 +60,7 @@ func ApiKeyAuthMiddleware(cfg config.Config, next http.Handler) (http.Handler, e
 }
 
 func ApiKeyAndSessionAuthMiddleware(cfg config.Config, next http.Handler) (http.Handler, error) {
-	warrantCfg, ok := cfg.(config.WarrantConfig)
+	warrantCfg, ok := cfg.(config.Auth4FlowConfig)
 	if !ok {
 		return nil, errors.New("cfg parameter on DefaultAuthMiddleware must be a WarrantConfig")
 	}

@@ -6,7 +6,8 @@ import (
 	"net/http"
 	"time"
 
-	"github.com/auth4flow/auth4flow-core/pkg/authn"
+	nonce "github.com/auth4flow/auth4flow-core/pkg/authn/nonce"
+	session "github.com/auth4flow/auth4flow-core/pkg/authn/session"
 	check "github.com/auth4flow/auth4flow-core/pkg/authz/check"
 	feature "github.com/auth4flow/auth4flow-core/pkg/authz/feature"
 	object "github.com/auth4flow/auth4flow-core/pkg/authz/object"
@@ -26,7 +27,7 @@ import (
 )
 
 const (
-	MySQLDatastoreMigrationVersion     = 000004
+	MySQLDatastoreMigrationVersion     = 000005
 	MySQLEventstoreMigrationVersion    = 000003
 	PostgresDatastoreMigrationVersion  = 000005
 	PostgresEventstoreMigrationVersion = 000004
@@ -262,8 +263,15 @@ func main() {
 	}
 	userSvc := user.NewService(&svcEnv, userRepository, eventSvc, objectSvc)
 
-	// Init the authn repo and service
-	authnSvc := authn.NewService(&svcEnv, eventSvc)
+	// Init the nonce repo and service
+	nonceRepository, err := nonce.NewRepository(svcEnv.DB())
+	if err != nil {
+		log.Fatal().Err(err).Msg("Could not initialize NonceRepository")
+	}
+	nonceSvc := nonce.NewService(&svcEnv, nonceRepository, eventSvc)
+
+	// Init the session repo and service
+	sessionSvc := session.NewService(&svcEnv, eventSvc)
 
 	svcs := []service.Service{
 		checkSvc,
@@ -277,7 +285,8 @@ func main() {
 		tenantSvc,
 		userSvc,
 		warrantSvc,
-		authnSvc,
+		nonceSvc,
+		sessionSvc,
 	}
 
 	routes := make([]service.Route, 0)
