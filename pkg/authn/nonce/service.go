@@ -7,14 +7,14 @@ import (
 
 type NonceService struct {
 	service.BaseService
-	NonceRepo NonceRepository
-	EventSvc  event.EventService
+	Repository NonceRepository
+	EventSvc   event.EventService
 }
 
 func NewService(env service.Env, nonceRepo NonceRepository, eventSvc event.EventService) NonceService {
 	return NonceService{
 		BaseService: service.NewBaseService(env),
-		NonceRepo:   nonceRepo,
+		Repository:  nonceRepo,
 		EventSvc:    eventSvc,
 	}
 }
