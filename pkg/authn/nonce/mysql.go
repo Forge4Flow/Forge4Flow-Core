@@ -20,8 +20,8 @@ func NewMySQLRepository(db *database.MySQL) MySQLRepository {
 	}
 }
 
-func (repo MySQLRepository) Create(ctx context.Context, model Model) error {
-	_, err := repo.DB(ctx).ExecContext(
+func (repo MySQLRepository) Create(ctx context.Context, model Model) (int64, error) {
+	result, err := repo.DB(ctx).ExecContext(
 		ctx,
 		`
 			INSERT INTO user (
@@ -33,10 +33,15 @@ func (repo MySQLRepository) Create(ctx context.Context, model Model) error {
 		model.GetExpDate(),
 	)
 	if err != nil {
-		return errors.Wrap(err, "error creating nonce")
+		return -1, errors.Wrap(err, "error creating nonce")
 	}
 
-	return nil
+	newNonceId, err := result.LastInsertId()
+	if err != nil {
+		return -1, errors.Wrap(err, "error creating user")
+	}
+
+	return newNonceId, nil
 }
 
 func (repo MySQLRepository) GetById(ctx context.Context, id int64) (Model, error) {

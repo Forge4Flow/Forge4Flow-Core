@@ -9,7 +9,7 @@ import (
 )
 
 type NonceRepository interface {
-	Create(ctx context.Context, user Model) error
+	Create(ctx context.Context, nonce Model) (int64, error)
 	GetById(ctx context.Context, id int64) (Model, error)
 	GetByNonce(ctx context.Context, nonce string) (Model, error)
 	DeleteById(ctx context.Context, id int64) error
