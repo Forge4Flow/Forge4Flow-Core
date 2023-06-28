@@ -1,9 +1,6 @@
 package authn
 
 import (
-	"crypto/rand"
-	"encoding/base64"
-	"fmt"
 	"net/http"
 
 	"github.com/auth4flow/auth4flow-core/pkg/service"
@@ -22,16 +19,11 @@ func (svc NonceService) Routes() ([]service.Route, error) {
 }
 
 func GenerateNonceHandler(svc NonceService, w http.ResponseWriter, r *http.Request) error {
-	nonceBytes := make([]byte, 64)
-	_, err := rand.Read(nonceBytes)
+	newNonce, err := svc.Create(r.Context())
 	if err != nil {
-		return fmt.Errorf("could not generate nonce")
+		return err
 	}
 
-	nonceStruct := &NonceSpec{
-		Nonce: base64.URLEncoding.EncodeToString(nonceBytes),
-	}
-
-	service.SendJSONResponse(w, nonceStruct)
+	service.SendJSONResponse(w, newNonce)
 	return nil
 }
