@@ -1,22 +1,23 @@
-# Local development
+# Local development - TODO this document is a work in progress and should not be used at this time
 
 ## Set up Go
 
-Warrant is written in Go. Prior to cloning the repo and making any code changes, please ensure that your local Go environment is set up. Refer to the appropriate instructions for your platform [here](https://go.dev/).
+Auth4Flow-Core is written in Go. Prior to cloning the repo and making any code changes, please ensure that your local Go environment is set up. Refer to the appropriate instructions for your platform [here](https://go.dev/).
 
 ## Fork & clone repository
 
-We follow GitHub's fork & pull request model. If you're looking to make code changes, it's easier to do so on your own fork and then contribute pull requests back to the Warrant repo. You can create your own fork of the repo [here](https://github.com/warrant-dev/warrant/fork).
+We follow GitHub's fork & pull request model. If you're looking to make code changes, it's easier to do so on your own fork and then contribute pull requests back to the Auth4Flow-Core repo. You can create your own fork of the repo [here](https://github.com/auth4flow/auth4flow-core/fork).
 
 If you'd just like to checkout the source to build & run, you can clone the repo directly:
 
 ```shell
-git clone git@github.com:warrant-dev/warrant.git
+git clone git@github.com:auth4flow/auth4flow-core.git
 ```
 
 Note: It's recommended you clone the repository into a directory relative to your `GOPATH` (e.g. `$GOPATH/src/github.com/warrant-dev`)
 
 ## Server configuration
+
 To set up your server config file, refer to our [configuration doc](/configuration.md).
 
 ## Build binary & start server
@@ -24,14 +25,14 @@ To set up your server config file, refer to our [configuration doc](/configurati
 After the datastore, eventstore and configuration are set, build & start the server:
 
 ```shell
-cd cmd/warrant
+cd cmd/auth4flow-core
 make dev
-./bin/warrant
+./bin/auth4flow-core
 ```
 
 ## Make requests
 
-Once the server is running, you can make API requests using curl, any of the [Warrant SDKs](/README.md#sdks), or your favorite API client:
+Once the server is running, you can make API requests using curl, any of the [Auth4Flow-Core SDKs](/README.md#sdks), or your favorite API client:
 
 ```shell
 curl -g "http://localhost:port/v1/object-types" -H "Authorization: ApiKey YOUR_KEY"
@@ -47,7 +48,7 @@ go test -v ./...
 
 ## End-to-end API tests
 
-The Warrant repo contains a suite of e2e tests that test various combinations of API requests. These tests are defined in json files within the `tests/` dir and are executed using [APIRunner](https://github.com/warrant-dev/apirunner). These tests can be run locally:
+The Auth4Flow-Core repo contains a suite of e2e tests that test various combinations of API requests. These tests are defined in json files within the `tests/` dir and are executed using [APIRunner](https://github.com/warrant-dev/apirunner). These tests can be run locally:
 
 ### Install APIRunner
 
@@ -67,10 +68,10 @@ Add the following to your `tests/apirunner.conf` (replace with your server url a
 
 ```json
 {
-    "baseUrl": "YOUR_SERVER_URL",
-    "headers": {
-        "Authorization" : "ApiKey YOUR_API_KEY"
-    }
+  "baseUrl": "YOUR_SERVER_URL",
+  "headers": {
+    "Authorization": "ApiKey YOUR_API_KEY"
+  }
 }
 ```
 

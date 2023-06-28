@@ -3,8 +3,8 @@ package event
 import (
 	"context"
 
+	"github.com/auth4flow/auth4flow-core/pkg/service"
 	"github.com/rs/zerolog/log"
-	"github.com/warrant-dev/warrant/pkg/service"
 )
 
 const (

@@ -1,90 +1,237 @@
-<p align="center">
-    <a href="https://warrant.dev/"><img src="https://warrant.dev/images/logo-primary-wide.png" width="300px" alt="Warrant" /></a>
-</p>
-<p align="center">
-  <a href="https://warrant.dev/">Website</a> |
-  <a href="https://app.warrant.dev/signup">Warrant Cloud</a> |
-  <a href="https://docs.warrant.dev/">Docs</a> |
-  <a href="https://docs.warrant.dev/objecttypes/get-all-object-types/">API Reference</a>
-</p>
+<!-- Improved compatibility of back to top link: See: https://github.com/othneildrew/Best-README-Template/pull/73 -->
 
-<p align="center">
-    <img alt="GitHub" src="https://img.shields.io/github/license/warrant-dev/warrant?color=4F0DCC">
-    <img alt="GitHub release (latest by date)" src="https://img.shields.io/github/v/release/warrant-dev/warrant?color=FF5E00">
-    <img alt="GitHub Workflow Status (with branch)" src="https://img.shields.io/github/actions/workflow/status/warrant-dev/warrant/go.yaml?branch=main">
-    <a href="https://join.slack.com/t/warrantcommunity/shared_invite/zt-12g84updv-5l1pktJf2bI5WIKN4_~f4w"><img alt="Slack Community" src="https://img.shields.io/badge/Slack%20Community-4A154B?style=flat&logo=slack"></a>
-    <a href="https://twitter.com/warrant_dev"><img alt="Twitter Follow" src="https://img.shields.io/badge/follow-%40warrant__dev-1DA1F2?logo=twitter"></a>
-    <a href="https://www.ycombinator.com/companies/warrant"><img alt="Backed by Y Combinator" src="https://img.shields.io/badge/Backed%20by-Y%20Combinator-%23E16E38"/></a>
-</p>
+<a name="readme-top"></a>
 
-# Warrant - Open Source Access Control Service
+<!--
+*** Thanks for checking out the Best-README-Template. If you have a suggestion
+*** that would make this better, please fork the repo and create a pull request
+*** or simply open an issue with the tag "enhancement".
+*** Don't forget to give the project a star!
+*** Thanks again! Now go create something AMAZING! :D
+-->
 
-Warrant is a **highly scalable, centralized authorization service** for _defining_, _storing_, _querying_, _checking_, and _auditing_ application authorization models and access rules. At its core, Warrant is a [relationship based access control (ReBAC)](https://en.wikipedia.org/wiki/Relationship-based_access_control) engine (inspired by [Google Zanzibar](https://research.google/pubs/pub48190/)) capable of enforcing any authorization paradigm, including role based access control (RBAC) (e.g. `[user:1] has [permission:view-billing-details]`), attribute based access control (ABAC) (e.g. `[user:1] can [view] [department:accounting] if [geo == "us"]`), and relationship based access control (ReBAC) (e.g. `[user:1] is an [editor] of [document:docA]`).
+<!-- PROJECT SHIELDS -->
+<!--
+*** I'm using markdown "reference style" links for readability.
+*** Reference links are enclosed in brackets [ ] instead of parentheses ( ).
+*** See the bottom of this document for the declaration of the reference variables
+*** for contributors-url, forks-url, etc. This is an optional, concise syntax you may use.
+*** https://www.markdownguide.org/basic-syntax/#reference-style-links
+-->
 
-## Features
+[![Contributors][contributors-shield]][contributors-url]
+[![Forks][forks-shield]][forks-url]
+[![Stargazers][stars-shield]][stars-url]
+[![Issues][issues-shield]][issues-url]
+[![ELv2 License][license-shield]][license-url]
 
-- HTTP APIs for managing your authorization model, access rules, and other Warrant resources (roles, permissions, features, tenants, users, etc.) from an application, a CLI tool, etc.
-- Real-time, low latency API for performing access checks in your application(s) at runtime (e.g. `is [user:A] an [editor] of [tenant:X]?`)
-- Integrates with in-house and third-party authn/identity providers like Auth0 and Firebase
-- A queryable, global event log that tracks updates to your authorization model, access rules, and all other Warrant resources, making auditing and debugging simple
-- Officially supported [SDKs](#sdks) for most popular languages and frameworks
-- Support for a number of databases, including: MySQL, Postgres, and SQLite (in-memory or file)
+<!-- PROJECT LOGO -->
+<br />
+<div align="center">
+  <a href="https://github.com/Auth4Flow/Auth4Flow-Core">
+    <img src="images/logo.png" alt="Logo" width="80" height="80">
+  </a>
 
-## Use Cases
+<h3 align="center">Auth4Flow</h3>
 
-Warrant is built specifically for application authorization and access control, particularly for product, security, and compliance use-cases. Examples of problems Warrant solves are:
+  <p align="center">
+    project_description
+    <br />
+    <a href="https://github.com/Auth4Flow/Auth4Flow-Core"><strong>Explore the docs »</strong></a>
+    <br />
+    <br />
+    <a href="https://github.com/Auth4Flow/Auth4Flow-Core">View Demo</a>
+    ·
+    <a href="https://github.com/Auth4Flow/Auth4Flow-Core/issues">Report Bug</a>
+    ·
+    <a href="https://github.com/Auth4Flow/Auth4Flow-Core/issues">Request Feature</a>
+  </p>
+</div>
 
-- Add role based access control (RBAC) to your SaaS application with the ability for your customers to self-manage their roles and permissions via the Warrant self service dashboard or your own custom dashboard built using Warrant's component library.
-- Allow customers to define and manage their own roles & permissions for their tenant (organization)
-- Add 'fine grained RBAC' (role based access to specific resources)
-- Implement fine grained, object/resource-level authorization specific to your application's data model (`[user:1] is an [editor] of [document:x]`)
-- Add centralized and auditable access control around your internal applications and tools.
-- Implement 'approval flows' (i.e. request access to a resource from an admin -> admin approves access).
-- Add Google Docs-like sharing and permissioning for your application's resources and objects.
-- Gate access to SaaS features based on your product's pricing tiers and feature packages.
-- Satisfy auditing and compliance requirements of frameworks and standards such as SOC2, HIPAA, GDPR and CCPA.
+<!-- TABLE OF CONTENTS -->
+<details>
+  <summary>Table of Contents</summary>
+  <ol>
+    <li>
+      <a href="#about-the-project">About The Project</a>
+      <ul>
+        <li><a href="#built-with">Built With</a></li>
+      </ul>
+    </li>
+    <li>
+      <a href="#getting-started">Getting Started</a>
+      <ul>
+        <li><a href="#prerequisites">Prerequisites</a></li>
+        <li><a href="#installation">Installation</a></li>
+      </ul>
+    </li>
+    <li><a href="#usage">Usage</a></li>
+    <li><a href="#roadmap">Roadmap</a></li>
+    <li><a href="#contributing">Contributing</a></li>
+    <li><a href="#license">License</a></li>
+    <li><a href="#contact">Contact</a></li>
+    <li><a href="#acknowledgments">Acknowledgments</a></li>
+  </ol>
+</details>
+
+<!-- ABOUT THE PROJECT -->
+
+## About The Project
+
+[![Product Name Screen Shot][product-screenshot]](https://example.com)
+
+Here's a blank template to get started: To avoid retyping too much info. Do a search and replace with your text editor for the following: `Auth4Flow`, `Auth4Flow-Core`, `twitter_handle`, `linkedin_username`, `email_client`, `email`, `Auth4Flow`, `project_description`
+
+<p align="right">(<a href="#readme-top">back to top</a>)</p>
+
+### Built With
+
+- [![Next][Next.js]][Next-url]
+- [![React][React.js]][React-url]
+- [![Vue][Vue.js]][Vue-url]
+- [![Angular][Angular.io]][Angular-url]
+- [![Svelte][Svelte.dev]][Svelte-url]
+- [![Laravel][Laravel.com]][Laravel-url]
+- [![Bootstrap][Bootstrap.com]][Bootstrap-url]
+- [![JQuery][JQuery.com]][JQuery-url]
+
+<p align="right">(<a href="#readme-top">back to top</a>)</p>
+
+<!-- GETTING STARTED -->
 
 ## Getting Started
 
-### Warrant Cloud
+This is an example of how you may give instructions on setting up your project locally.
+To get a local copy up and running follow these simple example steps.
 
-The quickest and easiest way to get started with Warrant is using the managed cloud service. You can sign-up for a free account [here](https://app.warrant.dev/signup).
+### Prerequisites
 
-Warrant Cloud is compatible with the same APIs as this open source version and provides additional functionality like:
+This is an example of how to list things you need to use the software and how to install them.
 
-- An admin dashboard for quickly managing your authorization model and access rules via an intuitive, easy-to-use UI
-- A real-time `query` API to query and audit access rules for a given subject or object (e.g. _`which users in tenant:1 have access to object:A?`_)
-- Multi-region availability
-- Improved access check latency & throughput for large scale use cases.
+- npm
+  ```sh
+  npm install npm@latest -g
+  ```
 
-Once you've created an account, refer to our [docs](https://docs.warrant.dev/) to get started.
+### Installation
 
-### Self-hosting
+1. Get a free API Key at [https://example.com](https://example.com)
+2. Clone the repo
+   ```sh
+   git clone https://github.com/Auth4Flow/Auth4Flow-Core.git
+   ```
+3. Install NPM packages
+   ```sh
+   npm install
+   ```
+4. Enter your API in `config.js`
+   ```js
+   const API_KEY = "ENTER YOUR API";
+   ```
 
-To self-host or run Warrant locally, check out our [local development guide](/development.md).
+<p align="right">(<a href="#readme-top">back to top</a>)</p>
 
-## SDKs
+<!-- USAGE EXAMPLES -->
 
-Warrant's native SDKs are compatible with both the cloud and open-source versions of Warrant. We currently support SDKs for:
+## Usage
 
-- [Node.js](https://github.com/warrant-dev/warrant-node)
-- [Go](https://github.com/warrant-dev/warrant-go)
-- [Python](https://github.com/warrant-dev/warrant-python)
-- [Ruby](https://github.com/warrant-dev/warrant-ruby)
-- [PHP](https://github.com/warrant-dev/warrant-php)
-- [Java](https://github.com/warrant-dev/warrant-java)
-- [React](https://github.com/warrant-dev/react-warrant-js)
-- [Angular](https://github.com/warrant-dev/angular-warrant)
-- [Vue](https://github.com/warrant-dev/vue-warrant)
+Use this space to show useful examples of how a project can be used. Additional screenshots, code examples and demos work well in this space. You may also link to more resources.
 
-## Documentation
+_For more examples, please refer to the [Documentation](https://example.com)_
 
-Visit our [docs](https://docs.warrant.dev/) to learn more about Warrant's key concepts & architecture and view our [quickstarts](https://docs.warrant.dev/quickstart/role-based-access-control/) & [API reference](https://docs.warrant.dev/objecttypes/get-all-object-types/).
+<p align="right">(<a href="#readme-top">back to top</a>)</p>
 
-## Support
+<!-- ROADMAP -->
 
-Join our [Slack community](https://join.slack.com/t/warrantcommunity/shared_invite/zt-12g84updv-5l1pktJf2bI5WIKN4_~f4w) to ask questions and get support.
+## Roadmap
+
+- [ ] Blockchain Native Login w/ Client & Server Sessions
+- [ ] Walletless Onboarding w/ Client & Server Sessions
+- [ ] NFT Gated Roles
+- [ ] Token Gated Roles
+- [ ] GO Server/Client SDK
+- [ ] JS, Node, and React SDKs
+- [ ] Swift SDK
+- [ ] Kotlin SDK
+- [ ] User Management & Admin Dashboard
+- [ ] Multi-Tenant Support
+
+See the [open issues](https://github.com/Auth4Flow/Auth4Flow-Core/issues) for a full list of proposed features (and known issues).
+
+<p align="right">(<a href="#readme-top">back to top</a>)</p>
+
+<!-- CONTRIBUTING -->
 
 ## Contributing
 
-Contributions welcome. Please see our [contributing guide](/CONTRIBUTING.md) for more details.
+Contributions are what make the open source community such an amazing place to learn, inspire, and create. Any contributions you make are **greatly appreciated**.
+
+If you have a suggestion that would make this better, please fork the repo and create a pull request. You can also simply open an issue with the tag "enhancement".
+Don't forget to give the project a star! Thanks again!
+
+1. Fork the Project
+2. Create your Feature Branch (`git checkout -b feature/AmazingFeature`)
+3. Commit your Changes (`git commit -m 'Add some AmazingFeature'`)
+4. Push to the Branch (`git push origin feature/AmazingFeature`)
+5. Open a Pull Request
+
+<p align="right">(<a href="#readme-top">back to top</a>)</p>
+
+<!-- LICENSE -->
+
+## License
+
+Distributed under the ELv2 License. See `LICENSE` for more information.
+
+<p align="right">(<a href="#readme-top">back to top</a>)</p>
+
+<!-- CONTACT -->
+
+## Contact
+
+Your Name - [@twitter_handle](https://twitter.com/twitter_handle) - email@email_client.com
+
+Project Link: [https://github.com/Auth4Flow/Auth4Flow-Core](https://github.com/Auth4Flow/Auth4Flow-Core)
+
+<p align="right">(<a href="#readme-top">back to top</a>)</p>
+
+<!-- ACKNOWLEDGMENTS -->
+
+## Acknowledgments
+
+- []()
+- []()
+- []()
+
+<p align="right">(<a href="#readme-top">back to top</a>)</p>
+
+<!-- MARKDOWN LINKS & IMAGES -->
+<!-- https://www.markdownguide.org/basic-syntax/#reference-style-links -->
+
+[contributors-shield]: https://img.shields.io/github/contributors/Auth4Flow/Auth4Flow-Core.svg?style=for-the-badge
+[contributors-url]: https://github.com/Auth4Flow/Auth4Flow-Core/graphs/contributors
+[forks-shield]: https://img.shields.io/github/forks/Auth4Flow/Auth4Flow-Core.svg?style=for-the-badge
+[forks-url]: https://github.com/Auth4Flow/Auth4Flow-Core/network/members
+[stars-shield]: https://img.shields.io/github/stars/Auth4Flow/Auth4Flow-Core.svg?style=for-the-badge
+[stars-url]: https://github.com/Auth4Flow/Auth4Flow-Core/stargazers
+[issues-shield]: https://img.shields.io/github/issues/Auth4Flow/Auth4Flow-Core.svg?style=for-the-badge
+[issues-url]: https://github.com/Auth4Flow/Auth4Flow-Core/issues
+[license-shield]: https://img.shields.io/badge/license-elv2-blue?style=for-the-badge
+[license-url]: https://github.com/Auth4Flow/Auth4Flow-Core/blob/master/LICENSE
+[product-screenshot]: images/screenshot.png
+[Next.js]: https://img.shields.io/badge/next.js-000000?style=for-the-badge&logo=nextdotjs&logoColor=white
+[Next-url]: https://nextjs.org/
+[React.js]: https://img.shields.io/badge/React-20232A?style=for-the-badge&logo=react&logoColor=61DAFB
+[React-url]: https://reactjs.org/
+[Vue.js]: https://img.shields.io/badge/Vue.js-35495E?style=for-the-badge&logo=vuedotjs&logoColor=4FC08D
+[Vue-url]: https://vuejs.org/
+[Angular.io]: https://img.shields.io/badge/Angular-DD0031?style=for-the-badge&logo=angular&logoColor=white
+[Angular-url]: https://angular.io/
+[Svelte.dev]: https://img.shields.io/badge/Svelte-4A4A55?style=for-the-badge&logo=svelte&logoColor=FF3E00
+[Svelte-url]: https://svelte.dev/
+[Laravel.com]: https://img.shields.io/badge/Laravel-FF2D20?style=for-the-badge&logo=laravel&logoColor=white
+[Laravel-url]: https://laravel.com
+[Bootstrap.com]: https://img.shields.io/badge/Bootstrap-563D7C?style=for-the-badge&logo=bootstrap&logoColor=white
+[Bootstrap-url]: https://getbootstrap.com
+[JQuery.com]: https://img.shields.io/badge/jQuery-0769AD?style=for-the-badge&logo=jquery&logoColor=white
+[JQuery-url]: https://jquery.com

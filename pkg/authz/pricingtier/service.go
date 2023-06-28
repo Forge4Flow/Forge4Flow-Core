@@ -3,11 +3,18 @@ package authz
 import (
 	"context"
 
+<<<<<<< HEAD
 	object "github.com/warrant-dev/warrant/pkg/authz/object"
 	objecttype "github.com/warrant-dev/warrant/pkg/authz/objecttype"
 	wookie "github.com/warrant-dev/warrant/pkg/authz/wookie"
 	"github.com/warrant-dev/warrant/pkg/event"
 	"github.com/warrant-dev/warrant/pkg/service"
+=======
+	object "github.com/auth4flow/auth4flow-core/pkg/authz/object"
+	objecttype "github.com/auth4flow/auth4flow-core/pkg/authz/objecttype"
+	"github.com/auth4flow/auth4flow-core/pkg/event"
+	"github.com/auth4flow/auth4flow-core/pkg/service"
+>>>>>>> main
 )
 
 const ResourceTypePricingTier = "pricing-tier"

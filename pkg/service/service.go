@@ -1,6 +1,6 @@
 package service
 
-import "github.com/warrant-dev/warrant/pkg/database"
+import "github.com/auth4flow/auth4flow-core/pkg/database"
 
 type Env interface {
 	DB() database.Database

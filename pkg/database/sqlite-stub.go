@@ -6,8 +6,8 @@ package database
 import (
 	"context"
 
+	"github.com/auth4flow/auth4flow-core/pkg/config"
 	"github.com/pkg/errors"
-	"github.com/warrant-dev/warrant/pkg/config"
 )
 
 type SQLite struct {

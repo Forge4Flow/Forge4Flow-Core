@@ -3,9 +3,13 @@ package tenant
 import (
 	"net/http"
 
+	"github.com/auth4flow/auth4flow-core/pkg/service"
 	"github.com/gorilla/mux"
+<<<<<<< HEAD
 	wookie "github.com/warrant-dev/warrant/pkg/authz/wookie"
 	"github.com/warrant-dev/warrant/pkg/service"
+=======
+>>>>>>> main
 )
 
 // GetRoutes registers all route handlers for this module

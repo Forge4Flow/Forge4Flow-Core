@@ -1,4 +1,4 @@
-NAME       = warrant
+NAME       = auth4flow-core
 BUILD_PATH = bin/$(NAME)
 GOENV      = GOARCH=amd64 GOOS=linux CGO_ENABLED=0
 GOCMD      = go

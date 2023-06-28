@@ -11,9 +11,9 @@ import (
 	"net/http"
 	"strings"
 
+	"github.com/auth4flow/auth4flow-core/pkg/config"
 	jwt "github.com/golang-jwt/jwt/v5"
 	"github.com/rs/zerolog/hlog"
-	"github.com/warrant-dev/warrant/pkg/config"
 )
 
 const FirebasePublicKeyUrl = "https://www.googleapis.com/robot/v1/metadata/x509/securetoken@system.gserviceaccount.com"
@@ -37,7 +37,7 @@ type AuthInfo struct {
 type AuthMiddlewareFunc func(config config.Config, next http.Handler) (http.Handler, error)
 
 func ApiKeyAuthMiddleware(cfg config.Config, next http.Handler) (http.Handler, error) {
-	warrantCfg, ok := cfg.(config.WarrantConfig)
+	warrantCfg, ok := cfg.(config.Auth4FlowConfig)
 	if !ok {
 		return nil, errors.New("cfg parameter on DefaultAuthMiddleware must be a WarrantConfig")
 	}
@@ -60,7 +60,7 @@ func ApiKeyAuthMiddleware(cfg config.Config, next http.Handler) (http.Handler, e
 }
 
 func ApiKeyAndSessionAuthMiddleware(cfg config.Config, next http.Handler) (http.Handler, error) {
-	warrantCfg, ok := cfg.(config.WarrantConfig)
+	warrantCfg, ok := cfg.(config.Auth4FlowConfig)
 	if !ok {
 		return nil, errors.New("cfg parameter on DefaultAuthMiddleware must be a WarrantConfig")
 	}

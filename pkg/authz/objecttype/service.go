@@ -3,9 +3,14 @@ package authz
 import (
 	"context"
 
+<<<<<<< HEAD
 	wookie "github.com/warrant-dev/warrant/pkg/authz/wookie"
 	"github.com/warrant-dev/warrant/pkg/event"
 	"github.com/warrant-dev/warrant/pkg/service"
+=======
+	"github.com/auth4flow/auth4flow-core/pkg/event"
+	"github.com/auth4flow/auth4flow-core/pkg/service"
+>>>>>>> main
 )
 
 const ResourceTypeObjectType = "object-type"

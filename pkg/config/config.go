@@ -14,15 +14,15 @@ import (
 )
 
 const (
-	DefaultMySQLDatastoreMigrationSource     = "github://warrant-dev/warrant/migrations/datastore/mysql"
-	DefaultMySQLEventstoreMigrationSource    = "github://warrant-dev/warrant/migrations/eventstore/mysql"
-	DefaultPostgresDatastoreMigrationSource  = "github://warrant-dev/warrant/migrations/datastore/postgres"
-	DefaultPostgresEventstoreMigrationSource = "github://warrant-dev/warrant/migrations/eventstore/postgres"
-	DefaultSQLiteDatastoreMigrationSource    = "github://warrant-dev/warrant/migrations/datastore/sqlite"
-	DefaultSQLiteEventstoreMigrationSource   = "github://warrant-dev/warrant/migrations/eventstore/sqlite"
+	DefaultMySQLDatastoreMigrationSource     = "github://auth4flow/auth4flow-core/migrations/datastore/mysql"
+	DefaultMySQLEventstoreMigrationSource    = "github://auth4flow/auth4flow-core/migrations/eventstore/mysql"
+	DefaultPostgresDatastoreMigrationSource  = "github://auth4flow/auth4flow-core/migrations/datastore/postgres"
+	DefaultPostgresEventstoreMigrationSource = "github://auth4flow/auth4flow-core/migrations/eventstore/postgres"
+	DefaultSQLiteDatastoreMigrationSource    = "github://auth4flow/auth4flow-core/migrations/datastore/sqlite"
+	DefaultSQLiteEventstoreMigrationSource   = "github://auth4flow/auth4flow-core/migrations/eventstore/sqlite"
 	DefaultAuthenticationUserIdClaim         = "sub"
-	PrefixWarrant                            = "warrant"
-	ConfigFileName                           = "warrant.yaml"
+	PrefixAuth4Flow                          = "auth4flow"
+	ConfigFileName                           = "auth4flow.yaml"
 )
 
 type Config interface {
@@ -34,6 +34,7 @@ type Config interface {
 	GetEventstore() *EventstoreConfig
 }
 
+<<<<<<< HEAD
 type WarrantConfig struct {
 	Port                int               `mapstructure:"port"`
 	LogLevel            int8              `mapstructure:"logLevel"`
@@ -43,33 +44,43 @@ type WarrantConfig struct {
 	Eventstore          *EventstoreConfig `mapstructure:"eventstore"`
 	Authentication      *AuthConfig       `mapstructure:"authentication"`
 	EnableWarrantTokens bool              `mapstructure:"enableWarrantTokens"`
+=======
+type Auth4FlowConfig struct {
+	Port            int               `mapstructure:"port"`
+	LogLevel        int8              `mapstructure:"logLevel"`
+	EnableAccessLog bool              `mapstructure:"enableAccessLog"`
+	AutoMigrate     bool              `mapstructure:"autoMigrate"`
+	Datastore       *DatastoreConfig  `mapstructure:"datastore"`
+	Eventstore      *EventstoreConfig `mapstructure:"eventstore"`
+	Authentication  *AuthConfig       `mapstructure:"authentication"`
+>>>>>>> main
 }
 
-func (warrantConfig WarrantConfig) GetPort() int {
+func (warrantConfig Auth4FlowConfig) GetPort() int {
 	return warrantConfig.Port
 }
 
-func (warrantConfig WarrantConfig) GetLogLevel() int8 {
+func (warrantConfig Auth4FlowConfig) GetLogLevel() int8 {
 	return warrantConfig.LogLevel
 }
 
-func (warrantConfig WarrantConfig) GetEnableAccessLog() bool {
+func (warrantConfig Auth4FlowConfig) GetEnableAccessLog() bool {
 	return warrantConfig.EnableAccessLog
 }
 
-func (warrantConfig WarrantConfig) GetAutoMigrate() bool {
+func (warrantConfig Auth4FlowConfig) GetAutoMigrate() bool {
 	return warrantConfig.AutoMigrate
 }
 
-func (warrantConfig WarrantConfig) GetDatastore() *DatastoreConfig {
+func (warrantConfig Auth4FlowConfig) GetDatastore() *DatastoreConfig {
 	return warrantConfig.Datastore
 }
 
-func (warrantConfig WarrantConfig) GetEventstore() *EventstoreConfig {
+func (warrantConfig Auth4FlowConfig) GetEventstore() *EventstoreConfig {
 	return warrantConfig.Eventstore
 }
 
-func (warrantConfig WarrantConfig) GetAuthentication() *AuthConfig {
+func (warrantConfig Auth4FlowConfig) GetAuthentication() *AuthConfig {
 	return warrantConfig.Authentication
 }
 
@@ -133,7 +144,7 @@ type AuthProviderConfig struct {
 	TenantIdClaim string `mapstructure:"tenantIdClaim"`
 }
 
-func NewConfig() WarrantConfig {
+func NewConfig() Auth4FlowConfig {
 	viper.SetConfigFile(ConfigFileName)
 	viper.SetDefault("port", 8000)
 	viper.SetDefault("logLevel", zerolog.DebugLevel)
@@ -163,10 +174,10 @@ func NewConfig() WarrantConfig {
 		}
 	}
 
-	var config WarrantConfig
+	var config Auth4FlowConfig
 	// If available, use env vars for config
 	for _, fieldName := range getFlattenedStructFields(reflect.TypeOf(config)) {
-		envKey := strings.ToUpper(fmt.Sprintf("%s_%s", PrefixWarrant, strings.ReplaceAll(fieldName, ".", "_")))
+		envKey := strings.ToUpper(fmt.Sprintf("%s_%s", PrefixAuth4Flow, strings.ReplaceAll(fieldName, ".", "_")))
 		envVar := os.Getenv(envKey)
 		if envVar != "" {
 			viper.Set(fieldName, envVar)

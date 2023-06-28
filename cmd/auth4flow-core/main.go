@@ -6,23 +6,24 @@ import (
 	"net/http"
 	"time"
 
+	nonce "github.com/auth4flow/auth4flow-core/pkg/authn/nonce"
+	session "github.com/auth4flow/auth4flow-core/pkg/authn/session"
+	check "github.com/auth4flow/auth4flow-core/pkg/authz/check"
+	feature "github.com/auth4flow/auth4flow-core/pkg/authz/feature"
+	object "github.com/auth4flow/auth4flow-core/pkg/authz/object"
+	objecttype "github.com/auth4flow/auth4flow-core/pkg/authz/objecttype"
+	permission "github.com/auth4flow/auth4flow-core/pkg/authz/permission"
+	pricingtier "github.com/auth4flow/auth4flow-core/pkg/authz/pricingtier"
+	role "github.com/auth4flow/auth4flow-core/pkg/authz/role"
+	tenant "github.com/auth4flow/auth4flow-core/pkg/authz/tenant"
+	user "github.com/auth4flow/auth4flow-core/pkg/authz/user"
+	warrant "github.com/auth4flow/auth4flow-core/pkg/authz/warrant"
+	"github.com/auth4flow/auth4flow-core/pkg/config"
+	"github.com/auth4flow/auth4flow-core/pkg/database"
+	"github.com/auth4flow/auth4flow-core/pkg/event"
+	"github.com/auth4flow/auth4flow-core/pkg/service"
 	"github.com/pkg/errors"
 	"github.com/rs/zerolog/log"
-	check "github.com/warrant-dev/warrant/pkg/authz/check"
-	feature "github.com/warrant-dev/warrant/pkg/authz/feature"
-	object "github.com/warrant-dev/warrant/pkg/authz/object"
-	objecttype "github.com/warrant-dev/warrant/pkg/authz/objecttype"
-	permission "github.com/warrant-dev/warrant/pkg/authz/permission"
-	pricingtier "github.com/warrant-dev/warrant/pkg/authz/pricingtier"
-	role "github.com/warrant-dev/warrant/pkg/authz/role"
-	tenant "github.com/warrant-dev/warrant/pkg/authz/tenant"
-	user "github.com/warrant-dev/warrant/pkg/authz/user"
-	warrant "github.com/warrant-dev/warrant/pkg/authz/warrant"
-	wookie "github.com/warrant-dev/warrant/pkg/authz/wookie"
-	"github.com/warrant-dev/warrant/pkg/config"
-	"github.com/warrant-dev/warrant/pkg/database"
-	"github.com/warrant-dev/warrant/pkg/event"
-	"github.com/warrant-dev/warrant/pkg/service"
 )
 
 const (
@@ -269,6 +270,16 @@ func main() {
 	}
 	userSvc := user.NewService(&svcEnv, userRepository, eventSvc, objectSvc)
 
+	// Init the nonce repo and service
+	nonceRepository, err := nonce.NewRepository(svcEnv.DB())
+	if err != nil {
+		log.Fatal().Err(err).Msg("Could not initialize NonceRepository")
+	}
+	nonceSvc := nonce.NewService(&svcEnv, nonceRepository, eventSvc)
+
+	// Init the session repo and service
+	sessionSvc := session.NewService(&svcEnv, eventSvc)
+
 	svcs := []service.Service{
 		checkSvc,
 		eventSvc,
@@ -281,6 +292,8 @@ func main() {
 		tenantSvc,
 		userSvc,
 		warrantSvc,
+		nonceSvc,
+		sessionSvc,
 	}
 
 	routes := make([]service.Route, 0)
