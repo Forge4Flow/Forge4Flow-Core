@@ -145,10 +145,16 @@ _For more examples, please refer to the [Documentation](https://example.com)_
 
 ## Roadmap
 
-- [ ] Feature 1
-- [ ] Feature 2
-- [ ] Feature 3
-  - [ ] Nested Feature
+- [ ] Blockchain Native Login w/ Client & Server Sessions
+- [ ] Walletless Onboarding w/ Client & Server Sessions
+- [ ] NFT Gated Roles
+- [ ] Token Gated Roles
+- [ ] GO Server/Client SDK
+- [ ] JS, Node, and React SDKs
+- [ ] Swift SDK
+- [ ] Kotlin SDK
+- [ ] User Management & Admin Dashboard
+- [ ] Multi-Tenant Support
 
 See the [open issues](https://github.com/Auth4Flow/Auth4Flow-Core/issues) for a full list of proposed features (and known issues).
 

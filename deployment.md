@@ -26,7 +26,7 @@ services:
       retries: 10
 
   web:
-    image: Auth4Flow-Coredev/Auth4Flow-Core
+    image: Auth4Flow-Core/Auth4Flow-Core
     ports:
       - 8000:8000
     depends_on:

@@ -8,7 +8,7 @@ Prior to submitting any PRs, please review and familiarize yourself with the fol
 
 - All outstanding bugs and feature requests are [tracked as GitHub issues](https://github.com/auth4flow/auth4flow-core/issues).
 - If you find a bug or have a feature request, please [open an issue](https://github.com/auth4flow/auth4flow-core/issues/new/choose). In order to prevent duplicate reports, please first search through existing open issues for your request prior to creating a new one.
-- If you discover a security issue or vulnerability, do not create an issue. Please email us with details at security@auth4flow.com.
+- If you discover a security issue or vulnerability, do not create an issue. Please email us with details at dev@boiseitguru.com.
 - If you find small mistakes or issues in docs/instructions etc., feel free to submit PR fixes without first creating issues.
 - If you'd like to contribute a fix or implementation for an issue, please first consult with a member of the Warrant team on your approach, either directly on the issue via comments or on [Slack](https://join.slack.com/t/warrantcommunity/shared_invite/zt-12g84updv-5l1pktJf2bI5WIKN4_~f4w).
 - [Here](https://github.com/auth4flow/auth4flow-core/issues?q=is%3Aissue+is%3Aopen+label%3A%22good+first+issue%22) is a list of 'good first issues' for new contributors.

@@ -2,8 +2,8 @@
 
 ## Supported Versions
 
-We recommend always using the latest version of Warrant in order to remain up-to-date with all security updates.
+We recommend always using the latest version of Auth4Flow in order to remain up-to-date with all security updates.
 
 ## Reporting a Vulnerability
 
-If you discover a vulnerability, please contact us at security@auth4flow.com.
+If you discover a vulnerability, please contact us at dev@boiseitguru.com.
