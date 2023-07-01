@@ -44,11 +44,10 @@
     ·
     <a href="https://github.com/Auth4Flow/Auth4Flow-Core/issues">Request Feature</a>
   </p>
-</div>
 
 Auth4Flow is a Identity & Access Management system for the Flow Blockchain and a replacement for services like Amazon’s AWS IAM or Microsoft’s Azure Active Directory, merging Web3 Identity with standard access management and control best practices.
 
-<p align="right">(<a href="#readme-top">back to top</a>)</p>
+</div>
 
 <!-- GETTING STARTED -->
 
