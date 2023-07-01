@@ -88,7 +88,7 @@ Auth4Flow is a Identity & Access Management system for the Flow Blockchain and a
 
 ## Getting Started
 
-To get started using Auth4Flow, setting up Auth4Flow Cloud account or follow the deployment guide to self host your own instance of Auth4Flow. Once you have an instance started, follow one of our SDK quick start guides or check out or documentation for more information.
+To get started using Auth4Flow, set up an Auth4Flow Cloud account or follow the deployment guide to self host your own instance of Auth4Flow. Once you have an instance started, follow one of our SDK quick start guides or check out or documentation for more information.
 
 <!-- ROADMAP -->
 
