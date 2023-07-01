@@ -35,8 +35,6 @@
 <h3 align="center">Auth4Flow</h3>
 
   <p align="center">
-    Authentication and Access Control for the Flow Blockchain
-    <br />
     <a href="https://github.com/Auth4Flow/Auth4Flow-Core"><strong>Explore the docs »</strong></a>
     <br />
     <br />
