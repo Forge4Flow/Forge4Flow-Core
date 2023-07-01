@@ -35,7 +35,7 @@
 <h3 align="center">Auth4Flow</h3>
 
   <p align="center">
-    project_description
+    Authentication and Access Control for the Flow Blockchain
     <br />
     <a href="https://github.com/Auth4Flow/Auth4Flow-Core"><strong>Explore the docs »</strong></a>
     <br />
@@ -80,7 +80,7 @@
 
 [![Product Name Screen Shot][product-screenshot]](https://example.com)
 
-Here's a blank template to get started: To avoid retyping too much info. Do a search and replace with your text editor for the following: `Auth4Flow`, `Auth4Flow-Core`, `twitter_handle`, `linkedin_username`, `email_client`, `email`, `Auth4Flow`, `project_description`
+Auth4Flow is a Identity & Access Management system for the Flow Blockchain and a replacement for services like Amazon’s AWS IAM or Microsoft’s Azure Active Directory, merging Web3 Identity with standard access management and control best practices.
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
