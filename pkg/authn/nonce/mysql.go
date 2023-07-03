@@ -24,7 +24,7 @@ func (repo MySQLRepository) Create(ctx context.Context, model Model) (int64, err
 	result, err := repo.DB(ctx).ExecContext(
 		ctx,
 		`
-			INSERT INTO user (
+			INSERT INTO nonce (
 				nonce,
 				expDate,
 			) VALUES (?, ?)

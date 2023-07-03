@@ -21,6 +21,9 @@ const (
 	DefaultSQLiteDatastoreMigrationSource    = "github://auth4flow/auth4flow-core/migrations/datastore/sqlite"
 	DefaultSQLiteEventstoreMigrationSource   = "github://auth4flow/auth4flow-core/migrations/eventstore/sqlite"
 	DefaultAuthenticationUserIdClaim         = "sub"
+	DefaultSessionTokenLength                = 32
+	DefaultSessionIdleTimeout                = 15 * time.Minute
+	DefaultSessionExpTimeout                 = time.Hour
 	PrefixAuth4Flow                          = "auth4flow"
 	ConfigFileName                           = "auth4flow.yaml"
 )
@@ -115,8 +118,11 @@ type EventstoreConfig struct {
 }
 
 type AuthConfig struct {
-	ApiKey   string              `mapstructure:"apiKey"`
-	Provider *AuthProviderConfig `mapstructure:"providers"`
+	ApiKey             string              `mapstructure:"apiKey"`
+	SessionTokenLength int64               `mapstructure:"sessionTokenLength"`
+	SessionIdleTimeout int64               `mapstructure:"sessionIdleTimeout"`
+	SessionExpTimeout  int64               `mapstructure:"sessionExpTimeout"`
+	Provider           *AuthProviderConfig `mapstructure:"providers"`
 }
 
 type AuthProviderConfig struct {
@@ -140,6 +146,9 @@ func NewConfig() Auth4FlowConfig {
 	viper.SetDefault("eventstore.sqlite.migrationSource", DefaultSQLiteEventstoreMigrationSource)
 	viper.SetDefault("eventstore.synchronizeEvents", false)
 	viper.SetDefault("authentication.provider.userIdClaim", DefaultAuthenticationUserIdClaim)
+	viper.SetDefault("authentication.sessionTokenLength", DefaultSessionTokenLength)
+	viper.SetDefault("authentication.sessionIdleTimeout", int64(DefaultSessionIdleTimeout.Seconds()))
+	viper.SetDefault("authentication.sessionExpTimeout", int64(DefaultSessionExpTimeout.Seconds()))
 
 	// If config file exists, use it
 	_, err := os.ReadFile(ConfigFileName)
