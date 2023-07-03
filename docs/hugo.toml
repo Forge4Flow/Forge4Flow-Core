@@ -1,7 +1,0 @@
-baseURL = 'https://auth4flow.github.io/Auth4Flow-Core/'
-languageCode = 'en-us'
-title = 'Auth4Flow Documentation'
-
-[module]
-[[module.imports]]
-path = "github.com/bep/docuapi/v2"
