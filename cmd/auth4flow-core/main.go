@@ -268,7 +268,7 @@ func main() {
 	if err != nil {
 		log.Fatal().Err(err).Msg("Could not initialize NonceRepository")
 	}
-	nonceSvc := nonce.NewService(&svcEnv, nonceRepository, eventSvc)
+	nonceSvc := nonce.NewService(&svcEnv, cfg, nonceRepository, eventSvc)
 
 	// Init the session repo and service
 	sessionRepository, err := session.NewRepository(svcEnv.DB())
