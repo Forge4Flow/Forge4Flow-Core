@@ -48,11 +48,11 @@ func CreateSessionHandler(svc SessionService, w http.ResponseWriter, r *http.Req
 		}
 
 		service.SendJSONResponse(w, session)
+		return nil
 	}
 
 	// Invalid authInfo in Context - Return UnAuthorizedError
 	service.SendErrorResponse(w, service.NewUnauthorizedError("Invalid Auth Info"))
-
 	return nil
 }
 

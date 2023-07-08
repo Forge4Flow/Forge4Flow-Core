@@ -19,7 +19,7 @@ type SignaturesSpec struct {
 	Ftype     string `json:"f_type"`
 	Fvsn      string `json:"f_vsn"`
 	Addr      string `json:"addr"`
-	KeyId     int64  `json:"keyId"`
+	KeyId     int    `json:"keyId"`
 	Signature string `json:"signature"`
 }
 
@@ -27,7 +27,7 @@ func getVerifyAccountProofScript(network string) (string, error) {
 	var fclCryptoContract string
 	switch network {
 	case http.EmulatorHost:
-		fclCryptoContract = "0x74daa6f9c7ef24b1"
+		fclCryptoContract = "0xf8d6e0586b0a20c7"
 	case http.TestnetHost:
 		fclCryptoContract = "0x74daa6f9c7ef24b1"
 	case http.MainnetHost:

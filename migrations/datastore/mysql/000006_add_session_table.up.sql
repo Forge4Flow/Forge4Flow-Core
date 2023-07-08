@@ -2,7 +2,7 @@ BEGIN;
 
 CREATE TABLE IF NOT EXISTS session (
   id int NOT NULL AUTO_INCREMENT,
-  sessionId varchar(32) NOT NULL,
+  sessionId varchar(64) NOT NULL,
   userId varchar(64) NOT NULL,
   lastActivity timestamp(6) NULL DEFAULT CURRENT_TIMESTAMP(6),
   idleTimeout int NOT NULL,

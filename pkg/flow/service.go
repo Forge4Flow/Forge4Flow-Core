@@ -2,6 +2,8 @@ package flow
 
 import (
 	"context"
+	"encoding/hex"
+	"fmt"
 
 	"github.com/auth4flow/auth4flow-core/pkg/config"
 
@@ -36,12 +38,14 @@ func (svc *FlowService) VerifyAccountProof(ctx context.Context, accountProof Acc
 	}
 
 	var signaturesArr []string
-	var keyIndices []int64
+	var keyIndices []int
 
 	for _, el := range accountProof.Signatures {
 		signaturesArr = append(signaturesArr, el.Signature)
 		keyIndices = append(keyIndices, el.KeyId)
 	}
+
+	fmt.Println(keyIndices)
 
 	script, err := getVerifyAccountProofScript(svc.Config.GetFlowNetwork())
 	if err != nil {
@@ -62,7 +66,7 @@ func (svc *FlowService) VerifyAccountProof(ctx context.Context, accountProof Acc
 
 	args := []cadence.Value{
 		cadence.BytesToAddress(address.Bytes()),
-		cadence.String(string(message)),
+		cadence.String(hex.EncodeToString(message)),
 		cadenceKeyIndices,
 		cadenceSignaturesArr,
 	}

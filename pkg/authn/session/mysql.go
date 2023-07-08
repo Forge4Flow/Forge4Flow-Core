@@ -29,7 +29,7 @@ func (repo MySQLRepository) Create(ctx context.Context, model Model) (int64, err
 				idleTimeout,
 				expTime,
 				userAgent,
-				clientIp,
+				clientIp
 			) VALUES (?, ?, ?, ?, ?, ?)
 		`,
 		model.GetSessionId(),
@@ -40,12 +40,12 @@ func (repo MySQLRepository) Create(ctx context.Context, model Model) (int64, err
 		model.GetClientIp(),
 	)
 	if err != nil {
-		return -1, errors.Wrap(err, "error creating nonce")
+		return -1, errors.Wrap(err, "error creating session")
 	}
 
 	newSessionId, err := result.LastInsertId()
 	if err != nil {
-		return -1, errors.Wrap(err, "error creating user")
+		return -1, errors.Wrap(err, "error creating session")
 	}
 
 	return newSessionId, nil
@@ -57,8 +57,8 @@ func (repo MySQLRepository) GetById(ctx context.Context, id int64) (Model, error
 		ctx,
 		&nonce,
 		`
-			SELECT id, nonce, expDate, createdAt, updatedAt, deletedAt
-			FROM nonce
+			SELECT id, sessionId, userId, lastActivity, idleTimeout, expTime, userAgent, clientIp, createdAt, updatedAt
+			FROM session
 			WHERE
 				id = ? AND
 				deletedAt IS NULL
@@ -68,9 +68,9 @@ func (repo MySQLRepository) GetById(ctx context.Context, id int64) (Model, error
 	if err != nil {
 		switch err {
 		case sql.ErrNoRows:
-			return nil, service.NewRecordNotFoundError("Nonce", id)
+			return nil, service.NewRecordNotFoundError("Session", id)
 		default:
-			return nil, errors.Wrapf(err, "error getting nonce %d", id)
+			return nil, errors.Wrapf(err, "error getting session %d", id)
 		}
 	}
 

@@ -355,3 +355,14 @@ func hexToAddress(h string) (*cadence.Address, error) {
 	address := cadence.BytesToAddress(b)
 	return &address, nil
 }
+
+// HexToAddress converts a hex string to an Address.
+func hexToAddressWithPrefix(h string) (*cadence.Address, error) {
+	b, err := hex.DecodeString(h)
+	if err != nil {
+		return nil, err
+
+	}
+	address := cadence.BytesToAddress(b)
+	return &address, nil
+}
