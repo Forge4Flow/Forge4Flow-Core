@@ -48,7 +48,7 @@ Note: It's possible to use different dbs for the `datastore` and `eventstore` (e
 
 Here is an example of a full server config using `mysql` for both the datastore and eventstore:
 
-### Sample `warrant.yaml` config (place file in same dir as server binary)
+### Sample `auth4flow.yaml` config (place file in same dir as server binary)
 
 ```yaml
 port: 8000
@@ -72,7 +72,7 @@ eventstore:
     database: warrantEvents
 ```
 
-### Sample `warrant.yaml` config with JWT authentication config
+### Sample `auth4flow.yaml` config with JWT authentication config
 
 ```yaml
 port: 8000

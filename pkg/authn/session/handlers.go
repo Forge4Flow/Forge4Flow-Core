@@ -16,7 +16,7 @@ func (svc SessionService) Routes() ([]service.Route, error) {
 			Pattern:                    "/v1/session",
 			Method:                     "POST",
 			Handler:                    service.NewRouteHandler(svc, CreateSessionHandler),
-			OverrideAuthMiddlewareFunc: service.ApiKeyAndSessionAuthMiddleware,
+			OverrideAuthMiddlewareFunc: service.ApiKeyAndAccountProofAuthMidleware,
 		},
 	}, nil
 }

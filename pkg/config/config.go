@@ -7,6 +7,7 @@ import (
 	"strings"
 	"time"
 
+	"github.com/onflow/flow-go-sdk/access/http"
 	"github.com/rs/zerolog"
 	"github.com/rs/zerolog/log"
 	"github.com/rs/zerolog/pkgerrors"
@@ -24,6 +25,8 @@ const (
 	DefaultSessionTokenLength                = 32
 	DefaultSessionIdleTimeout                = 15 * time.Minute
 	DefaultSessionExpTimeout                 = time.Hour
+	DefaultAppIdentifier                     = "Auth4Flow IAM Service"
+	DefaultFlowNetwork                       = "emulator"
 	PrefixAuth4Flow                          = "auth4flow"
 	ConfigFileName                           = "auth4flow.yaml"
 )
@@ -35,6 +38,8 @@ type Config interface {
 	GetAutoMigrate() bool
 	GetDatastore() *DatastoreConfig
 	GetEventstore() *EventstoreConfig
+	GetAuthentication() *AuthConfig
+	GetAppIdentifier() string
 }
 
 type Auth4FlowConfig struct {
@@ -45,34 +50,44 @@ type Auth4FlowConfig struct {
 	Datastore       *DatastoreConfig  `mapstructure:"datastore"`
 	Eventstore      *EventstoreConfig `mapstructure:"eventstore"`
 	Authentication  *AuthConfig       `mapstructure:"authentication"`
+	AppIdentifier   string            `mapstructure:"appIdentifier"`
+	FlowNetwork     string            `mapstructure:"flowNetwork"`
 }
 
-func (warrantConfig Auth4FlowConfig) GetPort() int {
-	return warrantConfig.Port
+func (auth4FlowConfig Auth4FlowConfig) GetPort() int {
+	return auth4FlowConfig.Port
 }
 
-func (warrantConfig Auth4FlowConfig) GetLogLevel() int8 {
-	return warrantConfig.LogLevel
+func (auth4FlowConfig Auth4FlowConfig) GetLogLevel() int8 {
+	return auth4FlowConfig.LogLevel
 }
 
-func (warrantConfig Auth4FlowConfig) GetEnableAccessLog() bool {
-	return warrantConfig.EnableAccessLog
+func (auth4FlowConfig Auth4FlowConfig) GetEnableAccessLog() bool {
+	return auth4FlowConfig.EnableAccessLog
 }
 
-func (warrantConfig Auth4FlowConfig) GetAutoMigrate() bool {
-	return warrantConfig.AutoMigrate
+func (auth4FlowConfig Auth4FlowConfig) GetAutoMigrate() bool {
+	return auth4FlowConfig.AutoMigrate
 }
 
-func (warrantConfig Auth4FlowConfig) GetDatastore() *DatastoreConfig {
-	return warrantConfig.Datastore
+func (auth4FlowConfig Auth4FlowConfig) GetDatastore() *DatastoreConfig {
+	return auth4FlowConfig.Datastore
 }
 
-func (warrantConfig Auth4FlowConfig) GetEventstore() *EventstoreConfig {
-	return warrantConfig.Eventstore
+func (auth4FlowConfig Auth4FlowConfig) GetEventstore() *EventstoreConfig {
+	return auth4FlowConfig.Eventstore
 }
 
-func (warrantConfig Auth4FlowConfig) GetAuthentication() *AuthConfig {
-	return warrantConfig.Authentication
+func (auth4FlowConfig Auth4FlowConfig) GetAuthentication() *AuthConfig {
+	return auth4FlowConfig.Authentication
+}
+
+func (auth4FlowConfig Auth4FlowConfig) GetAppIdentifier() string {
+	return auth4FlowConfig.AppIdentifier
+}
+
+func (auth4FlowConfig Auth4FlowConfig) GetFlowNetwork() string {
+	return auth4FlowConfig.FlowNetwork
 }
 
 type DatastoreConfig struct {
@@ -149,18 +164,20 @@ func NewConfig() Auth4FlowConfig {
 	viper.SetDefault("authentication.sessionTokenLength", DefaultSessionTokenLength)
 	viper.SetDefault("authentication.sessionIdleTimeout", int64(DefaultSessionIdleTimeout.Seconds()))
 	viper.SetDefault("authentication.sessionExpTimeout", int64(DefaultSessionExpTimeout.Seconds()))
+	viper.SetDefault("appIdentifier", DefaultAppIdentifier)
+	viper.SetDefault("flowNetwork", DefaultFlowNetwork)
 
 	// If config file exists, use it
 	_, err := os.ReadFile(ConfigFileName)
 	if err == nil {
 		if err := viper.ReadInConfig(); err != nil {
-			log.Fatal().Err(err).Msg("Error while reading warrant.yaml. Shutting down.")
+			log.Fatal().Err(err).Msg("Error while reading auth4flow.yaml. Shutting down.")
 		}
 	} else {
 		if os.IsNotExist(err) {
-			log.Info().Msg("Could not find warrant.yaml. Attempting to use environment variables.")
+			log.Info().Msg("Could not find auth4flow.yaml. Attempting to use environment variables.")
 		} else {
-			log.Fatal().Err(err).Msg("Error while reading warrant.yaml. Shutting down.")
+			log.Fatal().Err(err).Msg("Error while reading auth4flow.yaml. Shutting down.")
 		}
 	}
 
@@ -189,6 +206,21 @@ func NewConfig() Auth4FlowConfig {
 
 	if config.GetAuthentication() == nil || config.GetAuthentication().ApiKey == "" {
 		log.Fatal().Msg("Must provide an API key to authenticate incoming requests to Warrant.")
+	}
+
+	// Check the selected network host value and assign it to the appropriate constant
+	flowNetwork := config.GetFlowNetwork()
+	switch flowNetwork {
+	case "emulator":
+		config.FlowNetwork = http.EmulatorHost
+	case "testnet":
+		config.FlowNetwork = http.TestnetHost
+	case "mainnet":
+		config.FlowNetwork = http.MainnetHost
+	case "canarynet":
+		config.FlowNetwork = http.CanarynetHost
+	default:
+		log.Fatal().Msgf("Invalid network host: %s", flowNetwork)
 	}
 
 	return config

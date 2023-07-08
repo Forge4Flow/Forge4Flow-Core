@@ -3,22 +3,25 @@ package authn
 import (
 	"context"
 	"crypto/rand"
-	"encoding/base64"
+	"encoding/hex"
 	"fmt"
 
+	"github.com/auth4flow/auth4flow-core/pkg/config"
 	"github.com/auth4flow/auth4flow-core/pkg/event"
 	"github.com/auth4flow/auth4flow-core/pkg/service"
 )
 
 type NonceService struct {
 	service.BaseService
+	Config     config.Auth4FlowConfig
 	Repository NonceRepository
 	EventSvc   event.EventService
 }
 
-func NewService(env service.Env, nonceRepo NonceRepository, eventSvc event.EventService) NonceService {
+func NewService(env service.Env, cfg config.Auth4FlowConfig, nonceRepo NonceRepository, eventSvc event.EventService) NonceService {
 	return NonceService{
 		BaseService: service.NewBaseService(env),
+		Config:      cfg,
 		Repository:  nonceRepo,
 		EventSvc:    eventSvc,
 	}
@@ -59,7 +62,11 @@ func (svc NonceService) Create(ctx context.Context) (*NonceSpec, error) {
 		return nil, err
 	}
 
-	return newNonce.ToNonceSpec(), nil
+	newNonceSpec := newNonce.ToNonceSpec()
+
+	newNonceSpec.AppIdentifier = svc.Config.GetAppIdentifier()
+
+	return newNonceSpec, nil
 }
 
 func generateNonce() (string, error) {
@@ -69,5 +76,5 @@ func generateNonce() (string, error) {
 		return "", fmt.Errorf("could not generate nonce")
 	}
 
-	return base64.URLEncoding.EncodeToString(nonceBytes), nil
+	return hex.EncodeToString(nonceBytes), nil
 }

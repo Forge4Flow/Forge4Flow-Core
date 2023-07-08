@@ -12,6 +12,7 @@ import (
 	"strings"
 
 	"github.com/auth4flow/auth4flow-core/pkg/config"
+	"github.com/auth4flow/auth4flow-core/pkg/flow"
 	jwt "github.com/golang-jwt/jwt/v5"
 	"github.com/rs/zerolog/hlog"
 )
@@ -39,7 +40,7 @@ type AuthMiddlewareFunc func(config config.Config, next http.Handler) (http.Hand
 func ApiKeyAuthMiddleware(cfg config.Config, next http.Handler) (http.Handler, error) {
 	warrantCfg, ok := cfg.(config.Auth4FlowConfig)
 	if !ok {
-		return nil, errors.New("cfg parameter on DefaultAuthMiddleware must be a WarrantConfig")
+		return nil, errors.New("cfg parameter on DefaultAuthMiddleware must be a Auth4FlowConfig")
 	}
 
 	return http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
@@ -59,10 +60,44 @@ func ApiKeyAuthMiddleware(cfg config.Config, next http.Handler) (http.Handler, e
 	}), nil
 }
 
+func ApiKeyAndAccountProofAuthMidleware(cfg config.Config, next http.Handler) (http.Handler, error) {
+	auth4FlowConfig, ok := cfg.(config.Auth4FlowConfig)
+	if !ok {
+		return nil, errors.New("cfg parameter on DefaultAuthMiddleware must be a Auth4FlowConfig")
+	}
+
+	return http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+		var accountProof flow.AccountProofSpec
+		err := ParseJSONBody(r.Body, &accountProof)
+		if err != nil {
+			SendErrorResponse(w, NewInvalidRequestError("Invalid AccountProof Received"))
+		}
+
+		flowService := flow.NewService(auth4FlowConfig)
+		validAccountProof, err := flowService.VerifyAccountProof(r.Context(), accountProof)
+		if err != nil {
+			SendErrorResponse(w, NewUnauthorizedError(fmt.Sprintf("Invalid Account Proof: %s", err.Error())))
+			return
+		}
+
+		if validAccountProof {
+			authInfo := &AuthInfo{
+				UserId: accountProof.Address,
+			}
+
+			newContext := context.WithValue(r.Context(), authInfoKey, *authInfo)
+			next.ServeHTTP(w, r.WithContext(newContext))
+			return
+		}
+
+		SendErrorResponse(w, NewUnauthorizedError("Invalid Account Proof"))
+	}), nil
+}
+
 func ApiKeyAndSessionAuthMiddleware(cfg config.Config, next http.Handler) (http.Handler, error) {
 	warrantCfg, ok := cfg.(config.Auth4FlowConfig)
 	if !ok {
-		return nil, errors.New("cfg parameter on DefaultAuthMiddleware must be a WarrantConfig")
+		return nil, errors.New("cfg parameter on DefaultAuthMiddleware must be a Auth4FlowConfig")
 	}
 
 	return http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {

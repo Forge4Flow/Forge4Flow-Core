@@ -3,7 +3,8 @@ package authn
 import "time"
 
 type NonceSpec struct {
-	Nonce string `json:"nonce"`
+	Nonce         string `json:"nonce"`
+	AppIdentifier string `json:"appIdentifier"`
 }
 
 func (spec NonceSpec) ToNonce() *Nonce {

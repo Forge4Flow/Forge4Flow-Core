@@ -125,9 +125,11 @@ func ParseJSONBody(body io.Reader, obj interface{}) error {
 	if err != nil {
 		switch err := err.(type) {
 		case *json.UnmarshalTypeError:
+			fmt.Printf("must be %s", primitiveTypeToDisplayName(err.Type))
 			return NewInvalidParameterError(err.Field, fmt.Sprintf("must be %s", primitiveTypeToDisplayName(err.Type)))
 		default:
 			if err != io.EOF {
+				fmt.Println("eof error")
 				return NewInvalidRequestError("Invalid request body")
 			}
 		}

@@ -26,7 +26,7 @@ func (repo MySQLRepository) Create(ctx context.Context, model Model) (int64, err
 		`
 			INSERT INTO nonce (
 				nonce,
-				expDate,
+				expDate
 			) VALUES (?, ?)
 		`,
 		model.GetNonce(),

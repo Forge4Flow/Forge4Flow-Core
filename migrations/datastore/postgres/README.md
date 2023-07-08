@@ -10,9 +10,9 @@ Install and run the [PostgreSQL Installer](https://www.postgresql.org/download/)
 
 ## Warrant configuration
 
-The Warrant server requires certain configuration, defined either within a `warrant.yaml` file (located within the same directory as the binary) or via environment variables. This configuration includes some common variables and some PostgreSQL specific variables. Here's a sample config:
+The Warrant server requires certain configuration, defined either within a `auth4flow.yaml` file (located within the same directory as the binary) or via environment variables. This configuration includes some common variables and some PostgreSQL specific variables. Here's a sample config:
 
-### Sample `warrant.yaml` config
+### Sample `auth4flow.yaml` config
 
 ```yaml
 port: 8000
