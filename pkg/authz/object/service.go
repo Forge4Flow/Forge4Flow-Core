@@ -12,17 +12,21 @@ import (
 type ObjectService struct {
 	service.BaseService
 	Repository ObjectRepository
-	EventSvc   event.EventService
-	WarrantSvc warrant.WarrantService
+	EventSvc   *event.EventService
+	WarrantSvc *warrant.WarrantService
 }
 
-func NewService(env service.Env, repository ObjectRepository, eventSvc event.EventService, warrantSvc warrant.WarrantService) ObjectService {
-	return ObjectService{
+func NewService(env service.Env, repository ObjectRepository, eventSvc *event.EventService, warrantSvc *warrant.WarrantService) *ObjectService {
+	return &ObjectService{
 		BaseService: service.NewBaseService(env),
 		Repository:  repository,
 		EventSvc:    eventSvc,
 		WarrantSvc:  warrantSvc,
 	}
+}
+
+func (svc ObjectService) ID() string {
+	return service.ObjectSerice
 }
 
 func (svc ObjectService) Create(ctx context.Context, objectSpec ObjectSpec) (*ObjectSpec, error) {

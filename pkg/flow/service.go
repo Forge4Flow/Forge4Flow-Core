@@ -3,9 +3,9 @@ package flow
 import (
 	"context"
 	"encoding/hex"
-	"fmt"
 
 	"github.com/auth4flow/auth4flow-core/pkg/config"
+	"github.com/auth4flow/auth4flow-core/pkg/service"
 
 	"github.com/onflow/cadence"
 	flowSDK "github.com/onflow/flow-go-sdk"
@@ -14,20 +14,26 @@ import (
 )
 
 type FlowService struct {
+	service.BaseService
 	Config     config.Auth4FlowConfig
 	FlowClient *http.Client
 }
 
-func NewService(cfg config.Auth4FlowConfig) FlowService {
+func NewService(env service.Env, cfg config.Auth4FlowConfig) *FlowService {
 	flowClient, err := http.NewClient(cfg.GetFlowNetwork())
 	if err != nil {
 		log.Fatal().Err(err).Msg("Could not initialize and connect to the configured Flow Blockchain. Shutting down.")
 	}
 
-	return FlowService{
-		Config:     cfg,
-		FlowClient: flowClient,
+	return &FlowService{
+		BaseService: service.NewBaseService(env),
+		Config:      cfg,
+		FlowClient:  flowClient,
 	}
+}
+
+func (svc *FlowService) ID() string {
+	return service.FlowService
 }
 
 func (svc *FlowService) VerifyAccountProof(ctx context.Context, accountProof AccountProofSpec) (bool, error) {
@@ -44,8 +50,6 @@ func (svc *FlowService) VerifyAccountProof(ctx context.Context, accountProof Acc
 		signaturesArr = append(signaturesArr, el.Signature)
 		keyIndices = append(keyIndices, el.KeyId)
 	}
-
-	fmt.Println(keyIndices)
 
 	script, err := getVerifyAccountProofScript(svc.Config.GetFlowNetwork())
 	if err != nil {

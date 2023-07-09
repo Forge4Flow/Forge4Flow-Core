@@ -16,17 +16,21 @@ const ResourceTypeTenant = "tenant"
 type TenantService struct {
 	service.BaseService
 	Repository TenantRepository
-	EventSvc   event.EventService
-	ObjectSvc  object.ObjectService
+	EventSvc   *event.EventService
+	ObjectSvc  *object.ObjectService
 }
 
-func NewService(env service.Env, repository TenantRepository, eventSvc event.EventService, objectSvc object.ObjectService) TenantService {
-	return TenantService{
+func NewService(env service.Env, repository TenantRepository, eventSvc *event.EventService, objectSvc *object.ObjectService) *TenantService {
+	return &TenantService{
 		BaseService: service.NewBaseService(env),
 		Repository:  repository,
 		EventSvc:    eventSvc,
 		ObjectSvc:   objectSvc,
 	}
+}
+
+func (svc TenantService) ID() string {
+	return service.TenantService
 }
 
 func (svc TenantService) Create(ctx context.Context, tenantSpec TenantSpec) (*TenantSpec, error) {

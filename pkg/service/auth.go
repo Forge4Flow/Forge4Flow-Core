@@ -12,7 +12,6 @@ import (
 	"strings"
 
 	"github.com/auth4flow/auth4flow-core/pkg/config"
-	"github.com/auth4flow/auth4flow-core/pkg/flow"
 	jwt "github.com/golang-jwt/jwt/v5"
 	"github.com/rs/zerolog/hlog"
 )
@@ -22,7 +21,7 @@ const FirebasePublicKeyUrl = "https://www.googleapis.com/robot/v1/metadata/x509/
 type key int
 
 const (
-	authInfoKey key = iota
+	AuthInfoKey key = iota
 )
 
 const (
@@ -35,9 +34,9 @@ type AuthInfo struct {
 	TenantId string
 }
 
-type AuthMiddlewareFunc func(config config.Config, next http.Handler) (http.Handler, error)
+type AuthMiddlewareFunc func(config config.Config, next http.Handler, svcs ...Service) (http.Handler, error)
 
-func ApiKeyAuthMiddleware(cfg config.Config, next http.Handler) (http.Handler, error) {
+func ApiKeyAuthMiddleware(cfg config.Config, next http.Handler, svcs ...Service) (http.Handler, error) {
 	warrantCfg, ok := cfg.(config.Auth4FlowConfig)
 	if !ok {
 		return nil, errors.New("cfg parameter on DefaultAuthMiddleware must be a Auth4FlowConfig")
@@ -55,46 +54,12 @@ func ApiKeyAuthMiddleware(cfg config.Config, next http.Handler) (http.Handler, e
 			return
 		}
 
-		newContext := context.WithValue(r.Context(), authInfoKey, &AuthInfo{})
+		newContext := context.WithValue(r.Context(), AuthInfoKey, &AuthInfo{})
 		next.ServeHTTP(w, r.WithContext(newContext))
 	}), nil
 }
 
-func ApiKeyAndAccountProofAuthMidleware(cfg config.Config, next http.Handler) (http.Handler, error) {
-	auth4FlowConfig, ok := cfg.(config.Auth4FlowConfig)
-	if !ok {
-		return nil, errors.New("cfg parameter on DefaultAuthMiddleware must be a Auth4FlowConfig")
-	}
-
-	return http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
-		var accountProof flow.AccountProofSpec
-		err := ParseJSONBody(r.Body, &accountProof)
-		if err != nil {
-			SendErrorResponse(w, NewInvalidRequestError("Invalid AccountProof Received"))
-		}
-
-		flowService := flow.NewService(auth4FlowConfig)
-		validAccountProof, err := flowService.VerifyAccountProof(r.Context(), accountProof)
-		if err != nil {
-			SendErrorResponse(w, NewUnauthorizedError(fmt.Sprintf("Invalid Account Proof: %s", err.Error())))
-			return
-		}
-
-		if validAccountProof {
-			authInfo := &AuthInfo{
-				UserId: accountProof.Address,
-			}
-
-			newContext := context.WithValue(r.Context(), authInfoKey, *authInfo)
-			next.ServeHTTP(w, r.WithContext(newContext))
-			return
-		}
-
-		SendErrorResponse(w, NewUnauthorizedError("Invalid Account Proof"))
-	}), nil
-}
-
-func ApiKeyAndSessionAuthMiddleware(cfg config.Config, next http.Handler) (http.Handler, error) {
+func ApiKeyAndSessionAuthMiddleware(cfg config.Config, next http.Handler, svcs ...Service) (http.Handler, error) {
 	warrantCfg, ok := cfg.(config.Auth4FlowConfig)
 	if !ok {
 		return nil, errors.New("cfg parameter on DefaultAuthMiddleware must be a Auth4FlowConfig")
@@ -207,12 +172,12 @@ func ApiKeyAndSessionAuthMiddleware(cfg config.Config, next http.Handler) (http.
 			}
 		}
 
-		newContext := context.WithValue(r.Context(), authInfoKey, *authInfo)
+		newContext := context.WithValue(r.Context(), AuthInfoKey, *authInfo)
 		next.ServeHTTP(w, r.WithContext(newContext))
 	}), nil
 }
 
-func PassthroughAuthMiddleware(cfg config.Config, next http.Handler) (http.Handler, error) {
+func PassthroughAuthMiddleware(cfg config.Config, next http.Handler, svcs ...Service) (http.Handler, error) {
 	return http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
 		next.ServeHTTP(w, r)
 	}), nil
@@ -220,9 +185,9 @@ func PassthroughAuthMiddleware(cfg config.Config, next http.Handler) (http.Handl
 
 // GetAuthInfoFromRequestContext returns the AuthInfo object from the given context
 func GetAuthInfoFromRequestContext(context context.Context) *AuthInfo {
-	contextVal := context.Value(authInfoKey)
+	contextVal := context.Value(AuthInfoKey)
 	if contextVal != nil {
-		authInfo := context.Value(authInfoKey).(AuthInfo)
+		authInfo := context.Value(AuthInfoKey).(AuthInfo)
 		return &authInfo
 	}
 

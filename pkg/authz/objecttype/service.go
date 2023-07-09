@@ -12,15 +12,19 @@ const ResourceTypeObjectType = "object-type"
 type ObjectTypeService struct {
 	service.BaseService
 	Repository ObjectTypeRepository
-	EventSvc   event.EventService
+	EventSvc   *event.EventService
 }
 
-func NewService(env service.Env, repository ObjectTypeRepository, eventSvc event.EventService) ObjectTypeService {
-	return ObjectTypeService{
+func NewService(env service.Env, repository ObjectTypeRepository, eventSvc *event.EventService) *ObjectTypeService {
+	return &ObjectTypeService{
 		BaseService: service.NewBaseService(env),
 		Repository:  repository,
 		EventSvc:    eventSvc,
 	}
+}
+
+func (svc ObjectTypeService) ID() string {
+	return service.ObjectTypeService
 }
 
 func (svc ObjectTypeService) Create(ctx context.Context, objectTypeSpec ObjectTypeSpec) (*ObjectTypeSpec, error) {

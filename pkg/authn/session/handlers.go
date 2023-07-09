@@ -6,6 +6,7 @@ import (
 	"net/http"
 	"time"
 
+	"github.com/auth4flow/auth4flow-core/pkg/flow"
 	"github.com/auth4flow/auth4flow-core/pkg/service"
 )
 
@@ -16,7 +17,7 @@ func (svc SessionService) Routes() ([]service.Route, error) {
 			Pattern:                    "/v1/session",
 			Method:                     "POST",
 			Handler:                    service.NewRouteHandler(svc, CreateSessionHandler),
-			OverrideAuthMiddlewareFunc: service.ApiKeyAndAccountProofAuthMidleware,
+			OverrideAuthMiddlewareFunc: flow.ApiKeyAndAccountProofAuthMidleware,
 		},
 	}, nil
 }

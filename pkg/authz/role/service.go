@@ -14,17 +14,21 @@ const ResourceTypeRole = "role"
 type RoleService struct {
 	service.BaseService
 	Repository RoleRepository
-	EventSvc   event.EventService
-	ObjectSvc  object.ObjectService
+	EventSvc   *event.EventService
+	ObjectSvc  *object.ObjectService
 }
 
-func NewService(env service.Env, repository RoleRepository, eventSvc event.EventService, objectSvc object.ObjectService) RoleService {
-	return RoleService{
+func NewService(env service.Env, repository RoleRepository, eventSvc *event.EventService, objectSvc *object.ObjectService) *RoleService {
+	return &RoleService{
 		BaseService: service.NewBaseService(env),
 		Repository:  repository,
 		EventSvc:    eventSvc,
 		ObjectSvc:   objectSvc,
 	}
+}
+
+func (svc RoleService) ID() string {
+	return service.RoleService
 }
 
 func (svc RoleService) Create(ctx context.Context, roleSpec RoleSpec) (*RoleSpec, error) {

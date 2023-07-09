@@ -15,16 +15,20 @@ type NonceService struct {
 	service.BaseService
 	Config     config.Auth4FlowConfig
 	Repository NonceRepository
-	EventSvc   event.EventService
+	EventSvc   *event.EventService
 }
 
-func NewService(env service.Env, cfg config.Auth4FlowConfig, nonceRepo NonceRepository, eventSvc event.EventService) NonceService {
-	return NonceService{
+func NewService(env service.Env, cfg config.Auth4FlowConfig, nonceRepo NonceRepository, eventSvc *event.EventService) *NonceService {
+	return &NonceService{
 		BaseService: service.NewBaseService(env),
 		Config:      cfg,
 		Repository:  nonceRepo,
 		EventSvc:    eventSvc,
 	}
+}
+
+func (svc NonceService) ID() string {
+	return service.NonceService
 }
 
 func (svc NonceService) Create(ctx context.Context) (*NonceSpec, error) {
@@ -67,6 +71,22 @@ func (svc NonceService) Create(ctx context.Context) (*NonceSpec, error) {
 	newNonceSpec.AppIdentifier = svc.Config.GetAppIdentifier()
 
 	return newNonceSpec, nil
+}
+
+func (svc NonceService) IsValid(ctx context.Context, nonce string) (bool, error) {
+	validNonce := false
+	nonceModel, err := svc.Repository.GetByNonce(ctx, nonce)
+	if err != nil {
+		return validNonce, err
+	}
+
+	if !nonceModel.IsExpired() {
+		validNonce = true
+	}
+
+	err = svc.Repository.DeleteByNonce(ctx, nonce)
+
+	return validNonce, err
 }
 
 func generateNonce() (string, error) {

@@ -35,7 +35,7 @@ func defaultCreateEventContext(ctx context.Context, synchronizeEvents bool) (con
 	return context.Background(), nil
 }
 
-func NewService(env service.Env, repository EventRepository, synchronizeEvents bool, createEventContext EventContextFunc) EventService {
+func NewService(env service.Env, repository EventRepository, synchronizeEvents bool, createEventContext EventContextFunc) *EventService {
 	svc := EventService{
 		BaseService:        service.NewBaseService(env),
 		Repository:         repository,
@@ -47,7 +47,11 @@ func NewService(env service.Env, repository EventRepository, synchronizeEvents b
 		svc.createEventContext = defaultCreateEventContext
 	}
 
-	return svc
+	return &svc
+}
+
+func (svc EventService) ID() string {
+	return service.EventService
 }
 
 func (svc EventService) TrackResourceCreated(ctx context.Context, resourceType string, resourceId string, meta interface{}) error {

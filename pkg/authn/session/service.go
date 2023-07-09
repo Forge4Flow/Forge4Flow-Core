@@ -13,11 +13,11 @@ type SessionService struct {
 	service.BaseService
 	Config     config.Auth4FlowConfig
 	Repository SessionRepository
-	NonceSvc   nonce.NonceService
-	EventSvc   event.EventService
+	NonceSvc   *nonce.NonceService
+	EventSvc   *event.EventService
 }
 
-func NewService(env service.Env, cfg config.Auth4FlowConfig, repo SessionRepository, nonceSvc nonce.NonceService, eventSvc event.EventService) SessionService {
+func NewService(env service.Env, cfg config.Auth4FlowConfig, repo SessionRepository, nonceSvc *nonce.NonceService, eventSvc *event.EventService) SessionService {
 	return SessionService{
 		BaseService: service.NewBaseService(env),
 		Config:      cfg,
@@ -25,6 +25,10 @@ func NewService(env service.Env, cfg config.Auth4FlowConfig, repo SessionReposit
 		NonceSvc:    nonceSvc,
 		EventSvc:    eventSvc,
 	}
+}
+
+func (svc SessionService) ID() string {
+	return service.SessionService
 }
 
 func (svc SessionService) Create(ctx context.Context, sessionDetails SessionCreationSpec) (*SessionSpec, error) {

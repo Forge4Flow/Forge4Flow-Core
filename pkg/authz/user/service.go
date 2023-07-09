@@ -16,17 +16,21 @@ const ResourceTypeUser = "user"
 type UserService struct {
 	service.BaseService
 	Repository UserRepository
-	EventSvc   event.EventService
-	ObjectSvc  object.ObjectService
+	EventSvc   *event.EventService
+	ObjectSvc  *object.ObjectService
 }
 
-func NewService(env service.Env, repository UserRepository, eventSvc event.EventService, objectSvc object.ObjectService) UserService {
-	return UserService{
+func NewService(env service.Env, repository UserRepository, eventSvc *event.EventService, objectSvc *object.ObjectService) *UserService {
+	return &UserService{
 		BaseService: service.NewBaseService(env),
 		Repository:  repository,
 		EventSvc:    eventSvc,
 		ObjectSvc:   objectSvc,
 	}
+}
+
+func (svc UserService) ID() string {
+	return service.UserService
 }
 
 func (svc UserService) Create(ctx context.Context, userSpec UserSpec) (*UserSpec, error) {

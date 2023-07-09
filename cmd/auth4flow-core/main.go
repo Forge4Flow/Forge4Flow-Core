@@ -21,6 +21,7 @@ import (
 	"github.com/auth4flow/auth4flow-core/pkg/config"
 	"github.com/auth4flow/auth4flow-core/pkg/database"
 	"github.com/auth4flow/auth4flow-core/pkg/event"
+	"github.com/auth4flow/auth4flow-core/pkg/flow"
 	"github.com/auth4flow/auth4flow-core/pkg/service"
 	"github.com/pkg/errors"
 	"github.com/rs/zerolog/log"
@@ -277,6 +278,8 @@ func main() {
 	}
 	sessionSvc := session.NewService(&svcEnv, cfg, sessionRepository, nonceSvc, eventSvc)
 
+	flowSerice := flow.NewService(&svcEnv, cfg)
+
 	svcs := []service.Service{
 		checkSvc,
 		eventSvc,
@@ -291,19 +294,10 @@ func main() {
 		warrantSvc,
 		nonceSvc,
 		sessionSvc,
+		flowSerice,
 	}
 
-	routes := make([]service.Route, 0)
-	for _, svc := range svcs {
-		svcRoutes, err := svc.Routes()
-		if err != nil {
-			log.Fatal().Err(err).Msg("Could not setup routes for service")
-		}
-
-		routes = append(routes, svcRoutes...)
-	}
-
-	router, err := service.NewRouter(cfg, "", routes, service.ApiKeyAuthMiddleware, []service.Middleware{}, []service.Middleware{})
+	router, err := service.NewRouter(cfg, "", svcs, service.ApiKeyAuthMiddleware, []service.Middleware{}, []service.Middleware{})
 	if err != nil {
 		log.Fatal().Err(err).Msg("Could not initialize service router")
 	}

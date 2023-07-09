@@ -10,6 +10,7 @@ import (
 
 	"github.com/auth4flow/auth4flow-core/pkg/config"
 	"github.com/auth4flow/auth4flow-core/pkg/stats"
+	"github.com/gorilla/handlers"
 	"github.com/gorilla/mux"
 	"github.com/rs/zerolog"
 	"github.com/rs/zerolog/hlog"
@@ -47,7 +48,7 @@ func (rh RouteHandler[T]) ServeHTTP(w http.ResponseWriter, r *http.Request) {
 	}
 }
 
-func NewRouter(config config.Config, pathPrefix string, routes []Route, authMiddleware AuthMiddlewareFunc, routerMiddlewares []Middleware, requestMiddlewares []Middleware) (*mux.Router, error) {
+func NewRouter(config config.Config, pathPrefix string, svcs []Service, authMiddleware AuthMiddlewareFunc, routerMiddlewares []Middleware, requestMiddlewares []Middleware) (*mux.Router, error) {
 	router := mux.NewRouter()
 
 	// Setup default middleware
@@ -69,10 +70,28 @@ func NewRouter(config config.Config, pathPrefix string, routes []Route, authMidd
 	router.Use(hlog.MethodHandler("method"))
 	router.Use(hlog.ProtoHandler("protocol"))
 
+	// Enable CORS for all origins
+	corsMiddleware := handlers.CORS(
+		handlers.AllowedOrigins([]string{"*"}),
+		handlers.AllowedMethods([]string{"GET", "POST", "PUT", "DELETE", "OPTIONS"}),
+		handlers.AllowedHeaders([]string{"Authorization", "Content-Type"}),
+	)
+	router.Use(corsMiddleware)
+
 	// Setup router middlewares, which will be run on ALL
 	// requests, even if they are to non-existent endpoints.
 	for _, routerMiddleware := range routerMiddlewares {
 		router.Use(mux.MiddlewareFunc(routerMiddleware))
+	}
+
+	routes := make([]Route, 0)
+	for _, svc := range svcs {
+		svcRoutes, err := svc.Routes()
+		if err != nil {
+			log.Fatal().Err(err).Msg("Could not setup routes for service")
+		}
+
+		routes = append(routes, svcRoutes...)
 	}
 
 	// Setup routes
@@ -82,7 +101,7 @@ func NewRouter(config config.Config, pathPrefix string, routes []Route, authMidd
 
 		var err error
 		if route.GetOverrideAuthMiddlewareFunc() != nil {
-			middlewareWrappedHandler, err = route.GetOverrideAuthMiddlewareFunc()(config, middlewareWrappedHandler)
+			middlewareWrappedHandler, err = route.GetOverrideAuthMiddlewareFunc()(config, middlewareWrappedHandler, svcs...)
 		} else {
 			middlewareWrappedHandler, err = authMiddleware(config, middlewareWrappedHandler)
 		}

@@ -15,17 +15,21 @@ import (
 type CheckService struct {
 	service.BaseService
 	WarrantRepository warrant.WarrantRepository
-	EventSvc          event.EventService
-	ObjectTypeSvc     objecttype.ObjectTypeService
+	EventSvc          *event.EventService
+	ObjectTypeSvc     *objecttype.ObjectTypeService
 }
 
-func NewService(env service.Env, warrantRepo warrant.WarrantRepository, eventSvc event.EventService, objectTypeSvc objecttype.ObjectTypeService) CheckService {
-	return CheckService{
+func NewService(env service.Env, warrantRepo warrant.WarrantRepository, eventSvc *event.EventService, objectTypeSvc *objecttype.ObjectTypeService) *CheckService {
+	return &CheckService{
 		BaseService:       service.NewBaseService(env),
 		WarrantRepository: warrantRepo,
 		EventSvc:          eventSvc,
 		ObjectTypeSvc:     objectTypeSvc,
 	}
+}
+
+func (svc CheckService) ID() string {
+	return service.CheckService
 }
 
 func (svc CheckService) getWithPolicyMatch(ctx context.Context, spec CheckWarrantSpec) (*warrant.WarrantSpec, error) {

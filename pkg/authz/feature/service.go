@@ -14,17 +14,21 @@ const ResourceTypeFeature = "feature"
 type FeatureService struct {
 	service.BaseService
 	Repository FeatureRepository
-	EventSvc   event.EventService
-	ObjectSvc  object.ObjectService
+	EventSvc   *event.EventService
+	ObjectSvc  *object.ObjectService
 }
 
-func NewService(env service.Env, repository FeatureRepository, eventSvc event.EventService, objectSvc object.ObjectService) FeatureService {
-	return FeatureService{
+func NewService(env service.Env, repository FeatureRepository, eventSvc *event.EventService, objectSvc *object.ObjectService) *FeatureService {
+	return &FeatureService{
 		BaseService: service.NewBaseService(env),
 		Repository:  repository,
 		EventSvc:    eventSvc,
 		ObjectSvc:   objectSvc,
 	}
+}
+
+func (svc FeatureService) ID() string {
+	return service.FeatureService
 }
 
 func (svc FeatureService) Create(ctx context.Context, featureSpec FeatureSpec) (*FeatureSpec, error) {
