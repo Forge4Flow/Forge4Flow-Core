@@ -17,31 +17,16 @@ const FooterContent = () => {
           ❤️
         </Box>
         {` by `}
-        <Link target='_blank' href='https://themeselection.com/'>
-          ThemeSelection
+        <Link target='_blank' href='https://auth4flow.com/'>
+          Auth4Flow
         </Link>
       </Typography>
       {hidden ? null : (
         <Box sx={{ display: 'flex', flexWrap: 'wrap', alignItems: 'center', '& :not(:last-child)': { mr: 4 } }}>
-          <Link
-            target='_blank'
-            href='https://github.com/themeselection/materio-mui-react-nextjs-admin-template-free/blob/main/LICENSE'
-          >
-            MIT License
-          </Link>
-          <Link target='_blank' href='https://themeselection.com/'>
-            More Themes
-          </Link>
-          <Link
-            target='_blank'
-            href='https://github.com/themeselection/materio-mui-react-nextjs-admin-template-free/blob/main/README.md'
-          >
+          <Link target='_blank' href='https://docs.auth4flow.com/'>
             Documentation
           </Link>
-          <Link
-            target='_blank'
-            href='https://github.com/themeselection/materio-mui-react-nextjs-admin-template-free/issues'
-          >
+          <Link target='_blank' href='https://github.com/Auth4Flow/Auth4Flow-Core/issues/new/choose'>
             Support
           </Link>
         </Box>

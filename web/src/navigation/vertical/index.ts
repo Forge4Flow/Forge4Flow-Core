@@ -21,58 +21,58 @@ const navigation = (): VerticalNavItemsType => {
       path: '/'
     },
     {
-      title: 'Account Settings',
+      sectionTitle: 'Users & Tenants'
+    },
+    {
+      title: 'Users',
       icon: AccountCogOutline,
       path: '/account-settings'
     },
     {
-      sectionTitle: 'Pages'
+      title: 'Tenants',
+      icon: AccountCogOutline,
+      path: '/account-settings'
     },
     {
-      title: 'Login',
+      sectionTitle: 'Role Based Access Control'
+    },
+    {
+      title: 'Roles',
       icon: Login,
-      path: '/pages/login',
-      openInNewTab: true
+      path: '/admin/rbac/roles'
     },
     {
-      title: 'Register',
+      title: 'Permissions',
       icon: AccountPlusOutline,
-      path: '/pages/register',
-      openInNewTab: true
+      path: '/admin/rbac/permissions'
     },
     {
-      title: 'Error',
-      icon: AlertCircleOutline,
-      path: '/pages/error',
-      openInNewTab: true
+      title: 'Check',
+      icon: CreditCardOutline,
+      path: '/admin/rbac/check'
     },
     {
-      sectionTitle: 'User Interface'
+      sectionTitle: 'Fine Grained Access Control'
     },
     {
-      title: 'Typography',
+      title: 'Object Types',
       icon: FormatLetterCase,
       path: '/typography'
     },
     {
-      title: 'Icons',
+      title: 'Objects',
       path: '/icons',
       icon: GoogleCirclesExtended
     },
     {
-      title: 'Cards',
+      title: 'Query',
       icon: CreditCardOutline,
       path: '/cards'
     },
     {
-      title: 'Tables',
-      icon: Table,
-      path: '/tables'
-    },
-    {
-      icon: CubeOutline,
-      title: 'Form Layouts',
-      path: '/form-layouts'
+      title: 'Check',
+      icon: CreditCardOutline,
+      path: '/cards'
     }
   ]
 }
