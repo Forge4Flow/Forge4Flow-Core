@@ -5,6 +5,7 @@ import (
 	"errors"
 	"fmt"
 	"net/http"
+	"strings"
 
 	nonce "github.com/auth4flow/auth4flow-core/pkg/authn/nonce"
 	"github.com/auth4flow/auth4flow-core/pkg/config"
@@ -23,42 +24,88 @@ func ApiKeyAndAccountProofAuthMidleware(cfg config.Config, next http.Handler, sv
 			nonceService = svc.(*nonce.NonceService)
 		}
 	}
-	_, ok := cfg.(config.Auth4FlowConfig)
+	auth4FlowConfig, ok := cfg.(config.Auth4FlowConfig)
 	if !ok {
 		return nil, errors.New("cfg parameter on DefaultAuthMiddleware must be a Auth4FlowConfig")
 	}
 
 	return http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
-		var accountProof AccountProofSpec
-		err := service.ParseJSONBody(r.Body, &accountProof)
+		authType, auth, err := parseAuthFromRequest(r, []string{service.AuthTypeApiKey})
 		if err != nil {
-			service.SendErrorResponse(w, service.NewInvalidRequestError("Invalid AccountProof Received"))
+			service.SendErrorResponse(w, service.NewUnauthorizedError(fmt.Sprintf("Invalid authorization header: %s", err.Error())))
 			return
 		}
 
-		//TODO: Fix error handling
-		validNonce, _ := nonceService.IsValid(r.Context(), accountProof.Nonce)
-		if !validNonce {
-			service.SendErrorResponse(w, service.NewInvalidRequestError("Invalid Nonce Received"))
-			return
-		}
-
-		validAccountProof, err := flowService.VerifyAccountProof(r.Context(), accountProof)
-		if err != nil {
-			service.SendErrorResponse(w, service.NewUnauthorizedError(fmt.Sprintf("Invalid Account Proof: %s", err.Error())))
-			return
-		}
-
-		if validAccountProof {
-			authInfo := &service.AuthInfo{
-				UserId: accountProof.Address,
+		var authInfo *service.AuthInfo
+		switch authType {
+		case service.AuthTypeApiKey:
+			apiKey := auth.(string)
+			if !service.SecureCompareEqual(apiKey, auth4FlowConfig.GetAuthentication().ApiKey) {
+				service.SendErrorResponse(w, service.NewUnauthorizedError("Invalid API key"))
+				return
 			}
 
-			newContext := context.WithValue(r.Context(), service.AuthInfoKey, *authInfo)
-			next.ServeHTTP(w, r.WithContext(newContext))
-			return
+			authInfo = &service.AuthInfo{}
+		case service.AuthTypeAccountProof:
+			accountProof := auth.(AccountProofSpec)
+			//TODO: Fix error handling
+			validNonce, _ := nonceService.IsValid(r.Context(), accountProof.Nonce)
+			if !validNonce {
+				service.SendErrorResponse(w, service.NewInvalidRequestError("Invalid Nonce Received"))
+				return
+			}
+
+			validAccountProof, err := flowService.VerifyAccountProof(r.Context(), accountProof)
+			if err != nil {
+				service.SendErrorResponse(w, service.NewUnauthorizedError(fmt.Sprintf("Invalid Account Proof: %s", err.Error())))
+				return
+			}
+
+			if validAccountProof {
+				authInfo := &service.AuthInfo{
+					UserId: accountProof.Address,
+				}
+
+				newContext := context.WithValue(r.Context(), service.AuthInfoKey, *authInfo)
+				next.ServeHTTP(w, r.WithContext(newContext))
+				return
+			}
+
+			service.SendErrorResponse(w, service.NewUnauthorizedError("Invalid Account Proof"))
 		}
 
-		service.SendErrorResponse(w, service.NewUnauthorizedError("Invalid Account Proof"))
+		newContext := context.WithValue(r.Context(), service.AuthInfoKey, *authInfo)
+		next.ServeHTTP(w, r.WithContext(newContext))
 	}), nil
+}
+
+func parseAuthFromRequest(r *http.Request, validTokenTypes []string) (string, interface{}, error) {
+	authHeader := r.Header.Get("Authorization")
+	authHeaderParts := strings.Split(authHeader, " ")
+	var authToken interface{}
+	if len(authHeaderParts) != 2 {
+		return "", "", fmt.Errorf("invalid format")
+	}
+
+	authTokenType := authHeaderParts[0]
+	authToken = authHeaderParts[1]
+
+	var isValidTokenType bool
+	for _, validTokenType := range validTokenTypes {
+		if authTokenType == validTokenType {
+			isValidTokenType = true
+		}
+	}
+	if !isValidTokenType {
+		var auth AccountProofSpec
+		err := service.ParseJSONBody(r.Body, &auth)
+		if err != nil {
+			return "", "", fmt.Errorf("invalid authorization header or no account proof")
+		}
+
+		authTokenType = service.AuthTypeAccountProof
+		authToken = auth
+	}
+
+	return authTokenType, authToken, nil
 }

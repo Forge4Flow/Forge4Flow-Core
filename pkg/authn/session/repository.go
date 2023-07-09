@@ -11,6 +11,9 @@ import (
 type SessionRepository interface {
 	Create(ctx context.Context, nonce Model) (int64, error)
 	GetById(ctx context.Context, id int64) (Model, error)
+	GetBySessionId(ctx context.Context, session string) (Model, error)
+	UpdateSessionActivity(ctx context.Context, id int64) error
+	DeleteById(ctx context.Context, id int64) error
 }
 
 func NewRepository(db database.Database) (SessionRepository, error) {

@@ -3,6 +3,7 @@ package authz
 import (
 	"net/http"
 
+	session "github.com/auth4flow/auth4flow-core/pkg/authn/session"
 	objecttype "github.com/auth4flow/auth4flow-core/pkg/authz/objecttype"
 	warrant "github.com/auth4flow/auth4flow-core/pkg/authz/warrant"
 	"github.com/auth4flow/auth4flow-core/pkg/service"
@@ -15,7 +16,7 @@ func (svc CheckService) Routes() ([]service.Route, error) {
 			Pattern:                    "/v2/authorize",
 			Method:                     "POST",
 			Handler:                    service.NewRouteHandler(svc, AuthorizeHandler),
-			OverrideAuthMiddlewareFunc: service.ApiKeyAndSessionAuthMiddleware,
+			OverrideAuthMiddlewareFunc: session.ApiKeyAndSessionAuthMiddleware,
 		},
 	}, nil
 }

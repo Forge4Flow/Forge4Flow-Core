@@ -3,6 +3,7 @@ package authn
 import (
 	"context"
 	"database/sql"
+	"time"
 
 	"github.com/auth4flow/auth4flow-core/pkg/database"
 	"github.com/auth4flow/auth4flow-core/pkg/service"
@@ -52,10 +53,10 @@ func (repo MySQLRepository) Create(ctx context.Context, model Model) (int64, err
 }
 
 func (repo MySQLRepository) GetById(ctx context.Context, id int64) (Model, error) {
-	var nonce Session
+	var session Session
 	err := repo.DB(ctx).GetContext(
 		ctx,
-		&nonce,
+		&session,
 		`
 			SELECT id, sessionId, userId, lastActivity, idleTimeout, expTime, userAgent, clientIp, createdAt, updatedAt
 			FROM session
@@ -74,5 +75,83 @@ func (repo MySQLRepository) GetById(ctx context.Context, id int64) (Model, error
 		}
 	}
 
-	return &nonce, nil
+	return &session, nil
 }
+
+func (repo MySQLRepository) GetBySessionId(ctx context.Context, sessionId string) (Model, error) {
+	var session Session
+	err := repo.DB(ctx).GetContext(
+		ctx,
+		&session,
+		`
+			SELECT id, sessionId, userId, lastActivity, idleTimeout, expTime, userAgent, clientIp, createdAt, updatedAt
+			FROM session
+			WHERE
+				sessionId = ? AND
+				deletedAt IS NULL
+		`,
+		sessionId,
+	)
+	if err != nil {
+		switch err {
+		case sql.ErrNoRows:
+			return nil, service.NewRecordNotFoundError("Session", sessionId)
+		default:
+			return nil, errors.Wrapf(err, "error getting session %d", sessionId)
+		}
+	}
+
+	return &session, nil
+}
+
+func (repo MySQLRepository) UpdateSessionActivity(ctx context.Context, id int64) error {
+	_, err := repo.DB(ctx).ExecContext(
+		ctx,
+		`
+			UPDATE session
+			SET lastActivity = ?
+			WHERE
+				id = ? AND
+				deletedAt IS NULL
+		`,
+		time.Now().UTC(),
+		id,
+	)
+	if err != nil {
+		switch err {
+		case sql.ErrNoRows:
+			return service.NewRecordNotFoundError("Session", id)
+		default:
+			return errors.Wrapf(err, "error updating session with ID %s", id)
+		}
+	}
+
+	return nil
+}
+
+func (repo MySQLRepository) DeleteById(ctx context.Context, id int64) error {
+	_, err := repo.DB(ctx).ExecContext(
+		ctx,
+		`
+			UPDATE session
+			SET deletedAt = ?
+			WHERE
+				id = ? AND
+				deletedAt IS NULL
+		`,
+		time.Now().UTC(),
+		id,
+	)
+	if err != nil {
+		switch err {
+		case sql.ErrNoRows:
+			return service.NewRecordNotFoundError("Session", id)
+		default:
+			return errors.Wrapf(err, "error deleting session with ID %s", id)
+		}
+	}
+
+	return nil
+}
+
+//TODO: Create DeleAllExpired function to delete all expired Nonce Objects

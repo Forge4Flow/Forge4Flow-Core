@@ -67,7 +67,7 @@ func (session Session) GetClientIp() string {
 }
 
 func (session Session) IsExpired() bool {
-	return session.ExpTime.Before(time.Now())
+	return session.ExpTime.Before(time.Now()) || session.GetLastActivity().Add(session.GetIdleTimeout()).Before(time.Now())
 }
 
 func (session Session) GetCreatedAt() time.Time {

@@ -17,8 +17,8 @@ type SessionService struct {
 	EventSvc   *event.EventService
 }
 
-func NewService(env service.Env, cfg config.Auth4FlowConfig, repo SessionRepository, nonceSvc *nonce.NonceService, eventSvc *event.EventService) SessionService {
-	return SessionService{
+func NewService(env service.Env, cfg config.Auth4FlowConfig, repo SessionRepository, nonceSvc *nonce.NonceService, eventSvc *event.EventService) *SessionService {
+	return &SessionService{
 		BaseService: service.NewBaseService(env),
 		Config:      cfg,
 		Repository:  repo,

@@ -19,6 +19,14 @@ func (svc SessionService) Routes() ([]service.Route, error) {
 			Handler:                    service.NewRouteHandler(svc, CreateSessionHandler),
 			OverrideAuthMiddlewareFunc: flow.ApiKeyAndAccountProofAuthMidleware,
 		},
+
+		// Verify Session
+		service.WarrantRoute{
+			Pattern:                    "/v1/session/verify",
+			Method:                     "GET",
+			Handler:                    service.NewRouteHandler(svc, VerifySessionHandler),
+			OverrideAuthMiddlewareFunc: SessionAuthMiddleware,
+		},
 	}, nil
 }
 
@@ -67,4 +75,9 @@ func generateSessionToken(tokenLength int64) (string, error) {
 	// Encode the random bytes as a base64 string to make it readable and usable as a session token
 	sessionToken := base64.URLEncoding.EncodeToString(tokenBytes)
 	return sessionToken, nil
+}
+
+func VerifySessionHandler(svc SessionService, w http.ResponseWriter, r *http.Request) error {
+	w.WriteHeader(http.StatusOK)
+	return nil
 }

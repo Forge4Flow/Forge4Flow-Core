@@ -217,10 +217,8 @@ func NewConfig() Auth4FlowConfig {
 		config.FlowNetwork = http.TestnetHost
 	case "mainnet":
 		config.FlowNetwork = http.MainnetHost
-	case "canarynet":
-		config.FlowNetwork = http.CanarynetHost
 	default:
-		log.Fatal().Msgf("Invalid network host: %s", flowNetwork)
+		log.Fatal().Msgf("Invalid flowNetwork parameter: %s - valid options are: emulator, testnet, mainnet", flowNetwork)
 	}
 
 	return config
