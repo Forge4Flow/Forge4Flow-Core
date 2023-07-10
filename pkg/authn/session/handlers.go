@@ -6,6 +6,7 @@ import (
 	"net/http"
 	"time"
 
+	user "github.com/auth4flow/auth4flow-core/pkg/authz/user"
 	"github.com/auth4flow/auth4flow-core/pkg/flow"
 	"github.com/auth4flow/auth4flow-core/pkg/service"
 )
@@ -33,6 +34,29 @@ func (svc SessionService) Routes() ([]service.Route, error) {
 func CreateSessionHandler(svc SessionService, w http.ResponseWriter, r *http.Request) error {
 	authInfo := service.GetAuthInfoFromRequestContext(r.Context())
 	if authInfo != nil && authInfo.UserId != "" {
+		// Verify that the user exists
+		_, err := svc.UserSvc.GetByUserId(r.Context(), authInfo.UserId)
+		if err != nil {
+			if _, ok := err.(*service.RecordNotFoundError); ok {
+				// If doesn't exist, and auto register enabled, then create user
+				if svc.Config.GetAuthentication().AutoRegister {
+					newUser := user.UserSpec{
+						UserId: authInfo.UserId,
+					}
+					_, err := svc.UserSvc.Create(r.Context(), newUser)
+					if err != nil {
+						service.SendErrorResponse(w, service.NewInternalError("unable to register new user"))
+						return err
+					}
+				} else {
+					return err
+				}
+			} else {
+				service.SendErrorResponse(w, service.NewInternalError("error locating user record"))
+				return err
+			}
+		}
+
 		// Create Session ID/Token
 		sessionToken, err := generateSessionToken(svc.Config.Authentication.SessionTokenLength)
 		if err != nil {

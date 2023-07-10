@@ -276,7 +276,7 @@ func main() {
 	if err != nil {
 		log.Fatal().Err(err).Msg("Could not initialize SessionRepository")
 	}
-	sessionSvc := session.NewService(&svcEnv, cfg, sessionRepository, nonceSvc, eventSvc)
+	sessionSvc := session.NewService(&svcEnv, cfg, sessionRepository, nonceSvc, userSvc, eventSvc)
 
 	flowSerice := flow.NewService(&svcEnv, cfg)
 

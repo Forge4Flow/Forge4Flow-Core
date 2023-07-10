@@ -36,7 +36,7 @@ func SessionAuthMiddleware(cfg config.Config, next http.Handler, svcs ...service
 		// Check If Session Has Expired
 		if session.IsExpired() {
 			sessionService.Repository.DeleteById(r.Context(), session.GetID())
-			service.SendErrorResponse(w, service.NewUnauthorizedError("Session Expired"))
+			service.SendErrorResponse(w, service.NewTokenExpiredError())
 			return
 		}
 

@@ -27,6 +27,7 @@ const (
 	DefaultSessionExpTimeout                 = time.Hour
 	DefaultAppIdentifier                     = "Auth4Flow IAM Service"
 	DefaultFlowNetwork                       = "emulator"
+	DefaultAutoRegister                      = false
 	PrefixAuth4Flow                          = "auth4flow"
 	ConfigFileName                           = "auth4flow.yaml"
 )
@@ -134,6 +135,7 @@ type EventstoreConfig struct {
 
 type AuthConfig struct {
 	ApiKey             string              `mapstructure:"apiKey"`
+	AutoRegister       bool                `mapstructure:"autoRegister"`
 	SessionTokenLength int64               `mapstructure:"sessionTokenLength"`
 	SessionIdleTimeout int64               `mapstructure:"sessionIdleTimeout"`
 	SessionExpTimeout  int64               `mapstructure:"sessionExpTimeout"`
@@ -166,6 +168,7 @@ func NewConfig() Auth4FlowConfig {
 	viper.SetDefault("authentication.sessionExpTimeout", int64(DefaultSessionExpTimeout.Seconds()))
 	viper.SetDefault("appIdentifier", DefaultAppIdentifier)
 	viper.SetDefault("flowNetwork", DefaultFlowNetwork)
+	viper.SetDefault("authentication.autoRegister", DefaultAutoRegister)
 
 	// If config file exists, use it
 	_, err := os.ReadFile(ConfigFileName)
