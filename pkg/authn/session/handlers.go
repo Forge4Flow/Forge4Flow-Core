@@ -102,6 +102,9 @@ func generateSessionToken(tokenLength int64) (string, error) {
 }
 
 func VerifySessionHandler(svc SessionService, w http.ResponseWriter, r *http.Request) error {
-	w.WriteHeader(http.StatusOK)
+	validSession := &SessionVerificationSpec{
+		Result: "Valid",
+	}
+	service.SendJSONResponse(w, validSession)
 	return nil
 }

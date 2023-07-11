@@ -1,3 +1,6 @@
+// ** React Imports
+import { ReactNode } from 'react'
+import '../flow/config.js'
 // ** Next Imports
 import Head from 'next/head'
 import { Router } from 'next/router'
@@ -17,6 +20,10 @@ import themeConfig from 'src/configs/themeConfig'
 // ** Component Imports
 import UserLayout from 'src/layouts/UserLayout'
 import ThemeComponent from 'src/@core/theme/ThemeComponent'
+import { Auth4FlowProvider } from '@auth4flow/auth4flow-react'
+import AuthGuard from 'src/layouts/components/auth/AuthGuard'
+import GuestGuard from 'src/layouts/components/auth/GuestGuard'
+import Spinner from 'src/@core/components/spinner'
 
 // ** Contexts
 import { SettingsConsumer, SettingsProvider } from 'src/@core/context/settingsContext'
@@ -36,6 +43,12 @@ type ExtendedAppProps = AppProps & {
   emotionCache: EmotionCache
 }
 
+type GuardProps = {
+  authGuard: boolean
+  guestGuard: boolean
+  children: ReactNode
+}
+
 const clientSideEmotionCache = createEmotionCache()
 
 // ** Pace Loader
@@ -51,12 +64,24 @@ if (themeConfig.routingLoader) {
   })
 }
 
+const Guard = ({ children, authGuard, guestGuard }: GuardProps) => {
+  if (guestGuard) {
+    return <GuestGuard fallback={<Spinner />}>{children}</GuestGuard>
+  } else if (!guestGuard && !authGuard) {
+    return <>{children}</>
+  } else {
+    return <AuthGuard fallback={<Spinner />}>{children}</AuthGuard>
+  }
+}
+
 // ** Configure JSS & ClassName
 const App = (props: ExtendedAppProps) => {
   const { Component, emotionCache = clientSideEmotionCache, pageProps } = props
 
   // Variables
   const getLayout = Component.getLayout ?? (page => <UserLayout>{page}</UserLayout>)
+  const authGuard = Component.authGuard ?? true
+  const guestGuard = Component.guestGuard ?? false
 
   return (
     <CacheProvider value={emotionCache}>
@@ -70,13 +95,21 @@ const App = (props: ExtendedAppProps) => {
         <meta name='viewport' content='initial-scale=1, width=device-width' />
       </Head>
 
-      <SettingsProvider>
-        <SettingsConsumer>
-          {({ settings }) => {
-            return <ThemeComponent settings={settings}>{getLayout(<Component {...pageProps} />)}</ThemeComponent>
-          }}
-        </SettingsConsumer>
-      </SettingsProvider>
+      <Auth4FlowProvider clientKey='123' endpoint='http://localhost:8000'>
+        <SettingsProvider>
+          <SettingsConsumer>
+            {({ settings }) => {
+              return (
+                <ThemeComponent settings={settings}>
+                  <Guard authGuard={authGuard} guestGuard={guestGuard}>
+                    {getLayout(<Component {...pageProps} />)}
+                  </Guard>
+                </ThemeComponent>
+              )
+            }}
+          </SettingsConsumer>
+        </SettingsProvider>
+      </Auth4FlowProvider>
     </CacheProvider>
   )
 }

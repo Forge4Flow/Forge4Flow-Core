@@ -278,6 +278,7 @@ func main() {
 	}
 	sessionSvc := session.NewService(&svcEnv, cfg, sessionRepository, nonceSvc, userSvc, eventSvc)
 
+	// Init the flow repo and service
 	flowSerice := flow.NewService(&svcEnv, cfg)
 
 	svcs := []service.Service{

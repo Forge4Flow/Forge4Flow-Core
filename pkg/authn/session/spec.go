@@ -25,3 +25,7 @@ func (s SessionCreationSpec) ToSession() *Session {
 		ClientIp:    s.ClientIp,
 	}
 }
+
+type SessionVerificationSpec struct {
+	Result string `json:"result"`
+}
