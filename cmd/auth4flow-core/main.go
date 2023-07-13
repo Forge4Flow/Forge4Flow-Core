@@ -23,6 +23,7 @@ import (
 	"github.com/auth4flow/auth4flow-core/pkg/event"
 	"github.com/auth4flow/auth4flow-core/pkg/flow"
 	"github.com/auth4flow/auth4flow-core/pkg/service"
+	"github.com/auth4flow/auth4flow-core/pkg/setup"
 	"github.com/pkg/errors"
 	"github.com/rs/zerolog/log"
 )
@@ -280,6 +281,9 @@ func main() {
 
 	// Init the flow repo and service
 	flowSerice := flow.NewService(&svcEnv, cfg)
+
+	// Verify admin role and initial user are configured
+	setup.InitialSetup(&cfg, permissionSvc, roleSvc, userSvc, warrantSvc)
 
 	svcs := []service.Service{
 		checkSvc,

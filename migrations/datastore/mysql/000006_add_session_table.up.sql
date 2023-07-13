@@ -5,7 +5,7 @@ CREATE TABLE IF NOT EXISTS session (
   sessionId varchar(64) NOT NULL,
   userId varchar(64) NOT NULL,
   lastActivity timestamp(6) NULL DEFAULT CURRENT_TIMESTAMP(6),
-  idleTimeout int NOT NULL,
+  idleTimeout bigint NOT NULL,
   expTime timestamp(6) NOT NULL,
   userAgent varchar(255) NOT NULL,
   clientIp varchar(14) NOT NULL,

@@ -70,5 +70,6 @@ const Error500 = () => {
 }
 
 Error500.getLayout = (page: ReactNode) => <BlankLayout>{page}</BlankLayout>
+Error500.authGuard = false
 
 export default Error500

@@ -28,6 +28,12 @@ func (svc SessionService) Routes() ([]service.Route, error) {
 			Handler:                    service.NewRouteHandler(svc, VerifySessionHandler),
 			OverrideAuthMiddlewareFunc: SessionAuthMiddleware,
 		},
+		service.WarrantRoute{
+			Pattern:                    "/v1/session/verify",
+			Method:                     "POST",
+			Handler:                    service.NewRouteHandler(svc, VerifySessionHandler),
+			OverrideAuthMiddlewareFunc: ApiKeyAndSessionAuthMiddleware,
+		},
 	}, nil
 }
 
@@ -68,8 +74,8 @@ func CreateSessionHandler(svc SessionService, w http.ResponseWriter, r *http.Req
 		sessionDetails := SessionCreationSpec{
 			SessionId:   sessionToken,
 			UserId:      authInfo.UserId,
-			IdleTimeout: time.Duration(svc.Config.Authentication.SessionIdleTimeout),
-			ExpTime:     time.Now().Add(time.Duration(svc.Config.Authentication.SessionExpTimeout)),
+			IdleTimeout: svc.Config.GetAuthentication().SessionIdleTimeout,
+			ExpTime:     time.Now().Add(time.Duration(svc.Config.GetAuthentication().SessionExpTimeout)),
 			ClientIp:    service.GetClientIpAddress(r),
 			UserAgent:   r.UserAgent(),
 		}
@@ -102,9 +108,16 @@ func generateSessionToken(tokenLength int64) (string, error) {
 }
 
 func VerifySessionHandler(svc SessionService, w http.ResponseWriter, r *http.Request) error {
-	validSession := &SessionVerificationSpec{
-		Result: "Valid",
+	authInfo := service.GetAuthInfoFromRequestContext(r.Context())
+	if authInfo != nil && authInfo.UserId != "" {
+		validSession := &SessionVerificationSpec{
+			UserId: authInfo.UserId,
+			Result: "Valid",
+		}
+		service.SendJSONResponse(w, validSession)
+		return nil
 	}
-	service.SendJSONResponse(w, validSession)
+
+	service.SendErrorResponse(w, service.NewInternalError("unable to validate session"))
 	return nil
 }

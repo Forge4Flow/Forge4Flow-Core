@@ -35,7 +35,7 @@ func (repo MySQLRepository) Create(ctx context.Context, model Model) (int64, err
 		`,
 		model.GetSessionId(),
 		model.GetUserId(),
-		int64(model.GetIdleTimeout()),
+		model.GetIdleTimeout(),
 		model.GetExpTime(),
 		model.GetUserAgent(),
 		model.GetClientIp(),

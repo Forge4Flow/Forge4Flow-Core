@@ -32,7 +32,7 @@ const GuestGuard = (props: GuestGuardProps) => {
     verifySession()
 
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [router.route])
+  }, [auth.sessionToken, router.route])
 
   if (auth.isLoading || (!auth.isLoading && auth.sessionToken !== '')) {
     return fallback

@@ -18,7 +18,7 @@ const navigation = (): VerticalNavItemsType => {
     {
       title: 'Dashboard',
       icon: HomeOutline,
-      path: '/'
+      path: '/admin'
     },
     {
       sectionTitle: 'Users & Tenants'
@@ -26,7 +26,7 @@ const navigation = (): VerticalNavItemsType => {
     {
       title: 'Users',
       icon: AccountCogOutline,
-      path: '/account-settings'
+      path: '/admin/users'
     },
     {
       title: 'Tenants',

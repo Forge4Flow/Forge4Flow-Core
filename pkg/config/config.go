@@ -53,6 +53,7 @@ type Auth4FlowConfig struct {
 	Authentication  *AuthConfig       `mapstructure:"authentication"`
 	AppIdentifier   string            `mapstructure:"appIdentifier"`
 	FlowNetwork     string            `mapstructure:"flowNetwork"`
+	AdminAccount    string            `mapstructure:"adminAccount"`
 }
 
 func (auth4FlowConfig Auth4FlowConfig) GetPort() int {
@@ -137,7 +138,7 @@ type AuthConfig struct {
 	ApiKey             string              `mapstructure:"apiKey"`
 	AutoRegister       bool                `mapstructure:"autoRegister"`
 	SessionTokenLength int64               `mapstructure:"sessionTokenLength"`
-	SessionIdleTimeout int64               `mapstructure:"sessionIdleTimeout"`
+	SessionIdleTimeout time.Duration       `mapstructure:"sessionIdleTimeout"`
 	SessionExpTimeout  int64               `mapstructure:"sessionExpTimeout"`
 	Provider           *AuthProviderConfig `mapstructure:"providers"`
 }
@@ -164,8 +165,8 @@ func NewConfig() Auth4FlowConfig {
 	viper.SetDefault("eventstore.synchronizeEvents", false)
 	viper.SetDefault("authentication.provider.userIdClaim", DefaultAuthenticationUserIdClaim)
 	viper.SetDefault("authentication.sessionTokenLength", DefaultSessionTokenLength)
-	viper.SetDefault("authentication.sessionIdleTimeout", int64(DefaultSessionIdleTimeout.Seconds()))
-	viper.SetDefault("authentication.sessionExpTimeout", int64(DefaultSessionExpTimeout.Seconds()))
+	viper.SetDefault("authentication.sessionIdleTimeout", DefaultSessionIdleTimeout)
+	viper.SetDefault("authentication.sessionExpTimeout", DefaultSessionExpTimeout)
 	viper.SetDefault("appIdentifier", DefaultAppIdentifier)
 	viper.SetDefault("flowNetwork", DefaultFlowNetwork)
 	viper.SetDefault("authentication.autoRegister", DefaultAutoRegister)

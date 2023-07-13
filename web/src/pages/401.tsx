@@ -61,5 +61,6 @@ const Error401 = () => {
 }
 
 Error401.getLayout = (page: ReactNode) => <BlankLayout>{page}</BlankLayout>
+Error401.authGuard = false
 
 export default Error401

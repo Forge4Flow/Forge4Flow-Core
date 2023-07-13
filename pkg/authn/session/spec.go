@@ -27,5 +27,7 @@ func (s SessionCreationSpec) ToSession() *Session {
 }
 
 type SessionVerificationSpec struct {
-	Result string `json:"result"`
+	Result    string `json:"result,omitempty"`
+	UserId    string `json:"userId,omitempty"`
+	SessionId string `json:"sessionId,omitempty"`
 }

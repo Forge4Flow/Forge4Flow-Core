@@ -40,7 +40,7 @@ const AuthGuard = (props: AuthGuardProps) => {
       verifySession()
     },
     // eslint-disable-next-line react-hooks/exhaustive-deps
-    [auth.sessionToken, router.route]
+    [router.route]
   )
 
   if (auth.isLoading || auth.sessionToken === '') {

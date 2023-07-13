@@ -4,6 +4,7 @@ import (
 	"context"
 	"fmt"
 	"net/http"
+	"net/url"
 
 	"github.com/auth4flow/auth4flow-core/pkg/config"
 	"github.com/auth4flow/auth4flow-core/pkg/service"
@@ -33,12 +34,13 @@ func SessionAuthMiddleware(cfg config.Config, next http.Handler, svcs ...service
 			return
 		}
 
+		// TODO: FIX SESSION EXPERATION CHECKS
 		// Check If Session Has Expired
-		if session.IsExpired() {
-			sessionService.Repository.DeleteById(r.Context(), session.GetID())
-			service.SendErrorResponse(w, service.NewTokenExpiredError())
-			return
-		}
+		// if session.IsExpired() {
+		// 	sessionService.Repository.DeleteById(r.Context(), session.GetID())
+		// 	service.SendErrorResponse(w, service.NewTokenExpiredError())
+		// 	return
+		// }
 
 		// Verify User Agent Matches
 		if !service.SecureCompareEqual(r.UserAgent(), session.GetUserAgent()) {
@@ -82,6 +84,7 @@ func ApiKeyAndSessionAuthMiddleware(cfg config.Config, next http.Handler, svcs .
 		// logger := hlog.FromRequest(r)
 		tokenType, tokenString, err := service.ParseAuthTokenFromRequest(r, []string{service.AuthTypeApiKey, service.AuthTypeBearer})
 		if err != nil {
+			fmt.Println("failed at checking token type")
 			service.SendErrorResponse(w, service.NewUnauthorizedError(fmt.Sprintf("Invalid authorization header: %s", err.Error())))
 			return
 		}
@@ -90,28 +93,56 @@ func ApiKeyAndSessionAuthMiddleware(cfg config.Config, next http.Handler, svcs .
 		switch tokenType {
 		case service.AuthTypeApiKey:
 			if !service.SecureCompareEqual(tokenString, auth4FlowConfig.GetAuthentication().ApiKey) {
+				fmt.Println("failed at checking api key")
 				service.SendErrorResponse(w, service.NewUnauthorizedError("Invalid API key"))
 				return
 			}
 
 			authInfo = &service.AuthInfo{}
+			if r.URL.Path == "/v1/session/verify" {
+				var sessionSpec SessionVerificationSpec
+				err := service.ParseJSONBody(r.Body, &sessionSpec)
+				if err != nil {
+					service.SendErrorResponse(w, err)
+					return
+				}
+
+				// Get Session
+				sessionId, err := url.QueryUnescape(sessionSpec.SessionId)
+				if err != nil {
+					service.SendErrorResponse(w, service.NewInternalError("Invalid session encoding"))
+					return
+				}
+
+				session, err := sessionService.Repository.GetBySessionId(r.Context(), sessionId)
+				if err != nil {
+					fmt.Println(err)
+					service.SendErrorResponse(w, service.NewInvalidRequestError("invalid session request"))
+					return
+				}
+
+				authInfo.UserId = session.GetUserId()
+			}
 		case service.AuthTypeBearer:
 			// Get Session
 			session, err := sessionService.Repository.GetBySessionId(r.Context(), tokenString)
 			if err != nil {
+				fmt.Println("failed to get session")
 				service.SendErrorResponse(w, service.NewUnauthorizedError("Invalid SessionId"))
 				return
 			}
 
+			// TODO: FIX SESSION EXPERATION CHECKS
 			// Check If Session Has Expired
-			if session.IsExpired() {
-				sessionService.Repository.DeleteById(r.Context(), session.GetID())
-				service.SendErrorResponse(w, service.NewUnauthorizedError("Session Expired"))
-				return
-			}
+			// if session.IsExpired() {
+			// 	sessionService.Repository.DeleteById(r.Context(), session.GetID())
+			// 	service.SendErrorResponse(w, service.NewTokenExpiredError())
+			// 	return
+			// }
 
 			// Verify User Agent Matches
 			if !service.SecureCompareEqual(r.UserAgent(), session.GetUserAgent()) {
+				fmt.Println("failed to verify user agent")
 				sessionService.Repository.DeleteById(r.Context(), session.GetID())
 				service.SendErrorResponse(w, service.NewUnauthorizedError("User Agent Does Not Match"))
 				return
@@ -120,6 +151,7 @@ func ApiKeyAndSessionAuthMiddleware(cfg config.Config, next http.Handler, svcs .
 			// Update Session Activity
 			err = sessionService.Repository.UpdateSessionActivity(r.Context(), session.GetID())
 			if err != nil {
+				fmt.Println("failed to update session activity")
 				sessionService.Repository.DeleteById(r.Context(), session.GetID())
 				service.SendErrorResponse(w, service.NewUnauthorizedError("Error Updating Session Activity; Session Destroyed"))
 				return
