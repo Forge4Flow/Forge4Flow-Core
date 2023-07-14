@@ -33,7 +33,7 @@ func getVerifyAccountProofScript(network string) (string, error) {
 	case http.MainnetHost:
 		fclCryptoContract = "0xb4b82a1c9d21d284"
 	default:
-		return "", errors.New("Network is not supported")
+		return "", errors.New("network is not supported")
 	}
 
 	script := fmt.Sprintf(`

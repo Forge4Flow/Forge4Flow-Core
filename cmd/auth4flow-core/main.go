@@ -309,5 +309,8 @@ func main() {
 
 	log.Info().Msgf("Listening on port %d", cfg.GetPort())
 	shutdownErr := http.ListenAndServe(fmt.Sprintf(":%d", cfg.GetPort()), router)
+
+	flowSerice.Wait()
+
 	log.Fatal().Err(shutdownErr).Msg("")
 }
