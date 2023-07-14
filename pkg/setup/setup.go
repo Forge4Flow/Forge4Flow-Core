@@ -39,20 +39,20 @@ func InitialSetup(cfg *config.Auth4FlowConfig, permissionSvc *permission.Permiss
 		if err != nil {
 			log.Fatalln("Unable to create admin permission")
 		}
-	}
 
-	newWarrantSpec := warrant.WarrantSpec{
-		ObjectType: "permission",
-		ObjectId:   permRoleName,
-		Relation:   "member",
-		Subject: &warrant.SubjectSpec{
-			ObjectType: "role",
+		newWarrantSpec := warrant.WarrantSpec{
+			ObjectType: "permission",
 			ObjectId:   permRoleName,
-		},
-	}
-	_, err = warrantSvc.Create(ctx, newWarrantSpec)
-	if err != nil {
-		log.Fatalln("Unable to assign permission role to role")
+			Relation:   "member",
+			Subject: &warrant.SubjectSpec{
+				ObjectType: "role",
+				ObjectId:   permRoleName,
+			},
+		}
+		_, err = warrantSvc.Create(ctx, newWarrantSpec)
+		if err != nil {
+			log.Fatalln("Unable to assign permission role to role")
+		}
 	}
 
 	// Verify the admin user exists and create if needed
@@ -66,21 +66,21 @@ func InitialSetup(cfg *config.Auth4FlowConfig, permissionSvc *permission.Permiss
 		if err != nil {
 			log.Fatalln("Unable to create admin role")
 		}
-	}
 
-	// Add role to the user
-	newWarrantSpecUser := warrant.WarrantSpec{
-		ObjectType: "role",
-		ObjectId:   permRoleName,
-		Relation:   "member",
-		Subject: &warrant.SubjectSpec{
-			ObjectType: "user",
-			ObjectId:   cfg.AdminAccount,
-		},
-	}
+		// Add role to the user
+		newWarrantSpecUser := warrant.WarrantSpec{
+			ObjectType: "role",
+			ObjectId:   permRoleName,
+			Relation:   "member",
+			Subject: &warrant.SubjectSpec{
+				ObjectType: "user",
+				ObjectId:   cfg.AdminAccount,
+			},
+		}
 
-	_, err = warrantSvc.Create(ctx, newWarrantSpecUser)
-	if err != nil {
-		log.Fatalln("Unable to assign admin role to user")
+		_, err = warrantSvc.Create(ctx, newWarrantSpecUser)
+		if err != nil {
+			log.Fatalln("Unable to assign admin role to user")
+		}
 	}
 }
