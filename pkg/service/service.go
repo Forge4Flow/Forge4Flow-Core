@@ -17,7 +17,6 @@ const (
 	SessionService     = "SessionService"
 	NonceService       = "NonceService"
 	FlowService        = "FlowService"
-	DashboardService   = "DashboardService"
 )
 
 type Env interface {
