@@ -6,9 +6,20 @@ import TableHead from '@mui/material/TableHead'
 import TableBody from '@mui/material/TableBody'
 import TableCell from '@mui/material/TableCell'
 import TableContainer from '@mui/material/TableContainer'
+import IconButton from '@mui/material/IconButton'
+import EditOutlinedIcon from '@mui/icons-material/EditOutlined'
+
+// ** React Imports
 import React, { useEffect } from 'react'
 
-import { UserType } from 'src/pages/admin/users'
+// ** Next IMports
+import Link from 'next/link'
+
+// ** Date Util Import
+import { convertDate } from 'src/utils/date-tools'
+
+// ** Type Import
+import { UserType } from 'src/utils/types/user'
 
 type UsersTableProps = {
   users: UserType[]
@@ -22,6 +33,7 @@ const UsersTable = ({ users }: UsersTableProps) => {
           <TableRow>
             <TableCell>User ID</TableCell>
             <TableCell>Email</TableCell>
+            <TableCell align='right'>Created At</TableCell>
             <TableCell align='right'>Action</TableCell>
           </TableRow>
         </TableHead>
@@ -38,8 +50,15 @@ const UsersTable = ({ users }: UsersTableProps) => {
               <TableCell component='th' scope='row'>
                 {user.userId}
               </TableCell>
-              <TableCell>{user.email}</TableCell>
-              <TableCell align='right'></TableCell>
+              <TableCell>{user.email || 'N/A'}</TableCell>
+              <TableCell align='right'>{user.createdAt ? convertDate(user.createdAt) : 'N/A'}</TableCell>
+              <TableCell align='right'>
+                <IconButton aria-aria-label='edit'>
+                  <Link className='customLink' href={`/admin/users/edit/${user.userId}`}>
+                    <EditOutlinedIcon />
+                  </Link>
+                </IconButton>
+              </TableCell>
             </TableRow>
           ))}
         </TableBody>

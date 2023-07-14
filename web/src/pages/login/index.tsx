@@ -78,7 +78,7 @@ const LoginPage = () => {
   const auth = useAuth4Flow()
 
   const handleLogin = async () => {
-    const login = await auth.login()
+    const login = await auth.authenticate()
 
     if (login) {
       router.push('/admin')

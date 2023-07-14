@@ -16,5 +16,5 @@ const Home = () => {
 }
 
 Home.getLayout = (page: ReactNode) => <BlankLayout>{page}</BlankLayout>
-
+Home.guestGuard = true
 export default Home

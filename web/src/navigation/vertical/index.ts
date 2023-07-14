@@ -31,7 +31,22 @@ const navigation = (): VerticalNavItemsType => {
     {
       title: 'Tenants',
       icon: AccountCogOutline,
-      path: '/account-settings'
+      path: '#',
+      badgeContent: 'API Only Currently',
+      disabled: true
+    },
+    {
+      sectionTitle: 'FT/NFT Gated Access Control'
+    },
+    {
+      title: 'Fungible Tokens',
+      icon: Login,
+      path: '/admin/fts'
+    },
+    {
+      title: 'NonFungible Tokens',
+      icon: AccountPlusOutline,
+      path: '/admin/nfts'
     },
     {
       sectionTitle: 'Role Based Access Control'
@@ -65,14 +80,33 @@ const navigation = (): VerticalNavItemsType => {
       icon: GoogleCirclesExtended
     },
     {
-      title: 'Query',
+      title: 'Check',
       icon: CreditCardOutline,
       path: '/cards'
     },
     {
+      sectionTitle: 'Pricing Tiers and Features'
+    },
+    {
+      title: 'Pricing Tiers',
+      icon: FormatLetterCase,
+      path: '/typography',
+      badgeContent: 'API Only Currently',
+      disabled: true
+    },
+    {
+      title: 'Features',
+      path: '/icons',
+      icon: GoogleCirclesExtended,
+      badgeContent: 'API Only Currently',
+      disabled: true
+    },
+    {
       title: 'Check',
       icon: CreditCardOutline,
-      path: '/cards'
+      path: '/cards',
+      badgeContent: 'API Only Currently',
+      disabled: true
     }
   ]
 }

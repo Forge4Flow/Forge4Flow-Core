@@ -17,13 +17,13 @@ const FooterContent = () => {
           ❤️
         </Box>
         {` by `}
-        <Link target='_blank' href='https://auth4flow.com/'>
+        <Link target='_blank' href='https://github.com/Auth4Flow'>
           Auth4Flow
         </Link>
       </Typography>
       {hidden ? null : (
         <Box sx={{ display: 'flex', flexWrap: 'wrap', alignItems: 'center', '& :not(:last-child)': { mr: 4 } }}>
-          <Link target='_blank' href='https://docs.auth4flow.com/'>
+          <Link target='_blank' href='https://auth4flow.gitbook.io/auth4flow/'>
             Documentation
           </Link>
           <Link target='_blank' href='https://github.com/Auth4Flow/Auth4Flow-Core/issues/new/choose'>

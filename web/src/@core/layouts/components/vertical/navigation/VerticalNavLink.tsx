@@ -77,15 +77,11 @@ const VerticalNavLink = ({ item, navVisible, toggleNavVisibility }: Props) => {
   }
 
   return (
-    <ListItem
-      disablePadding
-      className='nav-link'
-      disabled={item.disabled || false}
-      sx={{ mt: 1.5, px: '0 !important' }}
-    >
+    <ListItem disablePadding className='nav-link' sx={{ mt: 1.5, px: '0 !important' }}>
       <Link passHref href={item.path === undefined ? '/' : `${item.path}`}>
         <MenuNavLink
           component={'a'}
+          disabled={item.disabled || false}
           className={isNavLinkActive() ? 'active' : ''}
           {...(item.openInNewTab ? { target: '_blank' } : null)}
           onClick={e => {

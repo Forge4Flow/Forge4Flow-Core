@@ -12,8 +12,7 @@ import { useEffect, useState } from 'react'
 import UsersTable from 'src/views/pages/users/UsersTable'
 import CreateUserForm from 'src/views/pages/users/CreateUserForm'
 
-// ** Type Imports
-import { UserType } from 'src/utils/types/user'
+export type UserType = { userId: string; email?: string }
 
 const style = {
   position: 'absolute' as 'absolute',
@@ -33,7 +32,7 @@ const UsersPage = () => {
   useEffect(() => {
     const fetchUsers = async () => {
       const res = await fetch('/api/users', {
-        credentials: 'include'
+        credentials: 'same-origin'
       })
 
       const json = await res.json()

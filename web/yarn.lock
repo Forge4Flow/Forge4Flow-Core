@@ -25,7 +25,7 @@
 "@auth4flow/auth4flow-nextjs@file:../../Auth4Flow-NextJS":
   version "0.1.0"
   dependencies:
-    "@auth4flow/auth4flow-node" "file:../../../../Library/Caches/Yarn/v6/npm-@auth4flow-auth4flow-nextjs-0.1.0-d2ba5e83-1f3c-4623-9169-958c20333bc0-1689220193827/node_modules/@auth4flow/Auth4Flow-Node"
+    "@auth4flow/auth4flow-node" "file:../../../../Library/Caches/Yarn/v6/npm-@auth4flow-auth4flow-nextjs-0.1.0-3bc46051-460d-4df4-8126-f08d6566fbd9-1689303524514/node_modules/@auth4flow/Auth4Flow-Node"
     cookies "^0.8.0"
     next "^13.4.9"
     next-api-route-middleware "^1.0.2"
@@ -33,10 +33,10 @@
 "@auth4flow/auth4flow-node@file:../../Auth4Flow-Node":
   version "0.1.0"
 
-"@auth4flow/auth4flow-react@0.1.4":
-  version "0.1.4"
-  resolved "https://registry.yarnpkg.com/@auth4flow/auth4flow-react/-/auth4flow-react-0.1.4.tgz#a513aa0cf3ff8012fd8acb08a428bd90edb9d723"
-  integrity sha512-9E85IrLcRlr5FdF0bHC8dZg1XL4bqo8JvDPL0jO0vccF9OjGd2HL1Nzp7J2Nb0FqmIB/P0sz7tzYjx21Neorsg==
+"@auth4flow/auth4flow-react@0.1.12":
+  version "0.1.12"
+  resolved "https://registry.yarnpkg.com/@auth4flow/auth4flow-react/-/auth4flow-react-0.1.12.tgz#a9f0ab1e7cbf252db03283f26b4ae2a43bd50f3c"
+  integrity sha512-SzgW1JFb9tc3/vvMYx7/GaH0/6NziT1Mv/Hplqspwsr0K83e9tRb+mnmPsVpWzecuySrcY7Z7GpQlceOnhBvgw==
   dependencies:
     "@auth4flow/auth4flow-js" "0.1.2"
     "@boiseitguru/cookie-cutter" "file:../../../BoiseITGuru/cookie-cutter"
@@ -479,6 +479,13 @@
   resolved "https://registry.yarnpkg.com/@mui/core-downloads-tracker/-/core-downloads-tracker-5.14.0.tgz#ca394a1c53c215f4c6bf7f7460d8211298d7bbf6"
   integrity sha512-SYBOVCatVDUf/lbrLGah09bHhX5WfUXg7kSskfLILr6SvKRni0NLp0aonxQ0SMALVVK3Qwa6cW4CdWuwS0gC1w==
 
+"@mui/icons-material@^5.14.0":
+  version "5.14.0"
+  resolved "https://registry.yarnpkg.com/@mui/icons-material/-/icons-material-5.14.0.tgz#6452b00bc98dc407f20a927245e273113703166f"
+  integrity sha512-z7lYNteDi1GMkF9JP/m2RWuCYK1M/FlaeBSUK7/IhIYzIXNhAVjfD8jRq5vFBV31qkEi2aGBS2z5SfLXwH6U0A==
+  dependencies:
+    "@babel/runtime" "^7.22.5"
+
 "@mui/lab@^5.0.0-alpha.70":
   version "5.0.0-alpha.136"
   resolved "https://registry.yarnpkg.com/@mui/lab/-/lab-5.0.0-alpha.136.tgz#ffa1af4a72fbe7a773d3a008979a72f895241504"
@@ -845,9 +852,9 @@
     "@types/react" "*"
 
 "@types/react@*", "@types/react@^18.2.14":
-  version "18.2.14"
-  resolved "https://registry.yarnpkg.com/@types/react/-/react-18.2.14.tgz#fa7a6fecf1ce35ca94e74874f70c56ce88f7a127"
-  integrity sha512-A0zjq+QN/O0Kpe30hA1GidzyFjatVvrpIvWLxD+xv67Vt91TWWgco9IvrJBkeyHm1trGaFS/FSGqPlhyeZRm0g==
+  version "18.2.15"
+  resolved "https://registry.yarnpkg.com/@types/react/-/react-18.2.15.tgz#14792b35df676c20ec3cf595b262f8c615a73066"
+  integrity sha512-oEjE7TQt1fFTFSbf8kkNuc798ahTUzn3Le67/PWjE8MAfYAD/qB7O8hSTcromLFqHCt9bcdOg5GXMokzTjJ5SA==
   dependencies:
     "@types/prop-types" "*"
     "@types/scheduler" "*"
@@ -1469,9 +1476,9 @@ duplexer2@^0.1.2:
     readable-stream "^2.0.2"
 
 electron-to-chromium@^1.4.431:
-  version "1.4.459"
-  resolved "https://registry.yarnpkg.com/electron-to-chromium/-/electron-to-chromium-1.4.459.tgz#25a23370f4ae8aaa8f77aaf00133aa4994f4148e"
-  integrity sha512-XXRS5NFv8nCrBL74Rm3qhJjA2VCsRFx0OjHKBMPI0otij56aun8UWiKTDABmd5/7GTR021pA4wivs+Ri6XCElg==
+  version "1.4.460"
+  resolved "https://registry.yarnpkg.com/electron-to-chromium/-/electron-to-chromium-1.4.460.tgz#f360a5059c039c4a5fb4dfa99680ad8129dd9f84"
+  integrity sha512-kKiHnbrHME7z8E6AYaw0ehyxY5+hdaRmeUbjBO22LZMdqTYCO29EvF0T1cQ3pJ1RN5fyMcHl1Lmcsdt9WWJpJQ==
 
 emoji-regex@^9.2.2:
   version "9.2.2"
@@ -2936,7 +2943,7 @@ process-nextick-args@~2.0.0:
   resolved "https://registry.yarnpkg.com/process-nextick-args/-/process-nextick-args-2.0.1.tgz#7820d9b16120cc55ca9ae7792680ae7dba6d7fe2"
   integrity sha512-3ouUOpQhtgrbOa17J7+uxOTpITYWaGP7/AhoR3+A+/1e9skrzelGi/dXzEYyvbxubEF6Wn2ypscTKiKJFFn1ag==
 
-prop-types@^15.5.7, prop-types@^15.6.1, prop-types@^15.6.2, prop-types@^15.7.2, prop-types@^15.8.1:
+prop-types@^15.6.1, prop-types@^15.6.2, prop-types@^15.7.2, prop-types@^15.8.1:
   version "15.8.1"
   resolved "https://registry.yarnpkg.com/prop-types/-/prop-types-15.8.1.tgz#67d87bf1a694f48435cf332c24af10214a3140b5"
   integrity sha512-oj87CgZICdulUohogVAR7AjlC0327U4el4L6eAvOqCeudMDVU0NThNaV+b9Df4dXgSP1gXMTnPdhfe/2qDH5cg==
@@ -2956,11 +2963,11 @@ queue-microtask@1.2.3, queue-microtask@^1.2.2:
   integrity sha512-NuaNSa6flKT5JaSYQzJok04JzTL1CA6aGhv5rfLW3PgqA+M2ChpZQnAC8h8i4ZFkBS8X5RqkDBHA7r4hej3K9A==
 
 react-apexcharts@^1.4.0:
-  version "1.4.0"
-  resolved "https://registry.yarnpkg.com/react-apexcharts/-/react-apexcharts-1.4.0.tgz#e3619104b34750da67a2ca80289dc87085c2aa27"
-  integrity sha512-DrcMV4aAMrUG+n6412yzyATWEyCDWlpPBBhVbpzBC4PDeuYU6iF84SmExbck+jx5MUm4U5PM3/T307Mc3kzc9Q==
+  version "1.4.1"
+  resolved "https://registry.yarnpkg.com/react-apexcharts/-/react-apexcharts-1.4.1.tgz#95ab31e4d2201308f59f3d2a4b65d10d9d0ea4bb"
+  integrity sha512-G14nVaD64Bnbgy8tYxkjuXEUp/7h30Q0U33xc3AwtGFijJB9nHqOt1a6eG0WBn055RgRg+NwqbKGtqPxy15d0Q==
   dependencies:
-    prop-types "^15.5.7"
+    prop-types "^15.8.1"
 
 react-datepicker@^4.11.0:
   version "4.16.0"
