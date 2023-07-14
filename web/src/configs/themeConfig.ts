@@ -18,7 +18,7 @@ type ThemeConfig = {
 
 const themeConfig: ThemeConfig = {
   // ** Layout Configs
-  templateName: 'FlowForge' /* App Name */,
+  templateName: 'Forge4Flow' /* App Name */,
   mode: 'dark' /* light | dark */,
   contentWidth: 'full' /* full | boxed */,
 

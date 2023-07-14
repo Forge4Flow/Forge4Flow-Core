@@ -54,7 +54,7 @@ const UsersTable = ({ users }: UsersTableProps) => {
               <TableCell align='right'>{user.createdAt ? convertDate(user.createdAt) : 'N/A'}</TableCell>
               <TableCell align='right'>
                 <IconButton aria-aria-label='edit'>
-                  <Link className='customLink' href={`/admin/users/edit/${user.userId}`}>
+                  <Link className='customLink' href={`/admin/auth4flow/users/edit/${user.userId}`}>
                     <EditOutlinedIcon />
                   </Link>
                 </IconButton>

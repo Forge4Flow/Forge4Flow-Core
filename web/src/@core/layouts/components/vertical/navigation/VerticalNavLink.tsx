@@ -69,17 +69,7 @@ const MenuItemTextMetaWrapper = styled(Box)<BoxProps>(({ theme }) => ({
   ...(themeConfig.menuTextTruncate && { overflow: 'hidden' })
 }))
 
-const VerticalNavLink = ({
-  item,
-  parent,
-  navHover,
-  settings,
-  navVisible,
-  isSubToSub,
-  collapsedNavWidth,
-  toggleNavVisibility,
-  navigationBorderWidth
-}: Props) => {
+const VerticalNavLink = ({ item, parent, navVisible, isSubToSub, toggleNavVisibility }: Props) => {
   // ** Hooks
   const router = useRouter()
 
@@ -94,14 +84,10 @@ const VerticalNavLink = ({
   }
 
   return (
-    <ListItem
-      disablePadding
-      className='nav-link'
-      disabled={item.disabled || false}
-      sx={{ mt: 1.5, px: '0 !important' }}
-    >
+    <ListItem disablePadding className='nav-link' sx={{ mt: 1.5, px: '0 !important' }}>
       <MenuNavLink
         component={Link}
+        disabled={item.disabled || false}
         {...(item.disabled && { tabIndex: -1 })}
         className={isNavLinkActive() ? 'active' : ''}
         href={item.path === undefined ? '/' : `${item.path}`}

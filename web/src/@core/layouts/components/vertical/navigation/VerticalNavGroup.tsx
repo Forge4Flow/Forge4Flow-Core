@@ -63,16 +63,12 @@ const VerticalNavGroup = (props: Props) => {
   const {
     item,
     parent,
-    settings,
-    navHover,
     navVisible,
     isSubToSub,
     groupActive,
     setGroupActive,
-    collapsedNavWidth,
     currentActiveGroup,
-    setCurrentActiveGroup,
-    navigationBorderWidth
+    setCurrentActiveGroup
   } = props
 
   // ** Hooks & Vars
@@ -137,13 +133,6 @@ const VerticalNavGroup = (props: Props) => {
 
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [router.asPath])
-
-  // useEffect(() => {
-  //   if (groupActive.length === 0 && !navCollapsed) {
-  //     setGroupActive([])
-  //   }
-  //   // eslint-disable-next-line react-hooks/exhaustive-deps
-  // }, [navHover])
 
   const icon = parent && !item.icon ? themeConfig.navSubItemIcon : item.icon
 
