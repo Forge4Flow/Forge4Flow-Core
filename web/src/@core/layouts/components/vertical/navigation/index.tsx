@@ -132,8 +132,9 @@ const Navigation = (props: Props) => {
             {userVerticalNavMenuContent ? (
               userVerticalNavMenuContent(props)
             ) : (
-              <List className='nav-items' sx={{ transition: 'padding .25s ease', pr: 4.5 }}>
+              <List className='nav-items' sx={{ transition: 'padding .25s ease' }}>
                 <VerticalNavItems
+                  navigationBorderWidth={0}
                   groupActive={groupActive}
                   setGroupActive={setGroupActive}
                   currentActiveGroup={currentActiveGroup}

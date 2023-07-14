@@ -50,6 +50,7 @@
     "@emotion/react": "11.10.8",
     "@emotion/server": "11.10.0",
     "@emotion/styled": "11.10.8",
+    "@iconify/react": "^4.1.1",
     "@mui/icons-material": "^5.14.0",
     "@mui/lab": "^5.0.0-alpha.70",
     "@mui/material": "^5.4.3",

@@ -1,5 +1,5 @@
 import { NextApiRequest, NextApiResponse } from 'next/types'
-import { withSessionPermission, Auth4FlowServer } from '@auth4flow/auth4flow-nextjs'
+import { withSessionPermission, Auth4FlowServer, CreateUserParams } from '@auth4flow/auth4flow-nextjs'
 import { use } from 'next-api-route-middleware'
 
 const createUser = async (req: NextApiRequest, res: NextApiResponse) => {
@@ -12,11 +12,11 @@ const createUser = async (req: NextApiRequest, res: NextApiResponse) => {
     apiKey: process.env.AUTH4FLOW_API_KEY || ''
   })
 
-  const users = await auth4flow.User.listUsers()
+  const user = JSON.parse(req.body)
 
-  if (users) {
-    res.status(200).json(users)
-    return
+  if (user) {
+    const userOptions: CreateUserParams = {}
+    auth4flow.User.create()
   }
 
   res.status(200).json({ message: 'Hello, world!' })

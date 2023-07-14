@@ -17,95 +17,123 @@ const navigation = (): VerticalNavItemsType => {
   return [
     {
       title: 'Dashboard',
-      icon: HomeOutline,
+      icon: 'mdi:archive-outline',
       path: '/admin'
     },
     {
-      sectionTitle: 'Users & Tenants'
+      sectionTitle: 'Auth4Flow'
     },
     {
-      title: 'Users',
-      icon: AccountCogOutline,
-      path: '/admin/users'
+      title: 'Users & Tenants',
+      children: [
+        {
+          title: 'Users',
+          icon: 'mdi:archive-outline',
+          path: '/admin/auth4flow/users'
+        },
+        {
+          title: 'Tenants',
+          icon: 'mdi:archive-outline',
+          path: '#',
+          badgeContent: 'API Only Currently',
+          disabled: true
+        }
+      ]
     },
     {
-      title: 'Tenants',
-      icon: AccountCogOutline,
+      title: 'FT/NFT Gated Access Control',
+      children: [
+        {
+          title: 'Fungible Tokens',
+          icon: 'mdi:archive-outline',
+          path: '/admin/auth4flow/fts'
+        },
+        {
+          title: 'NonFungible Tokens',
+          icon: 'mdi:archive-outline',
+          path: '/admin/auth4flow/nfts'
+        }
+      ]
+    },
+    {
+      title: 'Role Based Access Control',
+      children: [
+        {
+          title: 'Roles',
+          icon: 'mdi:archive-outline',
+          path: '/admin/auth4flow/rbac/roles'
+        },
+        {
+          title: 'Permissions',
+          icon: 'mdi:archive-outline',
+          path: '/admin/auth4flow/rbac/permissions'
+        },
+        {
+          title: 'Check',
+          icon: 'mdi:archive-outline',
+          path: '/admin/auth4flow/rbac/check'
+        }
+      ]
+    },
+    {
+      title: 'Fine Grained Access Control',
+      children: [
+        {
+          title: 'Object Types',
+          icon: 'mdi:archive-outline',
+          path: '/typography'
+        },
+        {
+          title: 'Objects',
+          path: '/icons',
+          icon: 'mdi:archive-outline'
+        },
+        {
+          title: 'Check',
+          icon: 'mdi:archive-outline',
+          path: '/cards'
+        }
+      ]
+    },
+    {
+      title: 'Pricing Tiers and Features',
+      children: [
+        {
+          title: 'Pricing Tiers',
+          icon: 'mdi:archive-outline',
+          path: '/typography',
+          badgeContent: 'API Only Currently',
+          disabled: true
+        },
+        {
+          title: 'Features',
+          path: '/icons',
+          icon: 'mdi:archive-outline',
+          badgeContent: 'API Only Currently',
+          disabled: true
+        },
+        {
+          title: 'Check',
+          icon: 'mdi:archive-outline',
+          path: '/cards',
+          badgeContent: 'API Only Currently',
+          disabled: true
+        }
+      ]
+    },
+    {
+      sectionTitle: 'Alerts4Flow'
+    },
+    {
+      title: 'Event Monitors',
+      icon: 'mdi:archive-outline',
+      path: '/admin/auth4flow/users'
+    },
+    {
+      title: 'Webhooks',
+      icon: 'mdi:archive-outline',
       path: '#',
-      badgeContent: 'API Only Currently',
-      disabled: true
-    },
-    {
-      sectionTitle: 'FT/NFT Gated Access Control'
-    },
-    {
-      title: 'Fungible Tokens',
-      icon: Login,
-      path: '/admin/fts'
-    },
-    {
-      title: 'NonFungible Tokens',
-      icon: AccountPlusOutline,
-      path: '/admin/nfts'
-    },
-    {
-      sectionTitle: 'Role Based Access Control'
-    },
-    {
-      title: 'Roles',
-      icon: Login,
-      path: '/admin/rbac/roles'
-    },
-    {
-      title: 'Permissions',
-      icon: AccountPlusOutline,
-      path: '/admin/rbac/permissions'
-    },
-    {
-      title: 'Check',
-      icon: CreditCardOutline,
-      path: '/admin/rbac/check'
-    },
-    {
-      sectionTitle: 'Fine Grained Access Control'
-    },
-    {
-      title: 'Object Types',
-      icon: FormatLetterCase,
-      path: '/typography'
-    },
-    {
-      title: 'Objects',
-      path: '/icons',
-      icon: GoogleCirclesExtended
-    },
-    {
-      title: 'Check',
-      icon: CreditCardOutline,
-      path: '/cards'
-    },
-    {
-      sectionTitle: 'Pricing Tiers and Features'
-    },
-    {
-      title: 'Pricing Tiers',
-      icon: FormatLetterCase,
-      path: '/typography',
-      badgeContent: 'API Only Currently',
-      disabled: true
-    },
-    {
-      title: 'Features',
-      path: '/icons',
-      icon: GoogleCirclesExtended,
-      badgeContent: 'API Only Currently',
-      disabled: true
-    },
-    {
-      title: 'Check',
-      icon: CreditCardOutline,
-      path: '/cards',
-      badgeContent: 'API Only Currently',
+      badgeContent: 'Coming Soon',
       disabled: true
     }
   ]

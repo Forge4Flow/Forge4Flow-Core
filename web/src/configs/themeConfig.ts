@@ -13,11 +13,12 @@ type ThemeConfig = {
   menuTextTruncate: boolean
   contentWidth: ContentWidth
   responsiveFontSizes: boolean
+  navSubItemIcon: string
 }
 
 const themeConfig: ThemeConfig = {
   // ** Layout Configs
-  templateName: 'Auth4Flow' /* App Name */,
+  templateName: 'FlowForge' /* App Name */,
   mode: 'dark' /* light | dark */,
   contentWidth: 'full' /* full | boxed */,
 
@@ -25,8 +26,9 @@ const themeConfig: ThemeConfig = {
   routingLoader: true /* true | false */,
 
   // ** Navigation (Menu) Configs
-  menuTextTruncate: true /* true | false */,
+  menuTextTruncate: false /* true | false */,
   navigationSize: 260 /* Number in PX(Pixels) /*! Note: This is for Vertical navigation menu only */,
+  navSubItemIcon: 'mdi:circle-outline' /* Icon */,
 
   // ** Other Configs
   responsiveFontSizes: true /* true | false */,
