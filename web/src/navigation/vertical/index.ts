@@ -1,15 +1,3 @@
-// ** Icon imports
-import Login from 'mdi-material-ui/Login'
-import Table from 'mdi-material-ui/Table'
-import CubeOutline from 'mdi-material-ui/CubeOutline'
-import HomeOutline from 'mdi-material-ui/HomeOutline'
-import FormatLetterCase from 'mdi-material-ui/FormatLetterCase'
-import AccountCogOutline from 'mdi-material-ui/AccountCogOutline'
-import CreditCardOutline from 'mdi-material-ui/CreditCardOutline'
-import AccountPlusOutline from 'mdi-material-ui/AccountPlusOutline'
-import AlertCircleOutline from 'mdi-material-ui/AlertCircleOutline'
-import GoogleCirclesExtended from 'mdi-material-ui/GoogleCirclesExtended'
-
 // ** Type import
 import { VerticalNavItemsType } from 'src/@core/layouts/types'
 
@@ -71,7 +59,9 @@ const navigation = (): VerticalNavItemsType => {
         {
           title: 'Check',
           icon: 'mdi:archive-outline',
-          path: '/admin/auth4flow/rbac/check'
+          path: '/admin/auth4flow/rbac/check',
+          badgeContent: 'API Only Currently',
+          disabled: true
         }
       ]
     },
@@ -91,7 +81,9 @@ const navigation = (): VerticalNavItemsType => {
         {
           title: 'Check',
           icon: 'mdi:archive-outline',
-          path: '/admin/auth4flow/fgac/check'
+          path: '/admin/auth4flow/fgac/check',
+          badgeContent: 'API Only Currently',
+          disabled: true
         }
       ]
     },
@@ -135,6 +127,31 @@ const navigation = (): VerticalNavItemsType => {
       path: '#',
       badgeContent: 'Coming Soon',
       disabled: true
+    },
+    {
+      sectionTitle: 'Ecosystem SDKs'
+    },
+    {
+      title: 'Swift (iOS)',
+      children: [
+        {
+          title: 'FLOAT',
+          icon: 'mdi:archive-outline',
+          path: '/admin/sdks/float'
+        },
+        {
+          title: '.find',
+          icon: 'mdi:archive-outline',
+          path: '/admin/sdks/find'
+        },
+        {
+          title: 'NFT Storage',
+          icon: 'mdi:archive-outline',
+          path: '/admin/sdks/nft-storage',
+          badgeContent: 'Coming Soon',
+          disabled: true
+        }
+      ]
     }
   ]
 }
