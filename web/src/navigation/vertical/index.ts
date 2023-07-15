@@ -21,7 +21,7 @@ const navigation = (): VerticalNavItemsType => {
       path: '/admin'
     },
     {
-      sectionTitle: 'Forge4Flow'
+      sectionTitle: 'Auth4Flow'
     },
     {
       title: 'Users & Tenants',
@@ -29,7 +29,7 @@ const navigation = (): VerticalNavItemsType => {
         {
           title: 'Users',
           icon: 'mdi:archive-outline',
-          path: '/admin/forge4flow/users'
+          path: '/admin/auth4flow/users'
         },
         {
           title: 'Tenants',
@@ -46,12 +46,12 @@ const navigation = (): VerticalNavItemsType => {
         {
           title: 'Fungible Tokens',
           icon: 'mdi:archive-outline',
-          path: '/admin/forge4flow/fts'
+          path: '/admin/auth4flow/fts'
         },
         {
           title: 'NonFungible Tokens',
           icon: 'mdi:archive-outline',
-          path: '/admin/forge4flow/nfts'
+          path: '/admin/auth4flow/nfts'
         }
       ]
     },
@@ -61,17 +61,17 @@ const navigation = (): VerticalNavItemsType => {
         {
           title: 'Roles',
           icon: 'mdi:archive-outline',
-          path: '/admin/forge4flow/rbac/roles'
+          path: '/admin/auth4flow/rbac/roles'
         },
         {
           title: 'Permissions',
           icon: 'mdi:archive-outline',
-          path: '/admin/forge4flow/rbac/permissions'
+          path: '/admin/auth4flow/rbac/permissions'
         },
         {
           title: 'Check',
           icon: 'mdi:archive-outline',
-          path: '/admin/forge4flow/rbac/check'
+          path: '/admin/auth4flow/rbac/check'
         }
       ]
     },
@@ -81,17 +81,17 @@ const navigation = (): VerticalNavItemsType => {
         {
           title: 'Object Types',
           icon: 'mdi:archive-outline',
-          path: '/admin/forge4flow/fgac/object-types'
+          path: '/admin/auth4flow/fgac/object-types'
         },
         {
           title: 'Objects',
-          path: '/admin/forge4flow/fgac/objects',
+          path: '/admin/auth4flow/fgac/objects',
           icon: 'mdi:archive-outline'
         },
         {
           title: 'Check',
           icon: 'mdi:archive-outline',
-          path: '/admin/forge4flow/fgac/check'
+          path: '/admin/auth4flow/fgac/check'
         }
       ]
     },

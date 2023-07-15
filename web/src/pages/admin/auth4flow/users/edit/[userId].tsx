@@ -36,7 +36,7 @@ const EditUserPage = (props: EditUserPageProps) => {
     <>
       <Grid container>
         <Grid item>
-          <Link className='customLink' href='/admin/users'>
+          <Link className='customLink' href='/admin/auth4flow/users'>
             <KeyboardReturnIcon fontSize='large' />
           </Link>
         </Grid>
