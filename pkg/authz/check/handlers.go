@@ -3,10 +3,10 @@ package authz
 import (
 	"net/http"
 
-	session "github.com/auth4flow/auth4flow-core/pkg/authn/session"
-	objecttype "github.com/auth4flow/auth4flow-core/pkg/authz/objecttype"
-	warrant "github.com/auth4flow/auth4flow-core/pkg/authz/warrant"
-	"github.com/auth4flow/auth4flow-core/pkg/service"
+	session "github.com/forge4flow/forge4flow-core/pkg/authn/session"
+	objecttype "github.com/forge4flow/forge4flow-core/pkg/authz/objecttype"
+	warrant "github.com/forge4flow/forge4flow-core/pkg/authz/warrant"
+	"github.com/forge4flow/forge4flow-core/pkg/service"
 )
 
 func (svc CheckService) Routes() ([]service.Route, error) {

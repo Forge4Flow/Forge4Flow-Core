@@ -2,7 +2,7 @@
 
 ## Supported Versions
 
-We recommend always using the latest version of Auth4Flow in order to remain up-to-date with all security updates.
+We recommend always using the latest version of Forge4Flow in order to remain up-to-date with all security updates.
 
 ## Reporting a Vulnerability
 

@@ -6,8 +6,8 @@ import (
 	"net/http"
 	"net/url"
 
-	"github.com/auth4flow/auth4flow-core/pkg/config"
-	"github.com/auth4flow/auth4flow-core/pkg/service"
+	"github.com/forge4flow/forge4flow-core/pkg/config"
+	"github.com/forge4flow/forge4flow-core/pkg/service"
 	"github.com/pkg/errors"
 )
 
@@ -75,9 +75,9 @@ func ApiKeyAndSessionAuthMiddleware(cfg config.Config, next http.Handler, svcs .
 		}
 	}
 
-	auth4FlowConfig, ok := cfg.(config.Auth4FlowConfig)
+	forge4FlowConfig, ok := cfg.(config.Forge4FlowConfig)
 	if !ok {
-		return nil, errors.New("cfg parameter on DefaultAuthMiddleware must be a Auth4FlowConfig")
+		return nil, errors.New("cfg parameter on DefaultAuthMiddleware must be a Forge4FlowConfig")
 	}
 
 	return http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
@@ -92,7 +92,7 @@ func ApiKeyAndSessionAuthMiddleware(cfg config.Config, next http.Handler, svcs .
 		var authInfo *service.AuthInfo
 		switch tokenType {
 		case service.AuthTypeApiKey:
-			if !service.SecureCompareEqual(tokenString, auth4FlowConfig.GetAuthentication().ApiKey) {
+			if !service.SecureCompareEqual(tokenString, forge4FlowConfig.GetAuthentication().ApiKey) {
 				fmt.Println("failed at checking api key")
 				service.SendErrorResponse(w, service.NewUnauthorizedError("Invalid API key"))
 				return

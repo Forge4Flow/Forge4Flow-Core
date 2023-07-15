@@ -3,9 +3,9 @@ package authz
 import (
 	"context"
 
-	objecttype "github.com/auth4flow/auth4flow-core/pkg/authz/objecttype"
-	"github.com/auth4flow/auth4flow-core/pkg/event"
-	"github.com/auth4flow/auth4flow-core/pkg/service"
+	objecttype "github.com/forge4flow/forge4flow-core/pkg/authz/objecttype"
+	"github.com/forge4flow/forge4flow-core/pkg/event"
+	"github.com/forge4flow/forge4flow-core/pkg/service"
 )
 
 type WarrantService struct {

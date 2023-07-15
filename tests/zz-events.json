@@ -146,7 +146,7 @@
               "resourceType": "user",
               "resourceId": "user-a",
               "meta": {
-                "email": "user-a@auth4flow.com",
+                "email": "user-a@forge4flow.com",
                 "userId": "user-a"
               }
             },
@@ -195,7 +195,7 @@
               "resourceType": "user",
               "resourceId": "user-a",
               "meta": {
-                "email": "user-a@auth4flow.com",
+                "email": "user-a@forge4flow.com",
                 "userId": "user-a"
               }
             },

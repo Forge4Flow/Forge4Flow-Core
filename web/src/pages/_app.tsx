@@ -20,7 +20,7 @@ import themeConfig from 'src/configs/themeConfig'
 // ** Component Imports
 import UserLayout from 'src/layouts/UserLayout'
 import ThemeComponent from 'src/@core/theme/ThemeComponent'
-import { Auth4FlowProvider } from '@auth4flow/auth4flow-react'
+import { Forge4FlowProvider } from '@forge4flow/forge4flow-react'
 import AuthGuard from 'src/layouts/components/auth/AuthGuard'
 import GuestGuard from 'src/layouts/components/auth/GuestGuard'
 import Spinner from 'src/@core/components/spinner'
@@ -95,7 +95,7 @@ const App = (props: ExtendedAppProps) => {
         <meta name='viewport' content='initial-scale=1, width=device-width' />
       </Head>
 
-      <Auth4FlowProvider clientKey='123' endpoint='http://localhost:8000'>
+      <Forge4FlowProvider clientKey='123' endpoint='http://localhost:8000'>
         <SettingsProvider>
           <SettingsConsumer>
             {({ settings }) => {
@@ -109,7 +109,7 @@ const App = (props: ExtendedAppProps) => {
             }}
           </SettingsConsumer>
         </SettingsProvider>
-      </Auth4FlowProvider>
+      </Forge4FlowProvider>
     </CacheProvider>
   )
 }

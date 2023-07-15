@@ -8,14 +8,14 @@
         "url": "/v1/users",
         "body": {
           "userId": "user-a",
-          "email": "user-a@auth4flow.com"
+          "email": "user-a@forge4flow.com"
         }
       },
       "expectedResponse": {
         "statusCode": 200,
         "body": {
           "userId": "user-a",
-          "email": "user-a@auth4flow.com"
+          "email": "user-a@forge4flow.com"
         }
       }
     },

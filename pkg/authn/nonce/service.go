@@ -6,19 +6,19 @@ import (
 	"encoding/hex"
 	"fmt"
 
-	"github.com/auth4flow/auth4flow-core/pkg/config"
-	"github.com/auth4flow/auth4flow-core/pkg/event"
-	"github.com/auth4flow/auth4flow-core/pkg/service"
+	"github.com/forge4flow/forge4flow-core/pkg/config"
+	"github.com/forge4flow/forge4flow-core/pkg/event"
+	"github.com/forge4flow/forge4flow-core/pkg/service"
 )
 
 type NonceService struct {
 	service.BaseService
-	Config     config.Auth4FlowConfig
+	Config     config.Forge4FlowConfig
 	Repository NonceRepository
 	EventSvc   *event.EventService
 }
 
-func NewService(env service.Env, cfg config.Auth4FlowConfig, nonceRepo NonceRepository, eventSvc *event.EventService) *NonceService {
+func NewService(env service.Env, cfg config.Forge4FlowConfig, nonceRepo NonceRepository, eventSvc *event.EventService) *NonceService {
 	return &NonceService{
 		BaseService: service.NewBaseService(env),
 		Config:      cfg,

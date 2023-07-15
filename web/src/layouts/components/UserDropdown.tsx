@@ -4,8 +4,8 @@ import { useState, SyntheticEvent, Fragment } from 'react'
 // ** Next Import
 import { useRouter } from 'next/router'
 
-// ** Auth4Flow Import
-import { useAuth4Flow } from '@auth4flow/auth4flow-react'
+// ** Forge4Flow Import
+import { useForge4Flow } from '@forge4flow/forge4flow-react'
 
 // ** MUI Imports
 import Box from '@mui/material/Box'
@@ -41,7 +41,7 @@ const UserDropdown = () => {
 
   // ** Hooks
   const router = useRouter()
-  const auth = useAuth4Flow()
+  const auth = useForge4Flow()
 
   const handleDropdownOpen = (event: SyntheticEvent) => {
     setAnchorEl(event.currentTarget)
@@ -125,7 +125,7 @@ const UserDropdown = () => {
         <MenuItem sx={{ p: 0 }} onClick={() => handleDropdownClose()}>
           <Box sx={styles}>
             <CurrencyUsd sx={{ marginRight: 2 }} />
-            Auth4Flow Settings
+            Forge4Flow Settings
           </Box>
         </MenuItem>
         <Divider />

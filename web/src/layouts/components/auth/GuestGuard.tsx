@@ -5,7 +5,7 @@ import { ReactNode, ReactElement, useEffect } from 'react'
 import { useRouter } from 'next/router'
 
 // ** Hooks Import
-import { useAuth4Flow } from '@auth4flow/auth4flow-react'
+import { useForge4Flow } from '@forge4flow/forge4flow-react'
 
 interface GuestGuardProps {
   children: ReactNode
@@ -14,7 +14,7 @@ interface GuestGuardProps {
 
 const GuestGuard = (props: GuestGuardProps) => {
   const { children, fallback } = props
-  const auth = useAuth4Flow()
+  const auth = useForge4Flow()
   const router = useRouter()
 
   useEffect(() => {

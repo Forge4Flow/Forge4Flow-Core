@@ -17,16 +17,16 @@ const FooterContent = () => {
           ❤️
         </Box>
         {` by `}
-        <Link target='_blank' href='https://github.com/Auth4Flow'>
-          Auth4Flow
+        <Link target='_blank' href='https://github.com/Forge4Flow'>
+          Forge4Flow
         </Link>
       </Typography>
       {hidden ? null : (
         <Box sx={{ display: 'flex', flexWrap: 'wrap', alignItems: 'center', '& :not(:last-child)': { mr: 4 } }}>
-          <Link target='_blank' href='https://auth4flow.gitbook.io/auth4flow/'>
+          <Link target='_blank' href='https://forge4flow.gitbook.io/forge4flow/'>
             Documentation
           </Link>
-          <Link target='_blank' href='https://github.com/Auth4Flow/Auth4Flow-Core/issues/new/choose'>
+          <Link target='_blank' href='https://github.com/Forge4Flow/Forge4Flow-Core/issues/new/choose'>
             Support
           </Link>
         </Box>

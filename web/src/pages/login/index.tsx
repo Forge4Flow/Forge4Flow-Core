@@ -31,7 +31,7 @@ import MuiCard, { CardProps } from '@mui/material/Card'
 // import EyeOutline from 'mdi-material-ui/EyeOutline'
 // import EyeOffOutline from 'mdi-material-ui/EyeOffOutline'
 
-import { useAuth4Flow } from '@auth4flow/auth4flow-react'
+import { useForge4Flow } from '@forge4flow/forge4flow-react'
 
 // ** Configs
 import themeConfig from 'src/configs/themeConfig'
@@ -75,7 +75,7 @@ const LoginPage = () => {
   // ** Hook
   const theme = useTheme()
   const router = useRouter()
-  const auth = useAuth4Flow()
+  const auth = useForge4Flow()
 
   const handleLogin = async () => {
     const login = await auth.authenticate()
@@ -175,7 +175,6 @@ const LoginPage = () => {
           </form>
         </CardContent>
       </Card>
-      <FooterIllustrationsV1 />
     </Box>
   )
 }

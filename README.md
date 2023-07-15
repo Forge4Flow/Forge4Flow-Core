@@ -28,22 +28,22 @@
 <!-- PROJECT LOGO -->
 <br />
 <div align="center">
-  <a href="https://github.com/Auth4Flow/Auth4Flow-Core">
+  <a href="https://github.com/Forge4Flow/Forge4Flow-Core">
     <img src="images/logo.png" alt="Logo" width="80" height="80">
   </a>
 
-<h3 align="center">Auth4Flow</h3>
+<h3 align="center">Forge4Flow</h3>
 
   <p align="center">
-    <a href="https://github.com/Auth4Flow/Auth4Flow-Core"><strong>Explore the docs »</strong></a>
+    <a href="https://github.com/Forge4Flow/Forge4Flow-Core"><strong>Explore the docs »</strong></a>
     <br />
     <br />
-    <a href="https://github.com/Auth4Flow/Auth4Flow-Core/issues">Report Bug</a>
+    <a href="https://github.com/Forge4Flow/Forge4Flow-Core/issues">Report Bug</a>
     ·
-    <a href="https://github.com/Auth4Flow/Auth4Flow-Core/issues">Request Feature</a>
+    <a href="https://github.com/Forge4Flow/Forge4Flow-Core/issues">Request Feature</a>
   </p>
 
-Auth4Flow is a Identity & Access Management system for the Flow Blockchain and a replacement for services like Amazon’s AWS IAM or Microsoft’s Azure Active Directory, merging Web3 Identity with standard access management and control best practices.
+Forge4Flow is a Identity & Access Management system for the Flow Blockchain and a replacement for services like Amazon’s AWS IAM or Microsoft’s Azure Active Directory, merging Web3 Identity with standard access management and control best practices.
 
 </div>
 
@@ -51,7 +51,7 @@ Auth4Flow is a Identity & Access Management system for the Flow Blockchain and a
 
 ## Getting Started
 
-To get started using Auth4Flow, set up an Auth4Flow Cloud account or follow the deployment guide to self host your own instance of Auth4Flow. Once you have an instance started, follow one of our SDK quick start guides or check out or documentation for more information.
+To get started using Forge4Flow, set up an Forge4Flow Cloud account or follow the deployment guide to self host your own instance of Forge4Flow. Once you have an instance started, follow one of our SDK quick start guides or check out or documentation for more information.
 
 <!-- ROADMAP -->
 
@@ -68,7 +68,7 @@ To get started using Auth4Flow, set up an Auth4Flow Cloud account or follow the 
 - [ ] User Management & Admin Dashboard
 - [ ] Multi-Tenant Support
 
-See the [open issues](https://github.com/Auth4Flow/Auth4Flow-Core/issues) for a full list of proposed features (and known issues).
+See the [open issues](https://github.com/Forge4Flow/Forge4Flow-Core/issues) for a full list of proposed features (and known issues).
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
@@ -88,7 +88,7 @@ Distributed under the ELv2 License. See `LICENSE` for more information.
 
 ## Acknowledgments
 
-- [warrant.dev](https://github.com/warrant-dev/warrant) Auth4Flow was built on top an amazing open source authorization project called Warrant. All credit for the Web2 authorization functionality within Auth4Flow goes to the amazing warrant.dev team.
+- [warrant.dev](https://github.com/warrant-dev/warrant) Forge4Flow was built on top an amazing open source authorization project called Warrant. All credit for the Web2 authorization functionality within Forge4Flow goes to the amazing warrant.dev team.
 - []()
 - []()
 
@@ -97,13 +97,13 @@ Distributed under the ELv2 License. See `LICENSE` for more information.
 <!-- MARKDOWN LINKS & IMAGES -->
 <!-- https://www.markdownguide.org/basic-syntax/#reference-style-links -->
 
-[contributors-shield]: https://img.shields.io/github/contributors/Auth4Flow/Auth4Flow-Core.svg?style=for-the-badge
-[contributors-url]: https://github.com/Auth4Flow/Auth4Flow-Core/graphs/contributors
-[forks-shield]: https://img.shields.io/github/forks/Auth4Flow/Auth4Flow-Core.svg?style=for-the-badge
-[forks-url]: https://github.com/Auth4Flow/Auth4Flow-Core/network/members
-[stars-shield]: https://img.shields.io/github/stars/Auth4Flow/Auth4Flow-Core.svg?style=for-the-badge
-[stars-url]: https://github.com/Auth4Flow/Auth4Flow-Core/stargazers
-[issues-shield]: https://img.shields.io/github/issues/Auth4Flow/Auth4Flow-Core.svg?style=for-the-badge
-[issues-url]: https://github.com/Auth4Flow/Auth4Flow-Core/issues
+[contributors-shield]: https://img.shields.io/github/contributors/Forge4Flow/Forge4Flow-Core.svg?style=for-the-badge
+[contributors-url]: https://github.com/Forge4Flow/Forge4Flow-Core/graphs/contributors
+[forks-shield]: https://img.shields.io/github/forks/Forge4Flow/Forge4Flow-Core.svg?style=for-the-badge
+[forks-url]: https://github.com/Forge4Flow/Forge4Flow-Core/network/members
+[stars-shield]: https://img.shields.io/github/stars/Forge4Flow/Forge4Flow-Core.svg?style=for-the-badge
+[stars-url]: https://github.com/Forge4Flow/Forge4Flow-Core/stargazers
+[issues-shield]: https://img.shields.io/github/issues/Forge4Flow/Forge4Flow-Core.svg?style=for-the-badge
+[issues-url]: https://github.com/Forge4Flow/Forge4Flow-Core/issues
 [license-shield]: https://img.shields.io/badge/license-elv2-blue?style=for-the-badge
-[license-url]: https://github.com/Auth4Flow/Auth4Flow-Core/blob/master/LICENSE
+[license-url]: https://github.com/Forge4Flow/Forge4Flow-Core/blob/master/LICENSE

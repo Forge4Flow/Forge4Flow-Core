@@ -6,7 +6,7 @@ import (
 	"fmt"
 	"time"
 
-	"github.com/auth4flow/auth4flow-core/pkg/stats"
+	"github.com/forge4flow/forge4flow-core/pkg/stats"
 	"github.com/jmoiron/sqlx"
 	"github.com/pkg/errors"
 	"github.com/rs/zerolog/log"

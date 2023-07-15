@@ -3,10 +3,10 @@ package authz
 import (
 	"context"
 
-	object "github.com/auth4flow/auth4flow-core/pkg/authz/object"
-	objecttype "github.com/auth4flow/auth4flow-core/pkg/authz/objecttype"
-	"github.com/auth4flow/auth4flow-core/pkg/event"
-	"github.com/auth4flow/auth4flow-core/pkg/service"
+	object "github.com/forge4flow/forge4flow-core/pkg/authz/object"
+	objecttype "github.com/forge4flow/forge4flow-core/pkg/authz/objecttype"
+	"github.com/forge4flow/forge4flow-core/pkg/event"
+	"github.com/forge4flow/forge4flow-core/pkg/service"
 	"github.com/google/uuid"
 	"github.com/pkg/errors"
 )

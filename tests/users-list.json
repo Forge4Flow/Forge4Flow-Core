@@ -8,14 +8,14 @@
         "url": "/v1/users",
         "body": {
           "userId": "user-1",
-          "email": "user-b@auth4flow.com"
+          "email": "user-b@forge4flow.com"
         }
       },
       "expectedResponse": {
         "statusCode": 200,
         "body": {
           "userId": "user-1",
-          "email": "user-b@auth4flow.com"
+          "email": "user-b@forge4flow.com"
         }
       }
     },
@@ -26,14 +26,14 @@
         "url": "/v1/users",
         "body": {
           "userId": "user-2",
-          "email": "user-a@auth4flow.com"
+          "email": "user-a@forge4flow.com"
         }
       },
       "expectedResponse": {
         "statusCode": 200,
         "body": {
           "userId": "user-2",
-          "email": "user-a@auth4flow.com"
+          "email": "user-a@forge4flow.com"
         }
       }
     },
@@ -79,14 +79,14 @@
         "url": "/v1/users",
         "body": {
           "userId": "user-5",
-          "email": "user-c@auth4flow.com"
+          "email": "user-c@forge4flow.com"
         }
       },
       "expectedResponse": {
         "statusCode": 200,
         "body": {
           "userId": "user-5",
-          "email": "user-c@auth4flow.com"
+          "email": "user-c@forge4flow.com"
         }
       }
     },
@@ -101,7 +101,7 @@
         "body": [
           {
             "userId": "user-5",
-            "email": "user-c@auth4flow.com"
+            "email": "user-c@forge4flow.com"
           },
           {
             "userId": "user-4",
@@ -113,11 +113,11 @@
           },
           {
             "userId": "user-2",
-            "email": "user-a@auth4flow.com"
+            "email": "user-a@forge4flow.com"
           },
           {
             "userId": "user-1",
-            "email": "user-b@auth4flow.com"
+            "email": "user-b@forge4flow.com"
           }
         ]
       }
@@ -133,11 +133,11 @@
         "body": [
           {
             "userId": "user-1",
-            "email": "user-b@auth4flow.com"
+            "email": "user-b@forge4flow.com"
           },
           {
             "userId": "user-2",
-            "email": "user-a@auth4flow.com"
+            "email": "user-a@forge4flow.com"
           },
           {
             "userId": "user-3",
@@ -149,7 +149,7 @@
           },
           {
             "userId": "user-5",
-            "email": "user-c@auth4flow.com"
+            "email": "user-c@forge4flow.com"
           }
         ]
       }
@@ -165,15 +165,15 @@
         "body": [
           {
             "userId": "user-5",
-            "email": "user-c@auth4flow.com"
+            "email": "user-c@forge4flow.com"
           },
           {
             "userId": "user-1",
-            "email": "user-b@auth4flow.com"
+            "email": "user-b@forge4flow.com"
           },
           {
             "userId": "user-2",
-            "email": "user-a@auth4flow.com"
+            "email": "user-a@forge4flow.com"
           },
           {
             "userId": "user-4",
@@ -205,15 +205,15 @@
           },
           {
             "userId": "user-2",
-            "email": "user-a@auth4flow.com"
+            "email": "user-a@forge4flow.com"
           },
           {
             "userId": "user-1",
-            "email": "user-b@auth4flow.com"
+            "email": "user-b@forge4flow.com"
           },
           {
             "userId": "user-5",
-            "email": "user-c@auth4flow.com"
+            "email": "user-c@forge4flow.com"
           }
         ]
       }
@@ -249,11 +249,11 @@
         "body": [
           {
             "userId": "user-2",
-            "email": "user-a@auth4flow.com"
+            "email": "user-a@forge4flow.com"
           },
           {
             "userId": "user-1",
-            "email": "user-b@auth4flow.com"
+            "email": "user-b@forge4flow.com"
           }
         ]
       }
@@ -262,14 +262,14 @@
       "name": "getUsersSortByEmailASCLimit2AfterIdAfterValue2",
       "request": {
         "method": "GET",
-        "url": "/v1/users?sortBy=email&sortOrder=ASC&limit=2&afterId=user-1&afterValue=user-b%40auth4flow.com"
+        "url": "/v1/users?sortBy=email&sortOrder=ASC&limit=2&afterId=user-1&afterValue=user-b%40forge4flow.com"
       },
       "expectedResponse": {
         "statusCode": 200,
         "body": [
           {
             "userId": "user-5",
-            "email": "user-c@auth4flow.com"
+            "email": "user-c@forge4flow.com"
           }
         ]
       }
@@ -285,11 +285,11 @@
         "body": [
           {
             "userId": "user-1",
-            "email": "user-b@auth4flow.com"
+            "email": "user-b@forge4flow.com"
           },
           {
             "userId": "user-2",
-            "email": "user-a@auth4flow.com"
+            "email": "user-a@forge4flow.com"
           }
         ]
       }
@@ -305,11 +305,11 @@
         "body": [
           {
             "userId": "user-1",
-            "email": "user-b@auth4flow.com"
+            "email": "user-b@forge4flow.com"
           },
           {
             "userId": "user-2",
-            "email": "user-a@auth4flow.com"
+            "email": "user-a@forge4flow.com"
           }
         ]
       }
@@ -345,7 +345,7 @@
         "body": [
           {
             "userId": "user-5",
-            "email": "user-c@auth4flow.com"
+            "email": "user-c@forge4flow.com"
           }
         ]
       }

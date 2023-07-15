@@ -3,23 +3,23 @@ package authn
 import (
 	"context"
 
-	nonce "github.com/auth4flow/auth4flow-core/pkg/authn/nonce"
-	user "github.com/auth4flow/auth4flow-core/pkg/authz/user"
-	"github.com/auth4flow/auth4flow-core/pkg/config"
-	"github.com/auth4flow/auth4flow-core/pkg/event"
-	"github.com/auth4flow/auth4flow-core/pkg/service"
+	nonce "github.com/forge4flow/forge4flow-core/pkg/authn/nonce"
+	user "github.com/forge4flow/forge4flow-core/pkg/authz/user"
+	"github.com/forge4flow/forge4flow-core/pkg/config"
+	"github.com/forge4flow/forge4flow-core/pkg/event"
+	"github.com/forge4flow/forge4flow-core/pkg/service"
 )
 
 type SessionService struct {
 	service.BaseService
-	Config     config.Auth4FlowConfig
+	Config     config.Forge4FlowConfig
 	Repository SessionRepository
 	NonceSvc   *nonce.NonceService
 	UserSvc    *user.UserService
 	EventSvc   *event.EventService
 }
 
-func NewService(env service.Env, cfg config.Auth4FlowConfig, repo SessionRepository, nonceSvc *nonce.NonceService, userSvc *user.UserService, eventSvc *event.EventService) *SessionService {
+func NewService(env service.Env, cfg config.Forge4FlowConfig, repo SessionRepository, nonceSvc *nonce.NonceService, userSvc *user.UserService, eventSvc *event.EventService) *SessionService {
 	return &SessionService{
 		BaseService: service.NewBaseService(env),
 		Config:      cfg,

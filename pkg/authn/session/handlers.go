@@ -6,9 +6,9 @@ import (
 	"net/http"
 	"time"
 
-	user "github.com/auth4flow/auth4flow-core/pkg/authz/user"
-	"github.com/auth4flow/auth4flow-core/pkg/flow"
-	"github.com/auth4flow/auth4flow-core/pkg/service"
+	user "github.com/forge4flow/forge4flow-core/pkg/authz/user"
+	"github.com/forge4flow/forge4flow-core/pkg/flow"
+	"github.com/forge4flow/forge4flow-core/pkg/service"
 )
 
 func (svc SessionService) Routes() ([]service.Route, error) {

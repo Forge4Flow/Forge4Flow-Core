@@ -15,21 +15,21 @@ import (
 )
 
 const (
-	DefaultMySQLDatastoreMigrationSource     = "github://auth4flow/auth4flow-core/migrations/datastore/mysql"
-	DefaultMySQLEventstoreMigrationSource    = "github://auth4flow/auth4flow-core/migrations/eventstore/mysql"
-	DefaultPostgresDatastoreMigrationSource  = "github://auth4flow/auth4flow-core/migrations/datastore/postgres"
-	DefaultPostgresEventstoreMigrationSource = "github://auth4flow/auth4flow-core/migrations/eventstore/postgres"
-	DefaultSQLiteDatastoreMigrationSource    = "github://auth4flow/auth4flow-core/migrations/datastore/sqlite"
-	DefaultSQLiteEventstoreMigrationSource   = "github://auth4flow/auth4flow-core/migrations/eventstore/sqlite"
+	DefaultMySQLDatastoreMigrationSource     = "github://forge4flow/forge4flow-core/migrations/datastore/mysql"
+	DefaultMySQLEventstoreMigrationSource    = "github://forge4flow/forge4flow-core/migrations/eventstore/mysql"
+	DefaultPostgresDatastoreMigrationSource  = "github://forge4flow/forge4flow-core/migrations/datastore/postgres"
+	DefaultPostgresEventstoreMigrationSource = "github://forge4flow/forge4flow-core/migrations/eventstore/postgres"
+	DefaultSQLiteDatastoreMigrationSource    = "github://forge4flow/forge4flow-core/migrations/datastore/sqlite"
+	DefaultSQLiteEventstoreMigrationSource   = "github://forge4flow/forge4flow-core/migrations/eventstore/sqlite"
 	DefaultAuthenticationUserIdClaim         = "sub"
 	DefaultSessionTokenLength                = 32
 	DefaultSessionIdleTimeout                = 15 * time.Minute
 	DefaultSessionExpTimeout                 = time.Hour
-	DefaultAppIdentifier                     = "Auth4Flow IAM Service"
+	DefaultAppIdentifier                     = "Forge4Flow IAM Service"
 	DefaultFlowNetwork                       = "emulator"
 	DefaultAutoRegister                      = false
-	PrefixAuth4Flow                          = "auth4flow"
-	ConfigFileName                           = "auth4flow.yaml"
+	PrefixForge4Flow                         = "forge4flow"
+	ConfigFileName                           = "forge4flow.yaml"
 )
 
 type Config interface {
@@ -43,7 +43,7 @@ type Config interface {
 	GetAppIdentifier() string
 }
 
-type Auth4FlowConfig struct {
+type Forge4FlowConfig struct {
 	Port            int               `mapstructure:"port"`
 	LogLevel        int8              `mapstructure:"logLevel"`
 	EnableAccessLog bool              `mapstructure:"enableAccessLog"`
@@ -56,40 +56,40 @@ type Auth4FlowConfig struct {
 	AdminAccount    string            `mapstructure:"adminAccount"`
 }
 
-func (auth4FlowConfig Auth4FlowConfig) GetPort() int {
-	return auth4FlowConfig.Port
+func (forge4FlowConfig Forge4FlowConfig) GetPort() int {
+	return forge4FlowConfig.Port
 }
 
-func (auth4FlowConfig Auth4FlowConfig) GetLogLevel() int8 {
-	return auth4FlowConfig.LogLevel
+func (forge4FlowConfig Forge4FlowConfig) GetLogLevel() int8 {
+	return forge4FlowConfig.LogLevel
 }
 
-func (auth4FlowConfig Auth4FlowConfig) GetEnableAccessLog() bool {
-	return auth4FlowConfig.EnableAccessLog
+func (forge4FlowConfig Forge4FlowConfig) GetEnableAccessLog() bool {
+	return forge4FlowConfig.EnableAccessLog
 }
 
-func (auth4FlowConfig Auth4FlowConfig) GetAutoMigrate() bool {
-	return auth4FlowConfig.AutoMigrate
+func (forge4FlowConfig Forge4FlowConfig) GetAutoMigrate() bool {
+	return forge4FlowConfig.AutoMigrate
 }
 
-func (auth4FlowConfig Auth4FlowConfig) GetDatastore() *DatastoreConfig {
-	return auth4FlowConfig.Datastore
+func (forge4FlowConfig Forge4FlowConfig) GetDatastore() *DatastoreConfig {
+	return forge4FlowConfig.Datastore
 }
 
-func (auth4FlowConfig Auth4FlowConfig) GetEventstore() *EventstoreConfig {
-	return auth4FlowConfig.Eventstore
+func (forge4FlowConfig Forge4FlowConfig) GetEventstore() *EventstoreConfig {
+	return forge4FlowConfig.Eventstore
 }
 
-func (auth4FlowConfig Auth4FlowConfig) GetAuthentication() *AuthConfig {
-	return auth4FlowConfig.Authentication
+func (forge4FlowConfig Forge4FlowConfig) GetAuthentication() *AuthConfig {
+	return forge4FlowConfig.Authentication
 }
 
-func (auth4FlowConfig Auth4FlowConfig) GetAppIdentifier() string {
-	return auth4FlowConfig.AppIdentifier
+func (forge4FlowConfig Forge4FlowConfig) GetAppIdentifier() string {
+	return forge4FlowConfig.AppIdentifier
 }
 
-func (auth4FlowConfig Auth4FlowConfig) GetFlowNetwork() string {
-	return auth4FlowConfig.FlowNetwork
+func (forge4FlowConfig Forge4FlowConfig) GetFlowNetwork() string {
+	return forge4FlowConfig.FlowNetwork
 }
 
 type DatastoreConfig struct {
@@ -150,7 +150,7 @@ type AuthProviderConfig struct {
 	TenantIdClaim string `mapstructure:"tenantIdClaim"`
 }
 
-func NewConfig() Auth4FlowConfig {
+func NewConfig() Forge4FlowConfig {
 	viper.SetConfigFile(ConfigFileName)
 	viper.SetDefault("port", 8000)
 	viper.SetDefault("logLevel", zerolog.DebugLevel)
@@ -175,20 +175,20 @@ func NewConfig() Auth4FlowConfig {
 	_, err := os.ReadFile(ConfigFileName)
 	if err == nil {
 		if err := viper.ReadInConfig(); err != nil {
-			log.Fatal().Err(err).Msg("Error while reading auth4flow.yaml. Shutting down.")
+			log.Fatal().Err(err).Msg("Error while reading forge4flow.yaml. Shutting down.")
 		}
 	} else {
 		if os.IsNotExist(err) {
-			log.Info().Msg("Could not find auth4flow.yaml. Attempting to use environment variables.")
+			log.Info().Msg("Could not find forge4flow.yaml. Attempting to use environment variables.")
 		} else {
-			log.Fatal().Err(err).Msg("Error while reading auth4flow.yaml. Shutting down.")
+			log.Fatal().Err(err).Msg("Error while reading forge4flow.yaml. Shutting down.")
 		}
 	}
 
-	var config Auth4FlowConfig
+	var config Forge4FlowConfig
 	// If available, use env vars for config
 	for _, fieldName := range getFlattenedStructFields(reflect.TypeOf(config)) {
-		envKey := strings.ToUpper(fmt.Sprintf("%s_%s", PrefixAuth4Flow, strings.ReplaceAll(fieldName, ".", "_")))
+		envKey := strings.ToUpper(fmt.Sprintf("%s_%s", PrefixForge4Flow, strings.ReplaceAll(fieldName, ".", "_")))
 		envVar := os.Getenv(envKey)
 		if envVar != "" {
 			viper.Set(fieldName, envVar)

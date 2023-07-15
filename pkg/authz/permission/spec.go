@@ -3,8 +3,8 @@ package authz
 import (
 	"time"
 
-	object "github.com/auth4flow/auth4flow-core/pkg/authz/object"
-	objecttype "github.com/auth4flow/auth4flow-core/pkg/authz/objecttype"
+	object "github.com/forge4flow/forge4flow-core/pkg/authz/object"
+	objecttype "github.com/forge4flow/forge4flow-core/pkg/authz/objecttype"
 )
 
 type PermissionSpec struct {

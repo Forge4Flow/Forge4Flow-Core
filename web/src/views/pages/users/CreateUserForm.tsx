@@ -55,7 +55,7 @@ const CreateUserForm = () => {
                       fullWidth
                       type='email'
                       label='Email'
-                      placeholder='AwesomeUser@Auth4Flow.com'
+                      placeholder='AwesomeUser@Forge4Flow.com'
                       helperText='optional'
                       InputProps={{
                         startAdornment: (
@@ -77,7 +77,7 @@ const CreateUserForm = () => {
                       fullWidth
                       type='email'
                       label='Email'
-                      placeholder='AwesomeUser@Auth4Flow.com'
+                      placeholder='AwesomeUser@Forge4Flow.com'
                       helperText='optional'
                       InputProps={{
                         startAdornment: (

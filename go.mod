@@ -1,11 +1,10 @@
-module github.com/auth4flow/auth4flow-core
+module github.com/forge4flow/forge4flow-core
 
 go 1.20
 
 require (
 	github.com/antonmedv/expr v1.12.5
 	github.com/go-playground/validator/v10 v10.14.1
-	github.com/golang-jwt/jwt/v5 v5.0.0
 	github.com/golang-migrate/migrate/v4 v4.16.2
 	github.com/google/go-cmp v0.5.9
 	github.com/google/uuid v1.3.0
@@ -50,8 +49,8 @@ require (
 	github.com/mattn/go-isatty v0.0.18 // indirect
 	github.com/mitchellh/mapstructure v1.5.0 // indirect
 	github.com/onflow/atree v0.6.0 // indirect
-	github.com/onflow/cadence v0.39.12 // indirect
-	github.com/onflow/flow-go-sdk v0.41.6 // indirect
+	github.com/onflow/cadence v0.39.12
+	github.com/onflow/flow-go-sdk v0.41.6
 	github.com/onflow/flow-go/crypto v0.24.7 // indirect
 	github.com/pelletier/go-toml/v2 v2.0.8 // indirect
 	github.com/pmezard/go-difflib v1.0.0 // indirect

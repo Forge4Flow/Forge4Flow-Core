@@ -58,7 +58,7 @@ const VerticalNavHeader = (props: Props) => {
       {userVerticalNavMenuBranding ? (
         userVerticalNavMenuBranding(props)
       ) : (
-        <Link href='/' passHref>
+        <Link className='customLink' href='/' passHref>
           <StyledLink>
             <svg
               fill={theme.palette.primary.main}

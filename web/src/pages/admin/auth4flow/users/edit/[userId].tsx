@@ -15,8 +15,8 @@ import { useEffect, useState } from 'react'
 import { GetServerSideProps } from 'next/types'
 import { useRouter } from 'next/router'
 
-// ** Auth4Flow Imports
-import { Auth4FlowServer } from '@auth4flow/auth4flow-nextjs'
+// ** Forge4Flow Imports
+import { Forge4FlowServer } from '@forge4flow/forge4flow-nextjs'
 
 // ** Date Util Import
 import { convertDate } from 'src/utils/date-tools'
@@ -59,12 +59,12 @@ export const getServerSideProps: GetServerSideProps<EditUserPageProps> = async c
   const { params } = context
   const userId = params?.userId as string
 
-  const auth4flow = new Auth4FlowServer({
+  const forge4flow = new Forge4FlowServer({
     endpoint: process.env.AUTH4FLOW_BASE_URL,
     apiKey: process.env.AUTH4FLOW_API_KEY || ''
   })
 
-  const userObject = await auth4flow.User.get(userId)
+  const userObject = await forge4flow.User.get(userId)
   const user: UserType = {
     userId: userObject.userId,
     email: userObject.email,

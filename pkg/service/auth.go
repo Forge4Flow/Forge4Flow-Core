@@ -8,7 +8,7 @@ import (
 	"net/http"
 	"strings"
 
-	"github.com/auth4flow/auth4flow-core/pkg/config"
+	"github.com/forge4flow/forge4flow-core/pkg/config"
 )
 
 const FirebasePublicKeyUrl = "https://www.googleapis.com/robot/v1/metadata/x509/securetoken@system.gserviceaccount.com"
@@ -33,9 +33,9 @@ type AuthInfo struct {
 type AuthMiddlewareFunc func(config config.Config, next http.Handler, svcs ...Service) (http.Handler, error)
 
 func ApiKeyAuthMiddleware(cfg config.Config, next http.Handler, svcs ...Service) (http.Handler, error) {
-	warrantCfg, ok := cfg.(config.Auth4FlowConfig)
+	warrantCfg, ok := cfg.(config.Forge4FlowConfig)
 	if !ok {
-		return nil, errors.New("cfg parameter on DefaultAuthMiddleware must be a Auth4FlowConfig")
+		return nil, errors.New("cfg parameter on DefaultAuthMiddleware must be a Forge4FlowConfig")
 	}
 
 	return http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {

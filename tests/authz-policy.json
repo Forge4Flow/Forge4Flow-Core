@@ -555,7 +555,7 @@
             "objectType": "user",
             "objectId": "user-a"
           },
-          "policy": "email endsWith \"@auth4flow.com\""
+          "policy": "email endsWith \"@forge4flow.com\""
         }
       },
       "expectedResponse": {
@@ -568,7 +568,7 @@
             "objectType": "user",
             "objectId": "user-a"
           },
-          "policy": "email endsWith \"@auth4flow.com\""
+          "policy": "email endsWith \"@forge4flow.com\""
         }
       }
     },
@@ -588,7 +588,7 @@
                 "objectId": "user-a"
               },
               "context": {
-                "email": "xyz@auth4flow.com"
+                "email": "xyz@forge4flow.com"
               }
             }
           ]
@@ -645,7 +645,7 @@
             "objectType": "user",
             "objectId": "user-a"
           },
-          "policy": "email endsWith \"@auth4flow.com\""
+          "policy": "email endsWith \"@forge4flow.com\""
         }
       },
       "expectedResponse": {

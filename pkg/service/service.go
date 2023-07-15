@@ -1,6 +1,6 @@
 package service
 
-import "github.com/auth4flow/auth4flow-core/pkg/database"
+import "github.com/forge4flow/forge4flow-core/pkg/database"
 
 const (
 	EventService       = "EventService"

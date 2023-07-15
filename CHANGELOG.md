@@ -6,6 +6,6 @@
 
 - Added this changelog :)
 - Added authn routes for Flow Blockchain Natiive Authentication
-- Began renaming Warrant functions to match Auth4Flow scheme
+- Began renaming Warrant functions to match Forge4Flow scheme
 
 ### Removed

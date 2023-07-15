@@ -8,8 +8,8 @@ import (
 	"strings"
 	"time"
 
-	"github.com/auth4flow/auth4flow-core/pkg/config"
-	"github.com/auth4flow/auth4flow-core/pkg/stats"
+	"github.com/forge4flow/forge4flow-core/pkg/config"
+	"github.com/forge4flow/forge4flow-core/pkg/stats"
 	"github.com/gorilla/handlers"
 	"github.com/gorilla/mux"
 	"github.com/rs/zerolog"

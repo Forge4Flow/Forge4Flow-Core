@@ -5,8 +5,8 @@ import (
 	"encoding/hex"
 	"errors"
 
-	"github.com/auth4flow/auth4flow-core/pkg/config"
-	"github.com/auth4flow/auth4flow-core/pkg/service"
+	"github.com/forge4flow/forge4flow-core/pkg/config"
+	"github.com/forge4flow/forge4flow-core/pkg/service"
 
 	"github.com/onflow/cadence"
 	flowSDK "github.com/onflow/flow-go-sdk"
@@ -16,13 +16,13 @@ import (
 
 type FlowService struct {
 	service.BaseService
-	Config       config.Auth4FlowConfig
+	Config       config.Forge4FlowConfig
 	FlowClient   *http.Client
 	queue        *Queue
 	eventMonitor *EventMonitorService
 }
 
-func NewService(env service.Env, cfg config.Auth4FlowConfig) *FlowService {
+func NewService(env service.Env, cfg config.Forge4FlowConfig) *FlowService {
 	flowClient, err := http.NewClient(cfg.GetFlowNetwork())
 	if err != nil {
 		log.Fatal().Err(err).Msg("Could not initialize and connect to the configured Flow Blockchain. Shutting down.")

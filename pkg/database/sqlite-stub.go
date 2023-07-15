@@ -6,7 +6,7 @@ package database
 import (
 	"context"
 
-	"github.com/auth4flow/auth4flow-core/pkg/config"
+	"github.com/forge4flow/forge4flow-core/pkg/config"
 	"github.com/pkg/errors"
 )
 

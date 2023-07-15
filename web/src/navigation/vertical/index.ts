@@ -21,7 +21,7 @@ const navigation = (): VerticalNavItemsType => {
       path: '/admin'
     },
     {
-      sectionTitle: 'Auth4Flow'
+      sectionTitle: 'Forge4Flow'
     },
     {
       title: 'Users & Tenants',
@@ -29,7 +29,7 @@ const navigation = (): VerticalNavItemsType => {
         {
           title: 'Users',
           icon: 'mdi:archive-outline',
-          path: '/admin/auth4flow/users'
+          path: '/admin/forge4flow/users'
         },
         {
           title: 'Tenants',
@@ -46,12 +46,12 @@ const navigation = (): VerticalNavItemsType => {
         {
           title: 'Fungible Tokens',
           icon: 'mdi:archive-outline',
-          path: '/admin/auth4flow/fts'
+          path: '/admin/forge4flow/fts'
         },
         {
           title: 'NonFungible Tokens',
           icon: 'mdi:archive-outline',
-          path: '/admin/auth4flow/nfts'
+          path: '/admin/forge4flow/nfts'
         }
       ]
     },
@@ -61,17 +61,17 @@ const navigation = (): VerticalNavItemsType => {
         {
           title: 'Roles',
           icon: 'mdi:archive-outline',
-          path: '/admin/auth4flow/rbac/roles'
+          path: '/admin/forge4flow/rbac/roles'
         },
         {
           title: 'Permissions',
           icon: 'mdi:archive-outline',
-          path: '/admin/auth4flow/rbac/permissions'
+          path: '/admin/forge4flow/rbac/permissions'
         },
         {
           title: 'Check',
           icon: 'mdi:archive-outline',
-          path: '/admin/auth4flow/rbac/check'
+          path: '/admin/forge4flow/rbac/check'
         }
       ]
     },
@@ -81,17 +81,17 @@ const navigation = (): VerticalNavItemsType => {
         {
           title: 'Object Types',
           icon: 'mdi:archive-outline',
-          path: '/typography'
+          path: '/admin/forge4flow/fgac/object-types'
         },
         {
           title: 'Objects',
-          path: '/icons',
+          path: '/admin/forge4flow/fgac/objects',
           icon: 'mdi:archive-outline'
         },
         {
           title: 'Check',
           icon: 'mdi:archive-outline',
-          path: '/cards'
+          path: '/admin/forge4flow/fgac/check'
         }
       ]
     },
@@ -101,13 +101,13 @@ const navigation = (): VerticalNavItemsType => {
         {
           title: 'Pricing Tiers',
           icon: 'mdi:archive-outline',
-          path: '/typography',
+          path: '#',
           badgeContent: 'API Only Currently',
           disabled: true
         },
         {
           title: 'Features',
-          path: '/icons',
+          path: '#',
           icon: 'mdi:archive-outline',
           badgeContent: 'API Only Currently',
           disabled: true
@@ -115,7 +115,7 @@ const navigation = (): VerticalNavItemsType => {
         {
           title: 'Check',
           icon: 'mdi:archive-outline',
-          path: '/cards',
+          path: '#',
           badgeContent: 'API Only Currently',
           disabled: true
         }
@@ -127,7 +127,7 @@ const navigation = (): VerticalNavItemsType => {
     {
       title: 'Event Monitors',
       icon: 'mdi:archive-outline',
-      path: '/admin/auth4flow/users'
+      path: '/admin/alerts4flow/monitors'
     },
     {
       title: 'Webhooks',

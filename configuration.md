@@ -1,6 +1,6 @@
 # Server configuration
 
-Auth4Flow-Core requires certain configuration variables to be set via either a `auth4flow.yaml` config file or via environment variables. There is a set of common variables as well as datastore and eventstore-specific configuration.
+Forge4Flow-Core requires certain configuration variables to be set via either a `forge4flow.yaml` config file or via environment variables. There is a set of common variables as well as datastore and eventstore-specific configuration.
 
 ## Common variables
 
@@ -48,7 +48,7 @@ Note: It's possible to use different dbs for the `datastore` and `eventstore` (e
 
 Here is an example of a full server config using `mysql` for both the datastore and eventstore:
 
-### Sample `auth4flow.yaml` config (place file in same dir as server binary)
+### Sample `forge4flow.yaml` config (place file in same dir as server binary)
 
 ```yaml
 port: 8000
@@ -72,7 +72,7 @@ eventstore:
     database: warrantEvents
 ```
 
-### Sample `auth4flow.yaml` config with JWT authentication config
+### Sample `forge4flow.yaml` config with JWT authentication config
 
 ```yaml
 port: 8000

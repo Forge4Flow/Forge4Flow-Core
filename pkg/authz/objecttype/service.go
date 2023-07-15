@@ -3,8 +3,8 @@ package authz
 import (
 	"context"
 
-	"github.com/auth4flow/auth4flow-core/pkg/event"
-	"github.com/auth4flow/auth4flow-core/pkg/service"
+	"github.com/forge4flow/forge4flow-core/pkg/event"
+	"github.com/forge4flow/forge4flow-core/pkg/service"
 )
 
 const ResourceTypeObjectType = "object-type"

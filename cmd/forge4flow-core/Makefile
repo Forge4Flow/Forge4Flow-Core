@@ -1,4 +1,4 @@
-NAME       = auth4flow-core
+NAME       = forge4flow-core
 BUILD_PATH = bin/$(NAME)
 GOENV      = GOARCH=amd64 GOOS=linux CGO_ENABLED=0
 GOCMD      = go

@@ -5,10 +5,10 @@ import (
 	"net/http"
 	"time"
 
-	objecttype "github.com/auth4flow/auth4flow-core/pkg/authz/objecttype"
-	warrant "github.com/auth4flow/auth4flow-core/pkg/authz/warrant"
-	"github.com/auth4flow/auth4flow-core/pkg/event"
-	"github.com/auth4flow/auth4flow-core/pkg/service"
+	objecttype "github.com/forge4flow/forge4flow-core/pkg/authz/objecttype"
+	warrant "github.com/forge4flow/forge4flow-core/pkg/authz/warrant"
+	"github.com/forge4flow/forge4flow-core/pkg/event"
+	"github.com/forge4flow/forge4flow-core/pkg/service"
 	"github.com/rs/zerolog/log"
 )
 

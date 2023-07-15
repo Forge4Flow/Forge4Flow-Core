@@ -4,7 +4,7 @@ import (
 	"context"
 	"fmt"
 
-	"github.com/auth4flow/auth4flow-core/pkg/database"
+	"github.com/forge4flow/forge4flow-core/pkg/database"
 	"github.com/pkg/errors"
 )
 

@@ -4,18 +4,18 @@ import (
 	"context"
 	"log"
 
-	permission "github.com/auth4flow/auth4flow-core/pkg/authz/permission"
-	role "github.com/auth4flow/auth4flow-core/pkg/authz/role"
-	user "github.com/auth4flow/auth4flow-core/pkg/authz/user"
-	warrant "github.com/auth4flow/auth4flow-core/pkg/authz/warrant"
-	"github.com/auth4flow/auth4flow-core/pkg/config"
+	permission "github.com/forge4flow/forge4flow-core/pkg/authz/permission"
+	role "github.com/forge4flow/forge4flow-core/pkg/authz/role"
+	user "github.com/forge4flow/forge4flow-core/pkg/authz/user"
+	warrant "github.com/forge4flow/forge4flow-core/pkg/authz/warrant"
+	"github.com/forge4flow/forge4flow-core/pkg/config"
 )
 
-func InitialSetup(cfg *config.Auth4FlowConfig, permissionSvc *permission.PermissionService, roleSvc *role.RoleService, userSvc *user.UserService, warrantSvc *warrant.WarrantService) {
+func InitialSetup(cfg *config.Forge4FlowConfig, permissionSvc *permission.PermissionService, roleSvc *role.RoleService, userSvc *user.UserService, warrantSvc *warrant.WarrantService) {
 	ctx := context.Background()
-	permRoleName := "auth4flow-admin"
+	permRoleName := "forge4flow-admin"
 
-	// Check if the auth4flow-admin role & Permission exist and create if needed
+	// Check if the forge4flow-admin role & Permission exist and create if needed
 	_, err := roleSvc.GetByRoleId(ctx, permRoleName)
 	if err != nil {
 		newRoleSpec := role.RoleSpec{
@@ -28,7 +28,7 @@ func InitialSetup(cfg *config.Auth4FlowConfig, permissionSvc *permission.Permiss
 		}
 	}
 
-	_, err = permissionSvc.GetByPermissionId(ctx, "auth4flow-admin")
+	_, err = permissionSvc.GetByPermissionId(ctx, "forge4flow-admin")
 	if err != nil {
 		newPermissionSpec := permission.PermissionSpec{
 			PermissionId: permRoleName,

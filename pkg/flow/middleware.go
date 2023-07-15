@@ -7,9 +7,9 @@ import (
 	"net/http"
 	"strings"
 
-	nonce "github.com/auth4flow/auth4flow-core/pkg/authn/nonce"
-	"github.com/auth4flow/auth4flow-core/pkg/config"
-	"github.com/auth4flow/auth4flow-core/pkg/service"
+	nonce "github.com/forge4flow/forge4flow-core/pkg/authn/nonce"
+	"github.com/forge4flow/forge4flow-core/pkg/config"
+	"github.com/forge4flow/forge4flow-core/pkg/service"
 )
 
 func ApiKeyAndAccountProofAuthMidleware(cfg config.Config, next http.Handler, svcs ...service.Service) (http.Handler, error) {
@@ -24,9 +24,9 @@ func ApiKeyAndAccountProofAuthMidleware(cfg config.Config, next http.Handler, sv
 			nonceService = svc.(*nonce.NonceService)
 		}
 	}
-	auth4FlowConfig, ok := cfg.(config.Auth4FlowConfig)
+	forge4FlowConfig, ok := cfg.(config.Forge4FlowConfig)
 	if !ok {
-		return nil, errors.New("cfg parameter on DefaultAuthMiddleware must be a Auth4FlowConfig")
+		return nil, errors.New("cfg parameter on DefaultAuthMiddleware must be a Forge4FlowConfig")
 	}
 
 	return http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
@@ -40,7 +40,7 @@ func ApiKeyAndAccountProofAuthMidleware(cfg config.Config, next http.Handler, sv
 		switch authType {
 		case service.AuthTypeApiKey:
 			apiKey := auth.(string)
-			if !service.SecureCompareEqual(apiKey, auth4FlowConfig.GetAuthentication().ApiKey) {
+			if !service.SecureCompareEqual(apiKey, forge4FlowConfig.GetAuthentication().ApiKey) {
 				service.SendErrorResponse(w, service.NewUnauthorizedError("Invalid API key"))
 				return
 			}

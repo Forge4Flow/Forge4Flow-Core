@@ -2,7 +2,7 @@
 
 This guide covers how to set up SQLite as a datastore/eventstore for Warrant.
 
-Note: Please first refer to the [development guide](/development.md) to ensure that your Go environment is set up and you have checked out the Warrant source or [downloaded a binary](https://github.com/auth4flow/auth4flow-core/releases).
+Note: Please first refer to the [development guide](/development.md) to ensure that your Go environment is set up and you have checked out the Warrant source or [downloaded a binary](https://github.com/forge4flow/forge4flow-core/releases).
 
 ## Install SQLite
 
@@ -14,9 +14,9 @@ sqlite3 --version
 
 ## Warrant configuration
 
-The Warrant server requires certain configuration, defined either within a `auth4flow.yaml` file (located within the same directory as the binary) or via environment variables. This configuration includes some common variables and some SQLite specific variables. Here's a sample config:
+The Warrant server requires certain configuration, defined either within a `forge4flow.yaml` file (located within the same directory as the binary) or via environment variables. This configuration includes some common variables and some SQLite specific variables. Here's a sample config:
 
-### Sample `auth4flow.yaml` config
+### Sample `forge4flow.yaml` config
 
 ```yaml
 port: 8000
