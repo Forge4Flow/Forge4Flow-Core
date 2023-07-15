@@ -105,16 +105,22 @@ To get started using Forge4Flow, follow the deployment guide to self host your o
 
 ### Ecosystem SDKs
 
-- FLOAT
-  - [x] Swift (iOS)
-  - [ ] JS, Node
-  - [ ] Go
-- .find
-  - [x] Swift (iOS)
-  - [ ] JS, Node
-  - [ ] Go
-- NFT Storage
-  - [x] Swift (iOS)
+- Flow Ecosystem
+  - FLOAT
+    - [x] Swift (iOS)
+    - [ ] JS, Node
+    - [ ] Go
+  - .find
+    - [x] Swift (iOS)
+    - [ ] JS, Node
+    - [ ] Go
+  - Flow NFT Catalog
+    - [ ] Swift (iOS)
+    - [ ] Go
+- Mobile Platforms
+  - Swift (iOS)
+    - [x] NFT.storage
+    - [x] SwiftIPFS-Image
 
 See the [open issues](https://github.com/Forge4Flow/Forge4Flow-Core/issues) for a full list of proposed features (and known issues).
 
@@ -137,8 +143,6 @@ Forge4Flow is distributed under the ELv2 License. See `LICENSE` for more informa
 ## Acknowledgments
 
 - [warrant.dev](https://github.com/warrant-dev/warrant) Forge4Flow was built on top an amazing open source authorization project called Warrant. All credit for the Web2 authorization functionality within Forge4Flow goes to the amazing warrant.dev team.
-- []()
-- []()
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
