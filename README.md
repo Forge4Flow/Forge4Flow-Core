@@ -76,8 +76,15 @@ To get started using Forge4Flow, follow the deployment guide to self host your o
 
 - [x] Blockchain Native Login w/ Client & Server Sessions
 - [ ] Walletless Onboarding w/ Client & Server Sessions
-- [ ] NFT Gated Roles
-- [ ] Token Gated Roles
+- NFT/FT Gates
+  - [ ] Users
+  - [ ] Tenants
+  - [ ] Roles
+  - [ ] Permissions
+  - [ ] Features
+  - [ ] Pricing Tiers
+  - [ ] Generic Objects
+- [ ] .find Name and Profile Integration
 - [x] GO Server SDK
 - [x] JS, Node, and React SDKs
 - [ ] Swift SDK
