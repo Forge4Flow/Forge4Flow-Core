@@ -38,8 +38,7 @@
           "{}": false
         }
       }
-    ],
-    "no-html-link-for-pages": "off"
+    ]
   },
   "plugins": ["import"],
   "settings": {
@@ -51,6 +50,9 @@
         "alwaysTryTypes": true,
         "project": ["./tsconfig.json"]
       }
+    },
+    "next": {
+      "rootDir": "web/"
     }
   }
 }
