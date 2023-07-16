@@ -38,7 +38,8 @@
           "{}": false
         }
       }
-    ]
+    ],
+    "no-html-link-for-pages": "off"
   },
   "plugins": ["import"],
   "settings": {
