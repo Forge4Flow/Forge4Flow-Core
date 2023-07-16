@@ -34,21 +34,21 @@ func NewService(env service.Env, cfg config.Forge4FlowConfig) *FlowService {
 		FlowClient:  flowClient,
 	}
 
-	svc.queue = newQueue(svc, 25)
-	go svc.queue.Start()
+	svc.queue = newQueue(svc)
+	go svc.queue.Start(25)
 
 	svc.eventMonitor = newEventMonitorService(svc)
 
 	return svc
 }
 
-func (svc *FlowService) ID() string {
+func (svc FlowService) ID() string {
 	return service.FlowService
 }
 
 func (svc *FlowService) StartQueue() error {
 	if !svc.queue.running {
-		go svc.queue.Start()
+		go svc.queue.Start(25)
 		return nil
 	}
 

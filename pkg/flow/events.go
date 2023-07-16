@@ -3,19 +3,29 @@ package flow
 import (
 	"context"
 	"errors"
+	"fmt"
 	"log"
 	"sync"
 )
+
+type Event struct {
+	Type          string      `json:"type,omitempty"`
+	Data          interface{} `json:"data,omitempty"`
+	TransactionID string      `json:"transaction_id,omitempty"`
+}
 
 type EventMonitorService struct {
 	monitors      map[string]*EventMonitor
 	monitorsMutex sync.Mutex
 	flowSvc       *FlowService
+	eventChannel  chan Event // Channel to receive events
 }
 
 func newEventMonitorService(svc *FlowService) *EventMonitorService {
 	return &EventMonitorService{
-		flowSvc: svc,
+		flowSvc:      svc,
+		monitors:     make(map[string]*EventMonitor),
+		eventChannel: make(chan Event),
 	}
 }
 
@@ -39,9 +49,11 @@ func (ems *EventMonitorService) StopService() {
 
 func (ems *EventMonitorService) AddMonitor(eventID string) {
 	em := &EventMonitor{
-		EventID:  eventID,
-		stopChan: make(chan struct{}),
-		flowSvc:  ems.flowSvc,
+		EventID:      eventID,
+		stopChan:     make(chan struct{}),
+		flowSvc:      ems.flowSvc,
+		queue:        ems.flowSvc.queue,
+		eventChannel: ems.eventChannel,
 	}
 
 	ems.monitorsMutex.Lock()
@@ -105,9 +117,15 @@ type Job struct {
 }
 
 func (j *Job) Execute() {
+	fmt.Println("executing called")
 	if j.ExecuteFunc != nil {
 		j.ExecuteFunc()
+		close(j.Done)
 	}
+}
+
+func (j *Job) Close() {
+	close(j.Done)
 }
 
 type EventMonitor struct {
@@ -118,6 +136,7 @@ type EventMonitor struct {
 	mutex           sync.Mutex
 	flowSvc         *FlowService
 	queue           *Queue
+	eventChannel    chan<- Event // Channel to send events to the service
 }
 
 func (em *EventMonitor) Start() {
@@ -143,60 +162,68 @@ func (em *EventMonitor) Stop() {
 }
 
 func (em *EventMonitor) runLoop() {
+	fmt.Println("is running 1")
 	em.running = true
 	for {
 		select {
 		case <-em.stopChan:
+			fmt.Println("stop called")
 			em.running = false
 			return
 		default:
+			fmt.Println("is running loop")
 			// Create a new job to be executed by the queue
 			job := &Job{
 				Done: make(chan struct{}),
 			}
 
-			// Capture the `job` variable in a closure
-			go func(job *Job) {
-				job.ExecuteFunc = func() {
-					ctx := context.Background()
+			job.ExecuteFunc = func() {
+				fmt.Println("job execution")
+				ctx := context.Background()
 
-					// Get last sealed block height from blockchain
-					latestBlock, err := em.flowSvc.FlowClient.GetLatestBlock(ctx, true)
-					if err != nil {
-						log.Println(err)
-					}
-
-					if em.lastBlockHeight == 0 {
-						em.lastBlockHeight = latestBlock.Height
-					}
-
-					// Query events from block range
-					blocks, err := em.flowSvc.FlowClient.GetEventsForHeightRange(ctx, em.EventID, em.lastBlockHeight, latestBlock.Height)
-					if err != nil {
-						log.Println(err)
-					}
-
-					// Updated last block height
-					em.lastBlockHeight = latestBlock.Height
-
-					// parse events from block range
-					for _, block := range blocks {
-						for _, event := range block.Events {
-							log.Printf("\n\nType: %s", event.Type)
-							log.Printf("\nValues: %v", event.Value)
-							log.Printf("\nTransaction ID: %s", event.TransactionID)
-						}
-					}
-
-					// Signal job completion
-					close(job.Done)
+				// Get last sealed block height from blockchain
+				latestBlock, err := em.flowSvc.FlowClient.GetLatestBlock(ctx, true)
+				if err != nil {
+					log.Println(err)
 				}
-			}(job)
 
-			go em.queue.CreateJob(job)
+				if em.lastBlockHeight == 0 {
+					em.lastBlockHeight = latestBlock.Height
+				}
+
+				// Query events from block range
+				blocks, err := em.flowSvc.FlowClient.GetEventsForHeightRange(ctx, em.EventID, em.lastBlockHeight, latestBlock.Height)
+				if err != nil {
+					log.Println(err)
+				}
+
+				// Updated last block height
+				em.lastBlockHeight = latestBlock.Height
+
+				// parse events from block range
+				for _, block := range blocks {
+					for _, cadenceEvent := range block.Events {
+						log.Printf("\n\nType: %s", cadenceEvent.Type)
+						log.Printf("\nValues: %v", cadenceEvent.Value)
+						log.Printf("\nTransaction ID: %s", cadenceEvent.TransactionID)
+
+						event := Event{
+							Type:          cadenceEvent.Type,
+							Data:          CadenceValueToInterface(cadenceEvent.Value),
+							TransactionID: cadenceEvent.TransactionID.Hex(),
+						}
+
+						em.eventChannel <- event
+					}
+				}
+				close(job.Done)
+			}
+
+			em.queue.CreateJob(job)
 
 			// Wait for the job to complete
 			<-job.Done
+			fmt.Println("job done")
 		}
 	}
 }
