@@ -15,7 +15,9 @@ const users = async (req: NextApiRequest, res: NextApiResponse) => {
       res.status(200).json(users)
       return
     }
-  } else if (req.method === 'POST') {
+  }
+
+  if (req.method === 'POST') {
     const user = JSON.parse(req.body)
 
     if (user) {
@@ -27,10 +29,14 @@ const users = async (req: NextApiRequest, res: NextApiResponse) => {
 
       if (createdUser) {
         res.status(200).json({ message: 'Success' })
+        return
       }
     }
-  } else if (req.method === 'PUT') {
+  }
+
+  if (req.method === 'PUT') {
     res.status(405).json({ message: 'Method Not Allowed' })
+    return
   }
 
   res.status(500).json({ message: 'Unknown Error' })
