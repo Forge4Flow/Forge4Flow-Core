@@ -5,7 +5,7 @@ import { ReactNode, ReactElement, useEffect } from 'react'
 import { useRouter } from 'next/router'
 
 // ** Hooks Import
-import { useForge4Flow } from '@forge4flow/forge4flow-react'
+import { useForge4Flow } from '@forge4flow/forge4flow-nextjs'
 
 interface AuthGuardProps {
   children: ReactNode

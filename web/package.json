@@ -44,16 +44,16 @@
     "format": "prettier --write \"src/**/*.{js,jsx,ts,tsx}\""
   },
   "dependencies": {
-    "@forge4flow/forge4flow-nextjs": "file:../../Forge4Flow-NextJS",
-    "@forge4flow/forge4flow-react": "0.0.1",
     "@emotion/cache": "11.10.8",
     "@emotion/react": "11.10.8",
     "@emotion/server": "11.10.0",
     "@emotion/styled": "11.10.8",
+    "@forge4flow/forge4flow-nextjs": "0.0.3",
     "@iconify/react": "^4.1.1",
     "@mui/icons-material": "^5.14.0",
     "@mui/lab": "^5.0.0-alpha.70",
     "@mui/material": "^5.4.3",
+    "@onflow/fcl": "^1.4.1",
     "@popperjs/core": "^2.11.2",
     "apexcharts-clevision": "3.28.5",
     "clsx": "^1.1.1",

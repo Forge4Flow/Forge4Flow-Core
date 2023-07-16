@@ -5,7 +5,7 @@ import { useState, SyntheticEvent, Fragment } from 'react'
 import { useRouter } from 'next/router'
 
 // ** Forge4Flow Import
-import { useForge4Flow } from '@forge4flow/forge4flow-react'
+import { useForge4Flow } from '@forge4flow/forge4flow-nextjs'
 
 // ** MUI Imports
 import Box from '@mui/material/Box'

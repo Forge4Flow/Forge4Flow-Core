@@ -20,7 +20,7 @@ import themeConfig from 'src/configs/themeConfig'
 // ** Component Imports
 import UserLayout from 'src/layouts/UserLayout'
 import ThemeComponent from 'src/@core/theme/ThemeComponent'
-import { Forge4FlowProvider } from '@forge4flow/forge4flow-react'
+import { Forge4FlowProvider } from '@forge4flow/forge4flow-nextjs'
 import AuthGuard from 'src/layouts/components/auth/AuthGuard'
 import GuestGuard from 'src/layouts/components/auth/GuestGuard'
 import Spinner from 'src/@core/components/spinner'

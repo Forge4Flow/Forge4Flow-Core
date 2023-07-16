@@ -1,6 +1,5 @@
 import { NextApiRequest, NextApiResponse } from 'next/types'
 import { withSessionPermission, Forge4FlowServer, CreateUserParams } from '@forge4flow/forge4flow-nextjs'
-import { use } from 'next-api-route-middleware'
 
 const users = async (req: NextApiRequest, res: NextApiResponse) => {
   const forge4flow = new Forge4FlowServer({
@@ -42,4 +41,4 @@ const users = async (req: NextApiRequest, res: NextApiResponse) => {
   res.status(500).json({ message: 'Unknown Error' })
 }
 
-export default use(withSessionPermission('forge4flow-admin'), users)
+export default withSessionPermission('forge4flow-admin', users)

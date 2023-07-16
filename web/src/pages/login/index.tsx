@@ -31,7 +31,7 @@ import MuiCard, { CardProps } from '@mui/material/Card'
 // import EyeOutline from 'mdi-material-ui/EyeOutline'
 // import EyeOffOutline from 'mdi-material-ui/EyeOffOutline'
 
-import { useForge4Flow } from '@forge4flow/forge4flow-react'
+import { useForge4Flow } from '@forge4flow/forge4flow-nextjs'
 
 // ** Configs
 import themeConfig from 'src/configs/themeConfig'

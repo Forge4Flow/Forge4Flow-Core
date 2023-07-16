@@ -25,6 +25,7 @@
 [![Stargazers][stars-shield]][stars-url]
 [![Issues][issues-shield]][issues-url]
 [![ELv2 License][license-shield]][license-url]
+[![CodeFactor][code-factor-shield]][code-factor-url]
 
 <!-- PROJECT LOGO -->
 <br />
@@ -76,6 +77,9 @@ To get started using Forge4Flow, follow the deployment guide to self host your o
 
 - [x] Blockchain Native Login w/ Client & Server Sessions
 - [ ] Walletless Onboarding w/ Client & Server Sessions
+  - [ ] Transaction Signing APIs
+  - [ ] Parent/Child Account Linking
+  - [ ] Forced Hybrid Authentication (Creating Flow Child Accounts for Blockchain Native Accounts)
 - NFT/FT Gates
   - [ ] Users
   - [ ] Tenants
@@ -86,10 +90,10 @@ To get started using Forge4Flow, follow the deployment guide to self host your o
   - [ ] Generic Objects
 - [ ] .find Name and Profile Integration
 - [x] GO Server SDK
-- [x] JS, Node, and React SDKs
+- [x] JS, Node, React, and NextJS SDKs
 - [ ] Swift SDK
 - [ ] Kotlin SDK
-- [x] User Management & Admin Dashboard
+- [x] Admin Dashboard
 - [ ] Multi-Tenant Support
 
 ### Alerts4Flow
@@ -109,6 +113,7 @@ To get started using Forge4Flow, follow the deployment guide to self host your o
     - [ ] FT Deposit
     - [ ] FT Withdrawal
 - [ ] Custom Event Monitors
+- [x] Admin Dashboard
 
 ### Ecosystem SDKs
 
@@ -166,3 +171,5 @@ Forge4Flow is distributed under the ELv2 License. See `LICENSE` for more informa
 [issues-url]: https://github.com/Forge4Flow/Forge4Flow-Core/issues
 [license-shield]: https://img.shields.io/badge/license-elv2-blue?style=for-the-badge
 [license-url]: https://github.com/Forge4Flow/Forge4Flow-Core/blob/master/LICENSE
+[code-factor-shield]: https://img.shields.io/codefactor/grade/github/forge4flow/forge4flow-core/main?style=for-the-badge
+[code-factor-url]: https://www.codefactor.io/repository/github/forge4flow/forge4flow-core
