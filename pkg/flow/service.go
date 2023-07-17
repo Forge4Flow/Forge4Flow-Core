@@ -4,6 +4,7 @@ import (
 	"context"
 	"encoding/hex"
 	"errors"
+	"fmt"
 
 	"github.com/forge4flow/forge4flow-core/pkg/config"
 	"github.com/forge4flow/forge4flow-core/pkg/service"
@@ -17,12 +18,13 @@ import (
 type FlowService struct {
 	service.BaseService
 	Config       config.Forge4FlowConfig
+	Repository   FlowEventRepository
 	FlowClient   *http.Client
 	queue        *Queue
 	eventMonitor *EventMonitorService
 }
 
-func NewService(env service.Env, cfg config.Forge4FlowConfig) *FlowService {
+func NewService(env service.Env, cfg config.Forge4FlowConfig, flowEventsRepo FlowEventRepository) *FlowService {
 	flowClient, err := http.NewClient(cfg.GetFlowNetwork())
 	if err != nil {
 		log.Fatal().Err(err).Msg("Could not initialize and connect to the configured Flow Blockchain. Shutting down.")
@@ -31,6 +33,7 @@ func NewService(env service.Env, cfg config.Forge4FlowConfig) *FlowService {
 	svc := &FlowService{
 		BaseService: service.NewBaseService(env),
 		Config:      cfg,
+		Repository:  flowEventsRepo,
 		FlowClient:  flowClient,
 	}
 
@@ -38,6 +41,15 @@ func NewService(env service.Env, cfg config.Forge4FlowConfig) *FlowService {
 	go svc.queue.Start(25)
 
 	svc.eventMonitor = newEventMonitorService(svc)
+	events, err := svc.Repository.GetAllEvents(context.Background()) // Need to handle errors properly but it's probably safe to ignore them for now.
+	if err != nil {
+		fmt.Println(err)
+	}
+
+	for _, event := range events {
+		fmt.Println("adding events")
+		svc.eventMonitor.AddMonitor(event.GetType())
+	}
 
 	return svc
 }

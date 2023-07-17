@@ -29,7 +29,7 @@ import (
 )
 
 const (
-	MySQLDatastoreMigrationVersion     = 000006
+	MySQLDatastoreMigrationVersion     = 000007
 	MySQLEventstoreMigrationVersion    = 000003
 	PostgresDatastoreMigrationVersion  = 000005
 	PostgresEventstoreMigrationVersion = 000004
@@ -279,8 +279,12 @@ func main() {
 	}
 	sessionSvc := session.NewService(&svcEnv, cfg, sessionRepository, nonceSvc, userSvc, eventSvc)
 
-	// Init the flow repo and service
-	flowSerice := flow.NewService(&svcEnv, cfg)
+	// Init the flow repos and service
+	flowEventRepository, err := flow.NewEventRepository(svcEnv.DB())
+	if err != nil {
+		log.Fatal().Err(err).Msg("Could not initialize FlowEventRepository")
+	}
+	flowSerice := flow.NewService(&svcEnv, cfg, flowEventRepository)
 
 	// Verify admin role and initial user are configured
 	setup.InitialSetup(&cfg, permissionSvc, roleSvc, userSvc, warrantSvc)

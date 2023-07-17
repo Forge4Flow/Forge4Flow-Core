@@ -7,26 +7,59 @@ import (
 	"log"
 	"sync"
 	"time"
+
+	"github.com/forge4flow/forge4flow-core/pkg/service"
 )
 
-type Event struct {
-	Type          string      `json:"type,omitempty"`
-	Data          interface{} `json:"data,omitempty"`
-	TransactionID string      `json:"transaction_id,omitempty"`
+func (svc *FlowService) AddEventMonitor(ctx context.Context, event EventSpec) error {
+	// Add to DB
+	var newEvent Model
+	err := svc.Env().DB().WithinTransaction(ctx, func(txCtx context.Context) error {
+		_, err := svc.Repository.GetByType(txCtx, event.Type)
+		if err == nil {
+			return service.NewDuplicateRecordError("FlowEventType", event.Type, "A event monitor with the given event type already exists")
+		}
+
+		newEventId, err := svc.Repository.Create(txCtx, event.ToEvent())
+		if err != nil {
+			return err
+		}
+
+		newEvent, err = svc.Repository.GetById(txCtx, newEventId)
+		if err != nil {
+			return err
+		}
+
+		// TODO: Integrate with EventSvc for monitoring and logging
+		// err = svc.EventSvc.TrackResourceCreated(txCtx, ResourceTypePermission, newPermission.GetPermissionId(), newPermission.ToPermissionSpec())
+		// if err != nil {
+		// 	return err
+		// }
+
+		return nil
+	})
+	if err != nil {
+		return err
+	}
+
+	// Add to EventMonitor Service
+	svc.eventMonitor.AddMonitor(newEvent.GetType())
+
+	return nil
 }
 
 type EventMonitorService struct {
 	monitors      map[string]*EventMonitor
 	monitorsMutex sync.Mutex
 	flowSvc       *FlowService
-	eventChannel  chan Event // Channel to receive events
+	eventChannel  chan EventSpec // Channel to receive events
 }
 
 func newEventMonitorService(svc *FlowService) *EventMonitorService {
 	return &EventMonitorService{
 		flowSvc:      svc,
 		monitors:     make(map[string]*EventMonitor),
-		eventChannel: make(chan Event),
+		eventChannel: make(chan EventSpec),
 	}
 }
 
@@ -132,7 +165,7 @@ type EventMonitor struct {
 	mutex           sync.Mutex
 	flowSvc         *FlowService
 	queue           *Queue
-	eventChannel    chan<- Event // Channel to send events to the service
+	eventChannel    chan<- EventSpec // Channel to send events to the service
 }
 
 func (em *EventMonitor) Start() {
@@ -187,7 +220,7 @@ func (em *EventMonitor) runLoop() {
 					em.lastBlockHeight = latestBlock.Height
 				}
 
-				if em.lastBlockHeight-latestBlock.Height > 250 {
+				if latestBlock.Height-em.lastBlockHeight > 250 {
 					latestBlock.Height = em.lastBlockHeight + 200
 				}
 
@@ -199,6 +232,7 @@ func (em *EventMonitor) runLoop() {
 
 				// Updated last block height
 				em.lastBlockHeight = latestBlock.Height
+				em.flowSvc.Repository.UpdateLastBlockHeightByType(context.Background(), em.EventID, latestBlock.Height)
 
 				// parse events from block range
 				for _, block := range blocks {
@@ -207,7 +241,7 @@ func (em *EventMonitor) runLoop() {
 						log.Printf("\nValues: %v", cadenceEvent.Value)
 						log.Printf("\nTransaction ID: %s", cadenceEvent.TransactionID)
 
-						event := Event{
+						event := EventSpec{
 							Type:          cadenceEvent.Type,
 							Data:          CadenceValueToInterface(cadenceEvent.Value),
 							TransactionID: cadenceEvent.TransactionID.Hex(),

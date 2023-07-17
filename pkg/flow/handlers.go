@@ -33,7 +33,7 @@ func (svc FlowService) Routes() ([]service.Route, error) {
 }
 
 func AddEventMonitorHandler(svc FlowService, w http.ResponseWriter, r *http.Request) error {
-	var event Event
+	var event EventSpec
 	err := service.ParseJSONBody(r.Body, &event)
 	if err != nil {
 		return service.NewInvalidRequestError("Invalid JSON body")
@@ -43,7 +43,10 @@ func AddEventMonitorHandler(svc FlowService, w http.ResponseWriter, r *http.Requ
 		return service.NewMissingRequiredParameterError("Type")
 	}
 
-	svc.eventMonitor.AddMonitor(event.Type)
+	err = svc.AddEventMonitor(r.Context(), event)
+	if err != nil {
+		return err
+	}
 
 	service.SendJSONResponse(w, event)
 
@@ -51,7 +54,7 @@ func AddEventMonitorHandler(svc FlowService, w http.ResponseWriter, r *http.Requ
 }
 
 func RemoveEventMonitorHandler(svc FlowService, w http.ResponseWriter, r *http.Request) error {
-	var event Event
+	var event EventSpec
 	err := service.ParseJSONBody(r.Body, &event)
 	if err != nil {
 		return service.NewInvalidRequestError("Invalid JSON body")
@@ -91,7 +94,7 @@ func GetEventsWSHandler(svc FlowService, w http.ResponseWriter, r *http.Request)
 	eventChannel := svc.eventMonitor.eventChannel
 
 	// Create a channel to send filtered events to the WebSocket client
-	filteredEvents := make(chan Event)
+	filteredEvents := make(chan EventSpec)
 
 	var subscriptionReq SubscriptionRequest
 
