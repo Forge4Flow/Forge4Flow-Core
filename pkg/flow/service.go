@@ -51,6 +51,8 @@ func NewService(env service.Env, cfg config.Forge4FlowConfig, flowEventsRepo Flo
 		svc.eventMonitor.AddMonitor(event.GetType())
 	}
 
+	// eventChannel := svc.eventMonitor.eventChannel
+
 	return svc
 }
 

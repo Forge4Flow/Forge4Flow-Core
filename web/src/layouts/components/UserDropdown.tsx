@@ -54,8 +54,6 @@ const UserDropdown = () => {
 
   const handleLogout = () => {
     auth.unauthenticate()
-
-    router.reload()
   }
 
   const styles = {

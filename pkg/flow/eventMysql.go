@@ -48,7 +48,7 @@ func (repo MySQLRepository) GetById(ctx context.Context, id int64) (Model, error
 		ctx,
 		&event,
 		`
-			SELECT id, type, lastBlockHeight, createdAt, updatedAt, deletedAt
+			SELECT id, type, lastBlockHeight, objectType, objectId, ownerField, script, removeAction, actionEnabled, createdAt, updatedAt, deletedAt
 			FROM flowEvent
 			WHERE
 				id = ? AND
@@ -74,7 +74,7 @@ func (repo MySQLRepository) GetByType(ctx context.Context, eventType string) (Mo
 		ctx,
 		&eventObject,
 		`
-			SELECT id, type, lastBlockHeight, createdAt, updatedAt, deletedAt
+			SELECT id, type, lastBlockHeight, objectType, objectId, ownerField, script, removeAction, actionEnabled, createdAt, updatedAt, deletedAt
 			FROM flowEvent
 			WHERE
 				type = ? AND
@@ -100,7 +100,7 @@ func (repo MySQLRepository) GetAllEvents(ctx context.Context) ([]Model, error) {
 		ctx,
 		&eventObjects,
 		`
-			SELECT id, type, lastBlockHeight, createdAt, updatedAt, deletedAt
+			SELECT id, type, lastBlockHeight, objectType, objectId, ownerField, script, removeAction, actionEnabled, createdAt, updatedAt, deletedAt
 			FROM flowEvent
 			WHERE
 				deletedAt IS NULL

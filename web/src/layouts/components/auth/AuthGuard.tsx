@@ -26,23 +26,28 @@ const AuthGuard = (props: AuthGuardProps) => {
       }
 
       const verifySession = async () => {
-        const validSession = await auth.validSession()
-        if (!validSession) {
-          if (router.asPath !== '/') {
-            router.replace({
-              pathname: '/login',
-              query: { returnUrl: router.asPath }
-            })
-          } else {
-            router.replace('/login')
+        try {
+          const validSession = await auth.validSession()
+          if (!validSession) {
+            if (router.asPath !== '/') {
+              router.replace({
+                pathname: '/login',
+                query: { returnUrl: router.asPath }
+              })
+            } else {
+              router.replace('/login')
+            }
           }
-        }
 
-        const isAdmin = await auth.hasPermission({ permissionId: 'forge4flow-admin' })
-        if (!isAdmin) {
-          router.replace('/401')
+          const isAdmin = await auth.hasPermission({ permissionId: 'forge4flow-admin' })
+          if (!isAdmin) {
+            router.replace('/401')
+          }
+          setCheckingSession(false)
+        } catch (error) {
+          console.log(error)
+          router.replace('/login')
         }
-        setCheckingSession(false)
       }
 
       verifySession()

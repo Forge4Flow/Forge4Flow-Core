@@ -18,6 +18,12 @@ type Event struct {
 	ID              int64      `mysql:"id" postgres:"id" sqlite:"id"`
 	Type            string     `mysql:"type" postgres:"type" sqlite:"type"`
 	LastBlockHeight uint64     `mysql:"lastBlockHeight" postgres:"last_block_height" sqlite:"lastBlockHeight"`
+	ObjectType      string     `mysql:"objectType" postgres:"object_type" sqlite:"objectType"`
+	ObjectIdField   string     `mysql:"objectId" postgres:"object_id" sqlite:"objectId"`
+	OwnerField      string     `mysql:"ownerField" postgres:"owner_field" sqlite:"ownerField"`
+	Script          string     `mysql:"script" postgres:"script" sqlite:"script"`
+	RemoveAction    bool       `mysql:"removeAction" postgres:"remove_action" sqlite:"removeAction"`
+	ActionEnabled   bool       `mysql:"actionEnabled" postgres:"action_enabled" sqllite:"actionEnabled"`
 	CreatedAt       time.Time  `mysql:"createdAt" postgres:"created_at" sqlite:"createdAt"`
 	UpdatedAt       time.Time  `mysql:"updatedAt" postgres:"updated_at" sqlite:"updatedAt"`
 	DeletedAt       *time.Time `mysql:"deletedAt" postgres:"deleted_at" sqlite:"deletedAt"`
