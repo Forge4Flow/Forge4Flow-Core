@@ -6,6 +6,7 @@ import (
 	"fmt"
 	"log"
 	"sync"
+	"time"
 )
 
 type Event struct {
@@ -120,12 +121,7 @@ func (j *Job) Execute() {
 	fmt.Println("executing called")
 	if j.ExecuteFunc != nil {
 		j.ExecuteFunc()
-		close(j.Done)
 	}
-}
-
-func (j *Job) Close() {
-	close(j.Done)
 }
 
 type EventMonitor struct {
@@ -191,6 +187,10 @@ func (em *EventMonitor) runLoop() {
 					em.lastBlockHeight = latestBlock.Height
 				}
 
+				if em.lastBlockHeight-latestBlock.Height > 250 {
+					latestBlock.Height = em.lastBlockHeight + 200
+				}
+
 				// Query events from block range
 				blocks, err := em.flowSvc.FlowClient.GetEventsForHeightRange(ctx, em.EventID, em.lastBlockHeight, latestBlock.Height)
 				if err != nil {
@@ -216,13 +216,12 @@ func (em *EventMonitor) runLoop() {
 						em.eventChannel <- event
 					}
 				}
-				close(job.Done)
 			}
 
 			em.queue.CreateJob(job)
 
 			// Wait for the job to complete
-			<-job.Done
+			time.Sleep(5 * time.Second)
 			fmt.Println("job done")
 		}
 	}

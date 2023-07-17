@@ -64,7 +64,6 @@ func (q *Queue) Start(rateLimit int) {
 			ticker.Stop()
 			return
 		case <-ticker.C:
-			fmt.Println("ticker count")
 			q.JobsMutex.Lock()
 			jobIDs := make([]string, 0, len(q.Jobs))
 			for id := range q.Jobs {
