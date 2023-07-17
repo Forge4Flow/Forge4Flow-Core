@@ -13,7 +13,7 @@ func (svc FlowService) Routes() ([]service.Route, error) {
 			Pattern:                    "/v1/flow/events",
 			Method:                     "GET",
 			Handler:                    service.NewRouteHandler(svc, GetEventsWSHandler),
-			OverrideAuthMiddlewareFunc: service.ApiKeyAuthMiddleware,
+			OverrideAuthMiddlewareFunc: service.PassthroughAuthMiddleware,
 		},
 
 		service.WarrantRoute{
@@ -72,7 +72,12 @@ var upgrader = websocket.Upgrader{
 }
 
 type SubscriptionRequest struct {
-	EventTypes []string `json:"eventTypes"`
+	EventTypes []string `json:"eventTypes,omitempty"`
+	SendAll    bool     `json:"sendAll,omitempty"`
+}
+
+type ErrorMessage struct {
+	Error string `json:"error"`
 }
 
 func GetEventsWSHandler(svc FlowService, w http.ResponseWriter, r *http.Request) error {
@@ -100,6 +105,17 @@ func GetEventsWSHandler(svc FlowService, w http.ResponseWriter, r *http.Request)
 		}
 	}()
 
+	// Start a goroutine to send filtered events from the filteredEvents channel to the WebSocket client
+	go func() {
+		for event := range filteredEvents {
+			err := conn.WriteJSON(event)
+			if err != nil {
+				// Handle error, e.g., log and break the loop
+				break
+			}
+		}
+	}()
+
 	// The function will block here until the connection is closed
 	for {
 		// Read incoming messages from the WebSocket client
@@ -107,6 +123,16 @@ func GetEventsWSHandler(svc FlowService, w http.ResponseWriter, r *http.Request)
 		if err != nil {
 			// Connection closed, so we break the loop
 			break
+		}
+
+		if len(subscriptionReq.EventTypes) > 0 && subscriptionReq.SendAll {
+			conn.WriteJSON(ErrorMessage{Error: "You cannot subscribe to all events and set a filter at the same time."})
+			conn.Close()
+		}
+
+		if len(subscriptionReq.EventTypes) == 0 && !subscriptionReq.SendAll {
+			conn.WriteJSON(ErrorMessage{Error: "You must either subscribe to all events or set a filter."})
+			conn.Close()
 		}
 	}
 
