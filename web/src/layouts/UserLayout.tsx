@@ -2,9 +2,12 @@
 import { ReactNode } from 'react'
 
 // ** MUI Imports
-import Box from '@mui/material/Box'
 import { Theme } from '@mui/material/styles'
 import useMediaQuery from '@mui/material/useMediaQuery'
+
+// ** Toastify Imports
+import { ToastContainer } from 'react-toastify'
+import 'react-toastify/dist/ReactToastify.css'
 
 // ** Layout Imports
 import VerticalLayout from 'src/@core/layouts/VerticalLayout'
@@ -54,6 +57,7 @@ const UserLayout = ({ children }: Props) => {
       )}
     >
       {children}
+      <ToastContainer position='bottom-right' closeOnClick autoClose={5000} theme='dark' />
     </VerticalLayout>
   )
 }

@@ -71,12 +71,16 @@ const navigation = (): VerticalNavItemsType => {
         {
           title: 'Object Types',
           icon: 'mdi:archive-outline',
-          path: '/admin/auth4flow/fgac/object-types'
+          path: '/admin/auth4flow/fgac/object-types',
+          badgeContent: 'API Only Currently',
+          disabled: true
         },
         {
           title: 'Objects',
           path: '/admin/auth4flow/fgac/objects',
-          icon: 'mdi:archive-outline'
+          icon: 'mdi:archive-outline',
+          badgeContent: 'API Only Currently',
+          disabled: true
         },
         {
           title: 'Check',

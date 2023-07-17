@@ -1,17 +1,17 @@
 import { NextApiRequest, NextApiResponse } from 'next/types'
 import { withSessionPermission, Forge4FlowServer, CreateUserParams } from '@forge4flow/forge4flow-nextjs'
 
-const users = async (req: NextApiRequest, res: NextApiResponse) => {
+const roles = async (req: NextApiRequest, res: NextApiResponse) => {
   const forge4flow = new Forge4FlowServer({
     endpoint: process.env.AUTH4FLOW_BASE_URL,
     apiKey: process.env.AUTH4FLOW_API_KEY || ''
   })
 
   if (req.method === 'GET') {
-    const users = await forge4flow.User.listUsers()
+    const roles = await forge4flow.Role.listRoles()
 
-    if (users) {
-      res.status(200).json(users)
+    if (roles) {
+      res.status(200).json(roles)
       return
     }
   }
@@ -43,4 +43,4 @@ const users = async (req: NextApiRequest, res: NextApiResponse) => {
   res.status(500).json({ message: 'Unknown Error' })
 }
 
-export default withSessionPermission('forge4flow-admin', users)
+export default withSessionPermission('forge4flow-admin', roles)

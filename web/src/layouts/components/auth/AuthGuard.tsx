@@ -1,5 +1,5 @@
 // ** React Imports
-import { ReactNode, ReactElement, useEffect } from 'react'
+import { ReactNode, ReactElement, useEffect, useState } from 'react'
 
 // ** Next Import
 import { useRouter } from 'next/router'
@@ -16,6 +16,8 @@ const AuthGuard = (props: AuthGuardProps) => {
   const { children, fallback } = props
   const auth = useForge4Flow()
   const router = useRouter()
+
+  const [checkingSession, setCheckingSession] = useState(true)
 
   useEffect(
     () => {
@@ -35,6 +37,12 @@ const AuthGuard = (props: AuthGuardProps) => {
             router.replace('/login')
           }
         }
+
+        const isAdmin = await auth.hasPermission({ permissionId: 'forge4flow-admin' })
+        if (!isAdmin) {
+          router.replace('/401')
+        }
+        setCheckingSession(false)
       }
 
       verifySession()
@@ -43,8 +51,7 @@ const AuthGuard = (props: AuthGuardProps) => {
     [auth.sessionToken, auth.isAuthenticated, router.route]
   )
 
-  if (auth.isLoading || auth.isAuthenticated === false) {
-    console.log(auth.isAuthenticated)
+  if (auth.isLoading || auth.isAuthenticated === false || checkingSession) {
     return fallback
   }
 

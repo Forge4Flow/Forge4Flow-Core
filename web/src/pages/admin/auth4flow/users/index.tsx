@@ -30,22 +30,27 @@ const UsersPage = () => {
   const [createUserOpen, setCreateUserOpen] = useState(false)
   const [users, setUsers] = useState<UserType[]>([])
 
+  const fetchUsers = async () => {
+    const res = await fetch('/api/users', {
+      credentials: 'include'
+    })
+
+    const json = await res.json()
+
+    setUsers(json)
+  }
+
   useEffect(() => {
-    const fetchUsers = async () => {
-      const res = await fetch('/api/users', {
-        credentials: 'include'
-      })
-
-      const json = await res.json()
-
-      setUsers(json)
-    }
-
     fetchUsers()
   }, [])
 
-  const handleCloseCreateUser = () => {
+  const handleCloseCreateUser = (success?: boolean) => {
     setCreateUserOpen(false)
+
+    if (success) {
+      setUsers([])
+      fetchUsers()
+    }
   }
 
   return (
@@ -79,12 +84,14 @@ const UsersPage = () => {
 
       <Modal
         open={createUserOpen}
-        onClose={handleCloseCreateUser}
+        onClose={e => {
+          handleCloseCreateUser()
+        }}
         aria-labelledby='modal-modal-title'
         aria-describedby='modal-modal-description'
       >
         <Box sx={style}>
-          <CreateUserForm />
+          <CreateUserForm closeHandler={handleCloseCreateUser} />
         </Box>
       </Modal>
     </>

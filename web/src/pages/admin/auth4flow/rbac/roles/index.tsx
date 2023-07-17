@@ -9,10 +9,11 @@ import Box from '@mui/material/Box'
 import { useEffect, useState } from 'react'
 
 // ** Components Imports
-import UsersTable from 'src/views/pages/users/UsersTable'
-import CreateUserForm from 'src/views/pages/users/CreateUserForm'
+import RolesTable from 'src/views/pages/roles/RolesTable'
+import CreateRoleForm from 'src/views/pages/roles/CreateRoleForm'
 
-export type UserType = { userId: string; email?: string }
+// ** Type Imports
+import { RoleType } from 'src/utils/types/roles'
 
 const style = {
   position: 'absolute' as 'absolute',
@@ -25,69 +26,70 @@ const style = {
   boxShadow: 24
 }
 
-const UsersPage = () => {
-  const [createUserOpen, setCreateUserOpen] = useState(false)
-  const [users, setUsers] = useState<UserType[]>([])
+const RolesPage = () => {
+  const [createRoleOpen, setCreateRoleOpen] = useState(false)
+  const [roles, setRoles] = useState<RoleType[]>([])
+  const [fetching, setFetching] = useState(true)
 
   useEffect(() => {
     const fetchUsers = async () => {
-      const res = await fetch('/api/users', {
+      setFetching(true)
+      const res = await fetch('/api/roles', {
         credentials: 'same-origin'
       })
 
       const json = await res.json()
 
-      setUsers(json)
+      setRoles(json)
+      setFetching(false)
     }
 
     fetchUsers()
   }, [])
 
-  const handleCloseCreateUser = () => {
-    setCreateUserOpen(false)
+  const handleCloseCreateRole = () => {
+    setCreateRoleOpen(false)
   }
 
   return (
     <>
       <Grid container spacing={6}>
         <Grid item xs={10}>
-          <Typography variant='h5'>Users</Typography>
-          <Typography variant='body2'>Create and manage users and what they can access in your application.</Typography>
+          <Typography variant='h5'>Roles</Typography>
+          <Typography variant='body2'>
+            Create and manage roles that allow you to group related permissions by user persona or function.
+          </Typography>
         </Grid>
         <Grid item xs={2}>
           <Button
             variant='contained'
             sx={{ px: 5.5 }}
             onClick={() => {
-              setCreateUserOpen(true)
+              setCreateRoleOpen(true)
             }}
           >
-            Create User
+            Create Role
           </Button>
         </Grid>
         <Grid item xs={12}>
           <Card>
-            {users.length > 0 ? (
-              <UsersTable users={users} />
-            ) : (
-              <Typography variant='body2'>Loading users...</Typography>
-            )}
+            {fetching ? <Typography variant='body2'>Loading roles...</Typography> : <RolesTable roles={roles} />}
           </Card>
         </Grid>
       </Grid>
 
       <Modal
-        open={createUserOpen}
-        onClose={handleCloseCreateUser}
+        open={createRoleOpen}
+        onClose={handleCloseCreateRole}
         aria-labelledby='modal-modal-title'
         aria-describedby='modal-modal-description'
       >
         <Box sx={style}>
-          <CreateUserForm />
+          <CreateRoleForm closeHandler={handleCloseCreateRole} />
         </Box>
       </Modal>
     </>
   )
 }
 
-export default UsersPage
+export default RolesPage
