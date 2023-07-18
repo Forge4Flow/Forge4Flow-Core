@@ -3,6 +3,9 @@ package authz
 import (
 	"net/http"
 
+	permission "github.com/forge4flow/forge4flow-core/pkg/authz/permission"
+	role "github.com/forge4flow/forge4flow-core/pkg/authz/role"
+	tenant "github.com/forge4flow/forge4flow-core/pkg/authz/tenant"
 	"github.com/forge4flow/forge4flow-core/pkg/service"
 	"github.com/gorilla/mux"
 )
@@ -21,6 +24,21 @@ func (svc UserService) Routes() ([]service.Route, error) {
 			Pattern: "/v1/users/{userId}",
 			Method:  "GET",
 			Handler: service.NewRouteHandler(svc, GetHandler),
+		},
+		service.WarrantRoute{
+			Pattern: "/v1/users/{userId}/tenants",
+			Method:  "GET",
+			Handler: service.NewRouteHandler(svc, GetTenantsForUserHandler),
+		},
+		service.WarrantRoute{
+			Pattern: "/v1/users/{userId}/roles",
+			Method:  "GET",
+			Handler: service.NewRouteHandler(svc, GetRolesForUserHandler),
+		},
+		service.WarrantRoute{
+			Pattern: "/v1/users/{userId}/permissions",
+			Method:  "GET",
+			Handler: service.NewRouteHandler(svc, GetPermissionsForUserHandler),
 		},
 		service.WarrantRoute{
 			Pattern: "/v1/users",
@@ -76,6 +94,72 @@ func GetHandler(svc UserService, w http.ResponseWriter, r *http.Request) error {
 	}
 
 	service.SendJSONResponse(w, user)
+	return nil
+}
+
+func GetTenantsForUserHandler(svc UserService, w http.ResponseWriter, r *http.Request) error {
+	userId := mux.Vars(r)["userId"]
+	tenantObjects, err := svc.GetAllObjectsForUserByType(r.Context(), userId, "tenant")
+	if err != nil {
+		return err
+	}
+
+	tenants := make([]*tenant.TenantSpec, 0)
+	for _, tenantObject := range tenantObjects {
+		tenant, err := svc.TenantSvc.GetByTenantId(r.Context(), tenantObject.ObjectId)
+		if err != nil {
+			return err
+		}
+
+		tenants = append(tenants, tenant)
+	}
+
+	service.SendJSONResponse(w, tenants)
+
+	return nil
+}
+
+func GetRolesForUserHandler(svc UserService, w http.ResponseWriter, r *http.Request) error {
+	userId := mux.Vars(r)["userId"]
+	roleObjects, err := svc.GetAllObjectsForUserByType(r.Context(), userId, "role")
+	if err != nil {
+		return err
+	}
+
+	roles := make([]*role.RoleSpec, 0)
+	for _, roleObject := range roleObjects {
+		role, err := svc.RoleSvc.GetByRoleId(r.Context(), roleObject.ObjectId)
+		if err != nil {
+			return err
+		}
+
+		roles = append(roles, role)
+	}
+
+	service.SendJSONResponse(w, roles)
+
+	return nil
+}
+
+func GetPermissionsForUserHandler(svc UserService, w http.ResponseWriter, r *http.Request) error {
+	userId := mux.Vars(r)["userId"]
+	permissionObjects, err := svc.GetAllObjectsForUserByType(r.Context(), userId, "permission")
+	if err != nil {
+		return err
+	}
+
+	permissions := make([]*permission.PermissionSpec, 0)
+	for _, permissionObject := range permissionObjects {
+		permission, err := svc.PermissionSvc.GetByPermissionId(r.Context(), permissionObject.ObjectId)
+		if err != nil {
+			return err
+		}
+
+		permissions = append(permissions, permission)
+	}
+
+	service.SendJSONResponse(w, permissions)
+
 	return nil
 }
 

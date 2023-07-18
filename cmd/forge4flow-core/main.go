@@ -249,7 +249,7 @@ func main() {
 	if err != nil {
 		log.Fatal().Err(err).Msg("Could not initialize RoleRepository")
 	}
-	roleSvc := role.NewService(&svcEnv, roleRepository, eventSvc, objectSvc)
+	roleSvc := role.NewService(&svcEnv, roleRepository, warrantSvc, permissionSvc, eventSvc, objectSvc)
 
 	// Init tenant repo and service
 	tenantRepository, err := tenant.NewRepository(svcEnv.DB())
@@ -263,7 +263,7 @@ func main() {
 	if err != nil {
 		log.Fatal().Err(err).Msg("Could not initialize UserRepository")
 	}
-	userSvc := user.NewService(&svcEnv, userRepository, eventSvc, objectSvc)
+	userSvc := user.NewService(&svcEnv, userRepository, permissionSvc, roleSvc, tenantSvc, warrantSvc, eventSvc, objectSvc)
 
 	// Init the nonce repo and service
 	nonceRepository, err := nonce.NewRepository(svcEnv.DB())

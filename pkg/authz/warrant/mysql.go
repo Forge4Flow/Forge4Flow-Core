@@ -290,6 +290,74 @@ func (repo MySQLRepository) List(ctx context.Context, filterOptions *FilterOptio
 	return models, nil
 }
 
+func (repo MySQLRepository) GetAllMatchingSubject(ctx context.Context, subjectType string, subjectId string, subjectRelation string) ([]Model, error) {
+	models := make([]Model, 0)
+	warrants := make([]Warrant, 0)
+	err := repo.DB(ctx).SelectContext(
+		ctx,
+		&warrants,
+		`
+			SELECT id, objectType, objectId, relation, subjectType, subjectId, subjectRelation, policy, createdAt, updatedAt, deletedAt
+			FROM warrant
+			WHERE
+				subjectType = ? AND
+				subjectId = ? AND
+				subjectRelation = ? AND
+				deletedAt IS NULL
+		`,
+		subjectType,
+		subjectId,
+		subjectRelation,
+	)
+	if err != nil {
+		switch err {
+		case sql.ErrNoRows:
+			return models, nil
+		default:
+			return nil, errors.Wrapf(err, "error getting warrants with subject type %s, and subject id %s", subjectType, subjectId)
+		}
+	}
+
+	for i := range warrants {
+		models = append(models, &warrants[i])
+	}
+
+	return models, nil
+}
+
+func (repo MySQLRepository) GetAllMatchingSubjectId(ctx context.Context, subjectType string, subjectId string) ([]Model, error) {
+	models := make([]Model, 0)
+	warrants := make([]Warrant, 0)
+	err := repo.DB(ctx).SelectContext(
+		ctx,
+		&warrants,
+		`
+			SELECT id, objectType, objectId, relation, subjectType, subjectId, subjectRelation, policy, createdAt, updatedAt, deletedAt
+			FROM warrant
+			WHERE
+				subjectType = ? AND
+				subjectId = ? AND
+				deletedAt IS NULL
+		`,
+		subjectType,
+		subjectId,
+	)
+	if err != nil {
+		switch err {
+		case sql.ErrNoRows:
+			return models, nil
+		default:
+			return nil, errors.Wrapf(err, "error getting warrants with subject type %s, and subject id %s", subjectType, subjectId)
+		}
+	}
+
+	for i := range warrants {
+		models = append(models, &warrants[i])
+	}
+
+	return models, nil
+}
+
 func (repo MySQLRepository) GetAllMatchingObjectRelationAndSubject(ctx context.Context, objectType string, objectId string, relation string, subjectType string, subjectId string, subjectRelation string) ([]Model, error) {
 	models := make([]Model, 0)
 	warrants := make([]Warrant, 0)
@@ -321,6 +389,43 @@ func (repo MySQLRepository) GetAllMatchingObjectRelationAndSubject(ctx context.C
 			return models, nil
 		default:
 			return nil, errors.Wrapf(err, "error getting warrants with object type %s, object id %s, relation %s, subject type %s, subject id %s, and subject relation %s", objectType, objectId, relation, subjectType, subjectId, subjectRelation)
+		}
+	}
+
+	for i := range warrants {
+		models = append(models, &warrants[i])
+	}
+
+	return models, nil
+}
+
+func (repo MySQLRepository) GetAllMatchingObjectRelationBySubjectId(ctx context.Context, objectType string, relation string, subjectType string, subjectId string) ([]Model, error) {
+	models := make([]Model, 0)
+	warrants := make([]Warrant, 0)
+	err := repo.DB(ctx).SelectContext(
+		ctx,
+		&warrants,
+		`
+			SELECT id, objectType, objectId, relation, subjectType, subjectId, subjectRelation, policy, createdAt, updatedAt, deletedAt
+			FROM warrant
+			WHERE
+				objectType = ? AND
+				relation = ? AND
+				subjectType = ? AND
+				subjectId = ? AND
+				deletedAt IS NULL
+		`,
+		objectType,
+		relation,
+		subjectType,
+		subjectId,
+	)
+	if err != nil {
+		switch err {
+		case sql.ErrNoRows:
+			return models, nil
+		default:
+			return nil, errors.Wrapf(err, "error getting warrants with object type %s, relation %s, and subject type %s, subject id %s", objectType, relation, subjectType, subjectId)
 		}
 	}
 

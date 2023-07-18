@@ -155,3 +155,54 @@ func (svc WarrantService) DeleteRelatedWarrants(ctx context.Context, objectType 
 
 	return nil
 }
+
+func (svc WarrantService) GetAllWarrantsForSubjectIdByType(ctx context.Context, subject string, subjectId string, objectType string) ([]Model, error) {
+	matchingWarrants := make([]Model, 0)
+	// Get all warrants where subjectType is subject and subjectid is subjectId
+	directWarrants, err := svc.Repository.GetAllMatchingSubjectId(ctx, subject, subjectId)
+	if err != nil {
+		return matchingWarrants, nil
+	}
+
+	for _, directWarrant := range directWarrants {
+		svc.processWarrant(ctx, directWarrant, objectType, &matchingWarrants)
+	}
+
+	return matchingWarrants, nil
+}
+
+func (svc WarrantService) processWarrant(ctx context.Context, warrantObject Model, objectType string, matchingWarrants *[]Model) {
+	// if objectTypes don't match
+	if warrantObject.GetObjectType() != objectType {
+		indirectWarrants := make([]Model, 0)
+		var err error
+		// Does warrant have a subjectRelation
+		if warrantObject.GetSubjectRelation() != "" {
+			// get all warrants where subjectType, subjectId, and subjectRelationship match current warrant objectType & objectId
+			indirectWarrants, err = svc.Repository.GetAllMatchingSubject(ctx, warrantObject.GetObjectType(), warrantObject.GetObjectId(), warrantObject.GetRelation())
+			if err != nil {
+				return
+			}
+		} else {
+			indirectWarrants, err = svc.Repository.GetAllMatchingSubjectId(ctx, warrantObject.GetObjectType(), warrantObject.GetObjectId())
+			if err != nil {
+				return
+			}
+		}
+
+		// Check if indirect warrants ObjectType matches requested objectType
+		for _, indirectWarrant := range indirectWarrants {
+			if indirectWarrant.GetObjectType() != objectType {
+				// repeat until warrant objectType matches requested objectType
+				svc.processWarrant(ctx, indirectWarrant, objectType, matchingWarrants)
+			} else {
+				*matchingWarrants = append(*matchingWarrants, indirectWarrant)
+			}
+		}
+
+		return
+	}
+
+	// If warrant objectType matches requested objectType add to matchingWarrants
+	*matchingWarrants = append(*matchingWarrants, warrantObject)
+}

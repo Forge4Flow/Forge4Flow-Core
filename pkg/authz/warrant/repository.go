@@ -13,6 +13,9 @@ type WarrantRepository interface {
 	Create(ctx context.Context, warrant Model) (int64, error)
 	Get(ctx context.Context, objectType string, objectId string, relation string, subjectType string, subjectId string, subjectRelation string, policyHash string) (Model, error)
 	GetByID(ctx context.Context, id int64) (Model, error)
+	GetAllMatchingSubject(ctx context.Context, subjectType string, subjectId string, subjectRelation string) ([]Model, error)
+	GetAllMatchingSubjectId(ctx context.Context, subjectType string, subjectId string) ([]Model, error)
+	GetAllMatchingObjectRelationBySubjectId(ctx context.Context, objectType string, relation string, subjectType string, subjectId string) ([]Model, error)
 	GetAllMatchingObjectRelationAndSubject(ctx context.Context, objectType string, objectId string, relation string, subjectType string, subjectId string, subjectRelation string) ([]Model, error)
 	GetAllMatchingObjectAndRelation(ctx context.Context, objectType string, objectId string, relation string) ([]Model, error)
 	GetAllMatchingObjectAndRelationBySubjectType(ctx context.Context, objectType string, objectId string, relation string, subjectType string) ([]Model, error)
@@ -31,20 +34,20 @@ func NewRepository(db database.Database) (WarrantRepository, error) {
 		}
 
 		return NewMySQLRepository(mysql), nil
-	case database.TypePostgres:
-		postgres, ok := db.(*database.Postgres)
-		if !ok {
-			return nil, errors.New(fmt.Sprintf("invalid %s database config", database.TypePostgres))
-		}
+	// case database.TypePostgres:
+	// 	postgres, ok := db.(*database.Postgres)
+	// 	if !ok {
+	// 		return nil, errors.New(fmt.Sprintf("invalid %s database config", database.TypePostgres))
+	// 	}
 
-		return NewPostgresRepository(postgres), nil
-	case database.TypeSQLite:
-		sqlite, ok := db.(*database.SQLite)
-		if !ok {
-			return nil, errors.New(fmt.Sprintf("invalid %s database config", database.TypeSQLite))
-		}
+	// 	return NewPostgresRepository(postgres), nil
+	// case database.TypeSQLite:
+	// 	sqlite, ok := db.(*database.SQLite)
+	// 	if !ok {
+	// 		return nil, errors.New(fmt.Sprintf("invalid %s database config", database.TypeSQLite))
+	// 	}
 
-		return NewSQLiteRepository(sqlite), nil
+	// 	return NewSQLiteRepository(sqlite), nil
 	default:
 		return nil, errors.New(fmt.Sprintf("unsupported database type %s specified", db.Type()))
 	}

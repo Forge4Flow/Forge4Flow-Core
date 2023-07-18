@@ -5,6 +5,8 @@ import (
 
 	object "github.com/forge4flow/forge4flow-core/pkg/authz/object"
 	objecttype "github.com/forge4flow/forge4flow-core/pkg/authz/objecttype"
+	permission "github.com/forge4flow/forge4flow-core/pkg/authz/permission"
+	warrant "github.com/forge4flow/forge4flow-core/pkg/authz/warrant"
 	"github.com/forge4flow/forge4flow-core/pkg/event"
 	"github.com/forge4flow/forge4flow-core/pkg/service"
 )
@@ -13,17 +15,21 @@ const ResourceTypeRole = "role"
 
 type RoleService struct {
 	service.BaseService
-	Repository RoleRepository
-	EventSvc   *event.EventService
-	ObjectSvc  *object.ObjectService
+	Repository    RoleRepository
+	WarrantSvc    *warrant.WarrantService
+	PermissionSvc *permission.PermissionService
+	EventSvc      *event.EventService
+	ObjectSvc     *object.ObjectService
 }
 
-func NewService(env service.Env, repository RoleRepository, eventSvc *event.EventService, objectSvc *object.ObjectService) *RoleService {
+func NewService(env service.Env, repository RoleRepository, warrantSvc *warrant.WarrantService, permissionSvc *permission.PermissionService, eventSvc *event.EventService, objectSvc *object.ObjectService) *RoleService {
 	return &RoleService{
-		BaseService: service.NewBaseService(env),
-		Repository:  repository,
-		EventSvc:    eventSvc,
-		ObjectSvc:   objectSvc,
+		BaseService:   service.NewBaseService(env),
+		Repository:    repository,
+		WarrantSvc:    warrantSvc,
+		PermissionSvc: permissionSvc,
+		EventSvc:      eventSvc,
+		ObjectSvc:     objectSvc,
 	}
 }
 
@@ -143,4 +149,25 @@ func (svc RoleService) DeleteByRoleId(ctx context.Context, roleId string) error 
 	}
 
 	return nil
+}
+
+func (svc RoleService) GetAllObjectsForRoleByType(ctx context.Context, roleId string, objectType string) ([]object.ObjectSpec, error) {
+	matchingObjects := make([]object.ObjectSpec, 0)
+	matchingWarrants, err := svc.WarrantSvc.GetAllWarrantsForSubjectIdByType(ctx, "role", roleId, objectType)
+	if err != nil {
+		return matchingObjects, err
+	}
+	// Convert warrants to ObjectSpec
+	for _, matchingWarrant := range matchingWarrants {
+		object, err := svc.ObjectSvc.GetByObjectTypeAndId(ctx, matchingWarrant.GetObjectType(), matchingWarrant.GetObjectId())
+		if err != nil {
+			return matchingObjects, err
+		}
+
+		objectSpec := object.ToObject().ToObjectSpec()
+
+		matchingObjects = append(matchingObjects, *objectSpec)
+	}
+
+	return matchingObjects, nil
 }

@@ -5,6 +5,10 @@ import (
 
 	object "github.com/forge4flow/forge4flow-core/pkg/authz/object"
 	objecttype "github.com/forge4flow/forge4flow-core/pkg/authz/objecttype"
+	permission "github.com/forge4flow/forge4flow-core/pkg/authz/permission"
+	role "github.com/forge4flow/forge4flow-core/pkg/authz/role"
+	tenant "github.com/forge4flow/forge4flow-core/pkg/authz/tenant"
+	warrant "github.com/forge4flow/forge4flow-core/pkg/authz/warrant"
 	"github.com/forge4flow/forge4flow-core/pkg/event"
 	"github.com/forge4flow/forge4flow-core/pkg/service"
 	"github.com/google/uuid"
@@ -15,17 +19,25 @@ const ResourceTypeUser = "user"
 
 type UserService struct {
 	service.BaseService
-	Repository UserRepository
-	EventSvc   *event.EventService
-	ObjectSvc  *object.ObjectService
+	Repository    UserRepository
+	PermissionSvc *permission.PermissionService
+	RoleSvc       *role.RoleService
+	TenantSvc     *tenant.TenantService
+	WarrantSvc    *warrant.WarrantService
+	EventSvc      *event.EventService
+	ObjectSvc     *object.ObjectService
 }
 
-func NewService(env service.Env, repository UserRepository, eventSvc *event.EventService, objectSvc *object.ObjectService) *UserService {
+func NewService(env service.Env, repository UserRepository, permissionSvc *permission.PermissionService, roleSvc *role.RoleService, tenantSvc *tenant.TenantService, warrantSvc *warrant.WarrantService, eventSvc *event.EventService, objectSvc *object.ObjectService) *UserService {
 	return &UserService{
-		BaseService: service.NewBaseService(env),
-		Repository:  repository,
-		EventSvc:    eventSvc,
-		ObjectSvc:   objectSvc,
+		BaseService:   service.NewBaseService(env),
+		Repository:    repository,
+		PermissionSvc: permissionSvc,
+		RoleSvc:       roleSvc,
+		TenantSvc:     tenantSvc,
+		WarrantSvc:    warrantSvc,
+		EventSvc:      eventSvc,
+		ObjectSvc:     objectSvc,
 	}
 }
 
@@ -155,4 +167,25 @@ func (svc UserService) DeleteByUserId(ctx context.Context, userId string) error 
 	})
 
 	return err
+}
+
+func (svc UserService) GetAllObjectsForUserByType(ctx context.Context, userId string, objectType string) ([]object.ObjectSpec, error) {
+	matchingObjects := make([]object.ObjectSpec, 0)
+	matchingWarrants, err := svc.WarrantSvc.GetAllWarrantsForSubjectIdByType(ctx, "user", userId, objectType)
+	if err != nil {
+		return matchingObjects, err
+	}
+	// Convert warrants to ObjectSpec
+	for _, matchingWarrant := range matchingWarrants {
+		object, err := svc.ObjectSvc.GetByObjectTypeAndId(ctx, matchingWarrant.GetObjectType(), matchingWarrant.GetObjectId())
+		if err != nil {
+			return matchingObjects, err
+		}
+
+		objectSpec := object.ToObject().ToObjectSpec()
+
+		matchingObjects = append(matchingObjects, *objectSpec)
+	}
+
+	return matchingObjects, nil
 }

@@ -3,6 +3,7 @@ package authz
 import (
 	"net/http"
 
+	permission "github.com/forge4flow/forge4flow-core/pkg/authz/permission"
 	"github.com/forge4flow/forge4flow-core/pkg/service"
 	"github.com/gorilla/mux"
 )
@@ -30,6 +31,12 @@ func (svc RoleService) Routes() ([]service.Route, error) {
 			Pattern: "/v1/roles/{roleId}",
 			Method:  "GET",
 			Handler: service.NewRouteHandler(svc, GetHandler),
+		},
+		service.WarrantRoute{
+			Pattern:                    "/v1/roles/{roleId}/permissions",
+			Method:                     "GET",
+			Handler:                    service.NewRouteHandler(svc, GetPermissionsForRoleHandler),
+			OverrideAuthMiddlewareFunc: service.PassthroughAuthMiddleware,
 		},
 
 		// update
@@ -118,6 +125,28 @@ func DeleteHandler(svc RoleService, w http.ResponseWriter, r *http.Request) erro
 	if err != nil {
 		return err
 	}
+
+	return nil
+}
+
+func GetPermissionsForRoleHandler(svc RoleService, w http.ResponseWriter, r *http.Request) error {
+	roleId := mux.Vars(r)["roleId"]
+	permissionObjects, err := svc.GetAllObjectsForRoleByType(r.Context(), roleId, "permission")
+	if err != nil {
+		return err
+	}
+
+	permissions := make([]*permission.PermissionSpec, 0)
+	for _, permissionObject := range permissionObjects {
+		permission, err := svc.PermissionSvc.GetByPermissionId(r.Context(), permissionObject.ObjectId)
+		if err != nil {
+			return err
+		}
+
+		permissions = append(permissions, permission)
+	}
+
+	service.SendJSONResponse(w, permissions)
 
 	return nil
 }
