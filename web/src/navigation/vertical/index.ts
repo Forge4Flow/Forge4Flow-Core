@@ -29,15 +29,15 @@ const navigation = (): VerticalNavItemsType => {
       ]
     },
     {
-      title: 'FT/NFT Gated Access Control',
+      title: 'NFT Gated Access Control',
       children: [
         {
-          title: 'Fungible Tokens',
+          title: 'Verifiers',
           icon: 'mdi:archive-outline',
-          path: '/admin/auth4flow/fts'
+          path: '/admin/auth4flow/nfts/verifiers'
         },
         {
-          title: 'NonFungible Tokens',
+          title: 'Tracked NFTs',
           icon: 'mdi:archive-outline',
           path: '/admin/auth4flow/nfts'
         }
@@ -131,32 +131,32 @@ const navigation = (): VerticalNavItemsType => {
       path: '#',
       badgeContent: 'Coming Soon',
       disabled: true
-    },
-    {
-      sectionTitle: 'Ecosystem SDKs'
-    },
-    {
-      title: 'Swift (iOS)',
-      children: [
-        {
-          title: 'FLOAT',
-          icon: 'mdi:archive-outline',
-          path: '/admin/sdks/float'
-        },
-        {
-          title: '.find',
-          icon: 'mdi:archive-outline',
-          path: '/admin/sdks/find'
-        },
-        {
-          title: 'NFT Storage',
-          icon: 'mdi:archive-outline',
-          path: '/admin/sdks/nft-storage',
-          badgeContent: 'Coming Soon',
-          disabled: true
-        }
-      ]
     }
+    // {
+    //   sectionTitle: 'Ecosystem SDKs'
+    // },
+    // {
+    //   title: 'Swift (iOS)',
+    //   children: [
+    //     {
+    //       title: 'FLOAT',
+    //       icon: 'mdi:archive-outline',
+    //       path: '/admin/sdks/float'
+    //     },
+    //     {
+    //       title: '.find',
+    //       icon: 'mdi:archive-outline',
+    //       path: '/admin/sdks/find'
+    //     },
+    //     {
+    //       title: 'NFT Catalog',
+    //       icon: 'mdi:archive-outline',
+    //       path: '/admin/sdks/nft-storage',
+    //       badgeContent: 'Coming Soon',
+    //       disabled: true
+    //     }
+    //   ]
+    // }
   ]
 }
 

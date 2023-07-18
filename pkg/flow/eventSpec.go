@@ -14,12 +14,12 @@ type EventSpec struct {
 
 func (e *EventSpec) ToEvent() Event {
 	return Event{
-		Type:          e.Type,
-		ObjectType:    e.ObjectType,
-		ObjectIdField: e.ObjectIdField,
-		OwnerField:    e.OwnerField,
-		Script:        e.Script,
-		RemoveAction:  e.RemovedAction,
-		ActionEnabled: e.ActionEnabled,
+		Type: e.Type,
+		// ObjectType:    &e.ObjectType,
+		// ObjectIdField: &e.ObjectIdField,
+		// OwnerField:    &e.OwnerField,
+		// Script:        &e.Script,
+		// RemoveAction:  &e.RemovedAction,
+		// ActionEnabled: e.ActionEnabled,
 	}
 }

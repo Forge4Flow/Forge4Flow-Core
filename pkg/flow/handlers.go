@@ -12,7 +12,7 @@ func (svc FlowService) Routes() ([]service.Route, error) {
 		service.WarrantRoute{
 			Pattern:                    "/v1/flow/events",
 			Method:                     "GET",
-			Handler:                    service.NewRouteHandler(svc, GetEventsWSHandler),
+			Handler:                    service.NewRouteHandler(svc, GetEventsHandler),
 			OverrideAuthMiddlewareFunc: service.PassthroughAuthMiddleware,
 		},
 
@@ -74,6 +74,12 @@ var upgrader = websocket.Upgrader{
 	},
 }
 
+func isWebSocketRequest(r *http.Request) bool {
+	connectionHeaders := r.Header.Get("Connection")
+	upgradeHeaders := r.Header.Get("Upgrade")
+	return connectionHeaders == "Upgrade" && upgradeHeaders == "websocket"
+}
+
 type SubscriptionRequest struct {
 	EventTypes []string `json:"eventTypes,omitempty"`
 	SendAll    bool     `json:"sendAll,omitempty"`
@@ -81,6 +87,29 @@ type SubscriptionRequest struct {
 
 type ErrorMessage struct {
 	Error string `json:"error"`
+}
+
+func GetEventsHandler(svc FlowService, w http.ResponseWriter, r *http.Request) error {
+	if isWebSocketRequest(r) {
+		return GetEventsWSHandler(svc, w, r)
+	} else {
+		return GetEventsHTTPHandler(svc, w, r)
+	}
+}
+
+func GetEventsHTTPHandler(svc FlowService, w http.ResponseWriter, r *http.Request) error {
+	eventModels, err := svc.Repository.GetAllEvents(r.Context())
+	if err != nil {
+		return err
+	}
+
+	var events []EventSpec
+	for _, event := range eventModels {
+		events = append(events, *event.ToEventSpec())
+	}
+
+	service.SendJSONResponse(w, events)
+	return nil
 }
 
 func GetEventsWSHandler(svc FlowService, w http.ResponseWriter, r *http.Request) error {
@@ -103,6 +132,10 @@ func GetEventsWSHandler(svc FlowService, w http.ResponseWriter, r *http.Request)
 		for event := range eventChannel {
 			// Check if the event type is in the client's subscribed event types
 			if isSubscribed(event.Type, subscriptionReq.EventTypes) {
+				filteredEvents <- event
+			}
+
+			if subscriptionReq.SendAll {
 				filteredEvents <- event
 			}
 		}
