@@ -26,6 +26,7 @@
 [![Issues][issues-shield]][issues-url]
 [![ELv2 License][license-shield]][license-url]
 [![CodeFactor][code-factor-shield]][code-factor-url]
+[![WakaTime][wakatime-shield]][wakatime-url]
 
 <!-- PROJECT LOGO -->
 <br />
@@ -59,7 +60,7 @@ Developers face challenges in creating dApps due to issues like user authenticat
 
 ### Ecosystem SDKs:
 
-> [Information about Ecosystem SDKs and their purpose]
+> Lack of mobile resources is a huge factor for their being verry little Web3 Mobile apps. By releases ecosystem SDKs for multiple platofrms we can lower the barrier to entry for new developers. We have scoped several SDKs to target for Swift (iOS).
 
 By providing these tool sets, we aim to empower developers to focus on delivering exceptional user experiences without worrying about complex authentication, access control, and other Web3 challenges.
 
@@ -80,50 +81,32 @@ To get started using Forge4Flow, follow the deployment guide to self host your o
   - [ ] Transaction Signing APIs
   - [ ] Parent/Child Account Linking
   - [ ] Forced Hybrid Authentication (Creating Flow Child Accounts for Blockchain Native Accounts)
-- NFT/FT Gates
-  - [ ] Users
-  - [ ] Tenants
-  - [ ] Roles
-  - [ ] Permissions
-  - [ ] Features
-  - [ ] Pricing Tiers
-  - [ ] Generic Objects
+- [ ] NFT Gated Access Controll
 - [ ] .find Name and Profile Integration
-- [x] GO Server SDK
-- [x] JS, Node, React, and NextJS SDKs
+- [] GO Server SDK
+- [x] [JS SDK](https://github.com/Forge4Flow/Forge4Flow-JS)
+- [x] [Node SDK](https://github.com/Forge4Flow/Forge4Flow-Node)
+- [x] [React SDK](https://github.com/Forge4Flow/Forge4Flow-React)
+- [x] [NextJS](https://github.com/Forge4Flow/Forge4Flow-NextJS)
 - [ ] Swift SDK
 - [ ] Kotlin SDK
 - [x] Admin Dashboard
-- [ ] Multi-Tenant Support
+- [x] Multi-Tenant Support
 
 ### Alerts4Flow
 
-- Predefined Event Monitors
-  - FLOAT
-    - [ ] FLOAT Minted
-    - [ ] FLOAT Transfered
-    - [ ] FLOAT Distroyed
-  - Emerald ID
-    - [ ] Emerald ID Created
-    - [ ] Emerald ID Removed
-  - Standard NFT Events
-    - [ ] NFT Deposit
-    - [ ] NFT Withdrawal
-  - Standard FT Events
-    - [ ] FT Deposit
-    - [ ] FT Withdrawal
-- [ ] Custom Event Monitors
+- [x] Custom Event Monitors
 - [x] Admin Dashboard
 
 ### Ecosystem SDKs
 
 - Flow Ecosystem
   - FLOAT
-    - [x] Swift (iOS)
+    - [x] [Swift (iOS)](https://github.com/Forge4Flow/FLOAT-Swift-SDK)
     - [ ] JS, Node
     - [ ] Go
   - .find
-    - [x] Swift (iOS)
+    - [x] [Swift (iOS)](https://github.com/Forge4Flow/FIND-Swift-SDK)
     - [ ] JS, Node
     - [ ] Go
   - Flow NFT Catalog
@@ -133,6 +116,8 @@ To get started using Forge4Flow, follow the deployment guide to self host your o
   - Swift (iOS)
     - [x] NFT.storage
     - [x] SwiftIPFS-Image
+- General Purpose
+  - [x] [GCP KMS authorizer (signer)](https://github.com/Forge4Flow/GCP-KMS-Flow-Authorizer)
 
 See the [open issues](https://github.com/Forge4Flow/Forge4Flow-Core/issues) for a full list of proposed features (and known issues).
 
@@ -173,3 +158,5 @@ Forge4Flow is distributed under the ELv2 License. See `LICENSE` for more informa
 [license-url]: https://github.com/Forge4Flow/Forge4Flow-Core/blob/master/LICENSE
 [code-factor-shield]: https://img.shields.io/codefactor/grade/github/forge4flow/forge4flow-core/main?style=for-the-badge
 [code-factor-url]: https://www.codefactor.io/repository/github/forge4flow/forge4flow-core
+[wakatime-shield]: https://wakatime.com/badge/user/0a8af699-5f37-4933-8df8-b7282a2ab48c/project/ec5d6c75-4dc2-4d9c-a344-78e9fcdf151d.svg?style=for-the-badge
+[wakatime-url]: https://wakatime.com/badge/user/0a8af699-5f37-4933-8df8-b7282a2ab48c/project/ec5d6c75-4dc2-4d9c-a344-78e9fcdf151d

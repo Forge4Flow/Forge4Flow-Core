@@ -121,7 +121,6 @@ func (q *Queue) RemoveJobByID(id string) error {
 }
 
 func (q *Queue) CreateJob(job JobInterface) (string, error) {
-	fmt.Println("Job added")
 	q.JobsMutex.Lock()
 	defer q.JobsMutex.Unlock()
 

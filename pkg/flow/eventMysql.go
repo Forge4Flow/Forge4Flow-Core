@@ -3,6 +3,7 @@ package flow
 import (
 	"context"
 	"database/sql"
+	"fmt"
 	"time"
 
 	"github.com/forge4flow/forge4flow-core/pkg/database"
@@ -115,9 +116,12 @@ func (repo MySQLRepository) GetAllEvents(ctx context.Context) ([]Model, error) {
 		}
 	}
 
+	fmt.Println(eventObjects)
+
 	var models []Model
 	for _, event := range eventObjects {
-		models = append(models, &event)
+		eventModel := event
+		models = append(models, &eventModel)
 	}
 
 	return models, nil

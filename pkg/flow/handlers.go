@@ -64,7 +64,7 @@ func RemoveEventMonitorHandler(svc FlowService, w http.ResponseWriter, r *http.R
 		return service.NewMissingRequiredParameterError("Type")
 	}
 
-	return svc.eventMonitor.RemoveMonitor(event.Type)
+	return svc.RemoveEventMonitor(r.Context(), event)
 }
 
 var upgrader = websocket.Upgrader{

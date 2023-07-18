@@ -48,6 +48,18 @@ func (svc *FlowService) AddEventMonitor(ctx context.Context, event EventSpec) er
 	return nil
 }
 
+func (svc *FlowService) RemoveEventMonitor(ctx context.Context, event EventSpec) error {
+	err := svc.Repository.DeleteByType(ctx, event.Type)
+	if err != nil {
+		return err
+	}
+
+	// Add to EventMonitor Service
+	svc.eventMonitor.RemoveMonitor(event.Type)
+
+	return nil
+}
+
 type EventMonitorService struct {
 	monitors      map[string]*EventMonitor
 	monitorsMutex sync.Mutex
@@ -191,23 +203,19 @@ func (em *EventMonitor) Stop() {
 }
 
 func (em *EventMonitor) runLoop() {
-	fmt.Println("is running 1")
 	em.running = true
 	for {
 		select {
 		case <-em.stopChan:
-			fmt.Println("stop called")
 			em.running = false
 			return
 		default:
-			fmt.Println("is running loop")
 			// Create a new job to be executed by the queue
 			job := &Job{
 				Done: make(chan struct{}),
 			}
 
 			job.ExecuteFunc = func() {
-				fmt.Println("job execution")
 				ctx := context.Background()
 
 				// Get last sealed block height from blockchain
@@ -237,10 +245,6 @@ func (em *EventMonitor) runLoop() {
 				// parse events from block range
 				for _, block := range blocks {
 					for _, cadenceEvent := range block.Events {
-						log.Printf("\n\nType: %s", cadenceEvent.Type)
-						log.Printf("\nValues: %v", cadenceEvent.Value)
-						log.Printf("\nTransaction ID: %s", cadenceEvent.TransactionID)
-
 						event := EventSpec{
 							Type:          cadenceEvent.Type,
 							Data:          CadenceValueToInterface(cadenceEvent.Value),
@@ -256,7 +260,6 @@ func (em *EventMonitor) runLoop() {
 
 			// Wait for the job to complete
 			time.Sleep(5 * time.Second)
-			fmt.Println("job done")
 		}
 	}
 }
