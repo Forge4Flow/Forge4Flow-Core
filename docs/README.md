@@ -6,25 +6,22 @@ Our docs site should have everything you need to get started. If you have any qu
 
 ## What is Forge4Flow?
 
-Forge4Flow is an Identity and Access Management platform for the Flock Blockchain. It's designed to abstract away the complexity of implementing and managing authentication, authroization, & access control so teams can focus on building their core products.
+Forge4Flow provides ecosystem and developer tools for the Flow Blockchain, including Identity and Access Management, Blockchain Event Monitoring, and SDKs to better integrate dApps with the ecosystem.
 
-You can use Forge4Flow to implement Blockchain Native and Walletles Onboarding authentication flows. From there you can create authorization & access control models like role based access control (RBAC), relationship based access control (ReBAC), attribute based access control (ABAC), and other custom access models.
+#### Auth4Flow
 
-## Key Features
+Auth4Flow is an Identity and Access Management platform for the Flock Blockchain. It's designed to abstract away the complexity of implementing and managing authentication, authroization, & access control so teams can focus on building their core products.
 
-- Flow Blockchain Native and Walletless Onboarding Authentication
-- A centralized, managed authorization service (based on [Warrant](https://warrant.dev)) for storing and managing authorization models and their associated access rules (we call these warrants)
-- Built-in support for common access models like RBAC, multi-tenancy, pricing tiers, and feature entitlements,&#x20;
-- Built-in support for building NFT/FT gated tenants, roles, and permissions.
-- Central event log of all operations to enable easy audit logs, alerting, and debugging of authentication and authorization rules.
+You can use Auth4Flow to implement Blockchain Native and Walletles Onboarding authentication flows. From there you can create authorization & access control models like role based access control (RBAC), relationship based access control (ReBAC), attribute based access control (ABAC), and other custom access models.
 
-## Getting Started
+#### Alerts4Flow
 
-Not sure where to start?
+One of the biggest advanges of the Flow Blockchain is it's ability to emmit events from within contracts, thus allowing developers to react to changes as they occur. Unfortuantley tooling in this area has not been widely developed. With Alerts4Flow developers can easily setup Event Monitors to receive alerts in realtime using Websockets or Webhooks.
 
-- Use Cases - Common use cases and exmaples of what you can build
-- Getting Started - Sign up for Forge4Flow Cloud or deploy a self-hosted instance, install SDKs, and start making requests!
-- [Overview](./#getting-started) = Deeper system & architecture overview
-- FAQ - Frequently asked questions
-- [API Reference](reference/api-reference/) - API resource definitions and examples
-- [SDKs](reference/sdks/) - SDK related documentation
+#### Ecosystem SDKs
+
+Lack of mobile resources is a huge factor for their being verry little Web3 Mobile apps. By releases ecosystem SDKs for multiple platofrms we can lower the barrier to entry for new developers. I've scoped several SDKs to target for Swift (iOS).
+
+By providing these tool sets, we aim to empower developers to focus on delivering exceptional user experiences without worrying about complex authentication, access control, and other Web3 challenges.
+
+##
