@@ -44,6 +44,7 @@ type Config interface {
 }
 
 type Forge4FlowConfig struct {
+	CoreInstall     bool              `mapstructure:"coreInstall"`
 	Port            int               `mapstructure:"port"`
 	LogLevel        int8              `mapstructure:"logLevel"`
 	EnableAccessLog bool              `mapstructure:"enableAccessLog"`
@@ -152,6 +153,7 @@ type AuthProviderConfig struct {
 
 func NewConfig() Forge4FlowConfig {
 	viper.SetConfigFile(ConfigFileName)
+	viper.SetDefault("coreInstall", false)
 	viper.SetDefault("port", 8000)
 	viper.SetDefault("logLevel", zerolog.DebugLevel)
 	viper.SetDefault("enableAccessLog", true)

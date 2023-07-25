@@ -286,8 +286,10 @@ func main() {
 	}
 	flowSerice := flow.NewService(&svcEnv, cfg, flowEventRepository)
 
-	// Verify admin role and initial user are configured
-	setup.InitialSetup(&cfg, permissionSvc, roleSvc, userSvc, warrantSvc)
+	if cfg.CoreInstall {
+		// Verify admin role and initial user are configured
+		setup.InitialSetup(&cfg, permissionSvc, roleSvc, userSvc, warrantSvc)
+	}
 
 	svcs := []service.Service{
 		checkSvc,

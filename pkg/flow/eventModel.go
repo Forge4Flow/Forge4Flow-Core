@@ -8,6 +8,12 @@ type Model interface {
 	GetID() int64
 	GetType() string
 	GetLastBlockHeight() uint64
+	GetObjectType() *string
+	GetObjectIdField() *string
+	GetOwnerField() *string
+	GetScript() *string
+	GetRemoveAction() bool
+	GetActionEnabled() bool
 	GetCreatedAt() time.Time
 	GetUpdatedAt() time.Time
 	GetDeletedAt() *time.Time
@@ -15,18 +21,18 @@ type Model interface {
 }
 
 type Event struct {
-	ID              int64  `mysql:"id" postgres:"id" sqlite:"id"`
-	Type            string `mysql:"type" postgres:"type" sqlite:"type"`
-	LastBlockHeight uint64 `mysql:"lastBlockHeight" postgres:"last_block_height" sqlite:"lastBlockHeight"`
-	// ObjectType      *string    `mysql:"objectType" postgres:"object_type" sqlite:"objectType"`
-	// ObjectIdField   *string    `mysql:"objectId" postgres:"object_id" sqlite:"objectId"`
-	// OwnerField      *string    `mysql:"ownerField" postgres:"owner_field" sqlite:"ownerField"`
-	// Script          *string    `mysql:"script" postgres:"script" sqlite:"script"`
-	// RemoveAction    *bool      `mysql:"removeAction" postgres:"remove_action" sqlite:"removeAction"`
-	// ActionEnabled   bool       `mysql:"actionEnabled" postgres:"action_enabled" sqllite:"actionEnabled"`
-	CreatedAt time.Time  `mysql:"createdAt" postgres:"created_at" sqlite:"createdAt"`
-	UpdatedAt time.Time  `mysql:"updatedAt" postgres:"updated_at" sqlite:"updatedAt"`
-	DeletedAt *time.Time `mysql:"deletedAt" postgres:"deleted_at" sqlite:"deletedAt"`
+	ID              int64      `mysql:"id" postgres:"id" sqlite:"id"`
+	Type            string     `mysql:"type" postgres:"type" sqlite:"type"`
+	LastBlockHeight uint64     `mysql:"lastBlockHeight" postgres:"last_block_height" sqlite:"lastBlockHeight"`
+	ObjectType      *string    `mysql:"objectType" postgres:"object_type" sqlite:"objectType"`
+	ObjectIdField   *string    `mysql:"objectId" postgres:"object_id" sqlite:"objectId"`
+	OwnerField      *string    `mysql:"ownerField" postgres:"owner_field" sqlite:"ownerField"`
+	Script          *string    `mysql:"script" postgres:"script" sqlite:"script"`
+	RemoveAction    bool       `mysql:"removeAction" postgres:"remove_action" sqlite:"removeAction"`
+	ActionEnabled   bool       `mysql:"actionEnabled" postgres:"action_enabled" sqllite:"actionEnabled"`
+	CreatedAt       time.Time  `mysql:"createdAt" postgres:"created_at" sqlite:"createdAt"`
+	UpdatedAt       time.Time  `mysql:"updatedAt" postgres:"updated_at" sqlite:"updatedAt"`
+	DeletedAt       *time.Time `mysql:"deletedAt" postgres:"deleted_at" sqlite:"deletedAt"`
 }
 
 func (event Event) GetID() int64 {
@@ -39,6 +45,30 @@ func (event Event) GetType() string {
 
 func (event Event) GetLastBlockHeight() uint64 {
 	return event.LastBlockHeight
+}
+
+func (event Event) GetObjectType() *string {
+	return event.ObjectType
+}
+
+func (event Event) GetObjectIdField() *string {
+	return event.ObjectIdField
+}
+
+func (event Event) GetOwnerField() *string {
+	return event.OwnerField
+}
+
+func (event Event) GetScript() *string {
+	return event.Script
+}
+
+func (event Event) GetRemoveAction() bool {
+	return event.RemoveAction
+}
+
+func (event Event) GetActionEnabled() bool {
+	return event.ActionEnabled
 }
 
 func (event Event) GetCreatedAt() time.Time {

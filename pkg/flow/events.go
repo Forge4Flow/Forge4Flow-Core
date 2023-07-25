@@ -49,13 +49,15 @@ func (svc *FlowService) AddEventMonitor(ctx context.Context, event EventSpec) er
 }
 
 func (svc *FlowService) RemoveEventMonitor(ctx context.Context, event EventSpec) error {
-	err := svc.Repository.DeleteByType(ctx, event.Type)
+	err := svc.eventMonitor.RemoveMonitor(event.Type)
 	if err != nil {
 		return err
 	}
 
-	// Add to EventMonitor Service
-	svc.eventMonitor.RemoveMonitor(event.Type)
+	err = svc.Repository.DeleteByType(ctx, event.Type)
+	if err != nil {
+		return err
+	}
 
 	return nil
 }
@@ -112,12 +114,14 @@ func (ems *EventMonitorService) AddMonitor(eventID string) {
 }
 
 func (ems *EventMonitorService) RemoveMonitor(eventID string) error {
-	ems.monitorsMutex.Lock()
-	defer ems.monitorsMutex.Unlock()
-
 	_, ok := ems.monitors[eventID]
 	if !ok {
 		return errors.New("EventMonitor not found: " + eventID)
+	}
+
+	err := ems.StopMonitor(eventID)
+	if err != nil {
+		return err
 	}
 
 	delete(ems.monitors, eventID)
