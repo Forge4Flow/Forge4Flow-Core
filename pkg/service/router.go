@@ -17,6 +17,10 @@ import (
 	"github.com/rs/zerolog/log"
 )
 
+type HealthCheck struct {
+	Status string `json:"status"`
+}
+
 type RouteHandler[T Service] struct {
 	svc     T
 	handler func(svc T, w http.ResponseWriter, r *http.Request) error
@@ -112,12 +116,19 @@ func NewRouter(config config.Config, pathPrefix string, svcs []Service, authMidd
 		router.Handle(routePattern, middlewareWrappedHandler).Methods(route.GetMethod())
 	}
 
+	router.Handle("/health", http.HandlerFunc(healthCheckHandler)).Methods("GET")
+
 	// Configure catch all handler for 404s
 	router.PathPrefix("/").Handler(http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
 		SendErrorResponse(w, NewRecordNotFoundError("Endpoint", r.URL.Path))
 	}))
 
 	return router, nil
+}
+
+func healthCheckHandler(w http.ResponseWriter, r *http.Request) {
+	status := HealthCheck{Status: "Healthy"}
+	SendJSONResponse(w, status)
 }
 
 // Create & inject a 'per-request' stats object into request context
