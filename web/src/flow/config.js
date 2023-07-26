@@ -1,6 +1,6 @@
-const fcl = require('@onflow/fcl')
+import { config } from '@onflow/fcl'
 
-fcl.config({
+config({
   'app.detail.title': 'Forge4Flow Dashboard', // this adds a custom name to our wallet
   'app.detail.icon':
     'https://github.com/Forge4Flow/.github/blob/ceeaf8b56d8aec6a939b5d9fc17b2bf2db4e7c23/images/logo.png', // this adds a custom image to our wallet

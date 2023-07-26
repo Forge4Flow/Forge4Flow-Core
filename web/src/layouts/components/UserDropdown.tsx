@@ -20,7 +20,6 @@ import { SvgIcon } from '@mui/material'
 
 // ** Icons Imports
 import CogOutline from 'mdi-material-ui/CogOutline'
-import CurrencyUsd from 'mdi-material-ui/CurrencyUsd'
 import LogoutVariant from 'mdi-material-ui/LogoutVariant'
 
 // ** Styled Components

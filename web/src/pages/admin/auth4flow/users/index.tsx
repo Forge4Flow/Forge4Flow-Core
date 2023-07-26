@@ -82,14 +82,7 @@ const UsersPage = () => {
         </Grid>
       </Grid>
 
-      <Modal
-        open={createUserOpen}
-        onClose={e => {
-          handleCloseCreateUser()
-        }}
-        aria-labelledby='modal-modal-title'
-        aria-describedby='modal-modal-description'
-      >
+      <Modal open={createUserOpen} aria-labelledby='modal-modal-title' aria-describedby='modal-modal-description'>
         <Box sx={style}>
           <CreateUserForm closeHandler={handleCloseCreateUser} />
         </Box>

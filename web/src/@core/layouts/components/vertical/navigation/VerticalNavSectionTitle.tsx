@@ -39,7 +39,7 @@ const TypographyHeaderText = styled(Typography)<TypographyProps>(({ theme }) => 
 
 const VerticalNavSectionTitle = (props: Props) => {
   // ** Props
-  const { item, navHover, settings, collapsedNavWidth, navigationBorderWidth } = props
+  const { item } = props
 
   return (
     <ListSubheader

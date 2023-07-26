@@ -11,7 +11,7 @@ import EditOutlinedIcon from '@mui/icons-material/EditOutlined'
 import Typography from '@mui/material/Typography'
 
 // ** React Imports
-import React, { useEffect } from 'react'
+import React from 'react'
 
 // ** Next IMports
 import Link from 'next/link'

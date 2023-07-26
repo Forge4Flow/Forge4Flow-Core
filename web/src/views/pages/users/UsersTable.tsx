@@ -10,7 +10,7 @@ import IconButton from '@mui/material/IconButton'
 import EditOutlinedIcon from '@mui/icons-material/EditOutlined'
 
 // ** React Imports
-import React, { useEffect } from 'react'
+import React from 'react'
 
 // ** Next IMports
 import Link from 'next/link'
