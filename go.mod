@@ -51,7 +51,7 @@ require (
 	github.com/mitchellh/mapstructure v1.5.0 // indirect
 	github.com/onflow/atree v0.6.0 // indirect
 	github.com/onflow/cadence v0.39.14
-	github.com/onflow/flow-go-sdk v0.41.6
+	github.com/onflow/flow-go-sdk v0.41.9
 	github.com/onflow/flow-go/crypto v0.24.7 // indirect
 	github.com/pelletier/go-toml/v2 v2.0.8 // indirect
 	github.com/pmezard/go-difflib v1.0.0 // indirect
