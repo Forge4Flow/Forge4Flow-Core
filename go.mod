@@ -17,7 +17,10 @@ require (
 	github.com/spf13/viper v1.16.0
 )
 
-require github.com/felixge/httpsnoop v1.0.1 // indirect
+require (
+	github.com/felixge/httpsnoop v1.0.1 // indirect
+	github.com/onflow/crypto v0.24.9 // indirect
+)
 
 require (
 	github.com/bits-and-blooms/bitset v1.5.0 // indirect
@@ -51,8 +54,7 @@ require (
 	github.com/mitchellh/mapstructure v1.5.0 // indirect
 	github.com/onflow/atree v0.6.0 // indirect
 	github.com/onflow/cadence v0.40.0
-	github.com/onflow/flow-go-sdk v0.41.9
-	github.com/onflow/flow-go/crypto v0.24.7 // indirect
+	github.com/onflow/flow-go-sdk v0.43.0
 	github.com/pelletier/go-toml/v2 v2.0.8 // indirect
 	github.com/pmezard/go-difflib v1.0.0 // indirect
 	github.com/rivo/uniseg v0.4.4 // indirect
