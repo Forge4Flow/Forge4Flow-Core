@@ -240,3 +240,4 @@ forge4flow.yaml
 apirunner.conf
 bin/
 dist/
+.idea/

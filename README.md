@@ -1,23 +1,5 @@
-<!-- Improved compatibility of back to top link: See: https://github.com/othneildrew/Best-README-Template/pull/73 -->
-
 <a name="readme-top"></a>
 
-<!--
-*** Thanks for checking out the Best-README-Template. If you have a suggestion
-*** that would make this better, please fork the repo and create a pull request
-*** or simply open an issue with the tag "enhancement".
-*** Don't forget to give the project a star!
-*** Thanks again! Now go create something AMAZING! :D
--->
-
-<!-- PROJECT SHIELDS -->
-<!--
-*** I'm using markdown "reference style" links for readability.
-*** Reference links are enclosed in brackets [ ] instead of parentheses ( ).
-*** See the bottom of this document for the declaration of the reference variables
-*** for contributors-url, forks-url, etc. This is an optional, concise syntax you may use.
-*** https://www.markdownguide.org/basic-syntax/#reference-style-links
--->
 <div align="center">
 
 [![Contributors][contributors-shield]][contributors-url]
@@ -56,11 +38,11 @@ Developers face challenges in creating dApps due to issues like user authenticat
 
 ### Alerts4Flow:
 
-> One of the biggest advanges of the Flow Blockchain is it's ability to emmit events from within contracts, thus allowing developers to react to changes as they occur. Unfortuantley tooling in this area has not been widely developed. With Alerts4Flow developers can easily setup Event Monitors to receive alerts in realtime using Websockets or Webhooks.
+> One of the biggest advantages of the Flow Blockchain is its ability to emmit events from within contracts, thus allowing developers to react to changes as they occur. Unfortunate tooling in this area has not been widely developed. With Alerts4Flow developers can easily set up Event Monitors to receive alerts in realtime using Websockets or Webhooks.
 
 ### Ecosystem SDKs:
 
-> Lack of mobile resources is a huge factor for their being verry little Web3 Mobile apps. By releases ecosystem SDKs for multiple platofrms we can lower the barrier to entry for new developers. We have scoped several SDKs to target for Swift (iOS).
+> Lack of mobile resources is a huge factor for their being very little Web3 Mobile apps. By releases ecosystem SDKs for multiple platforms we can lower the barrier to entry for new developers. We have scoped several SDKs to target for Swift (iOS).
 
 By providing these tool sets, we aim to empower developers to focus on delivering exceptional user experiences without worrying about complex authentication, access control, and other Web3 challenges.
 
@@ -68,35 +50,50 @@ By providing these tool sets, we aim to empower developers to focus on deliverin
 
 ## Getting Started
 
-To get started using Forge4Flow, follow the deployment guide to self host your own instance of Forge4Flow-Core. Once you have an instance started, follow one of our SDK quick start guides or check out or documentation for more information.
+To get started using Forge4Flow, follow the deployment guide to self-host your own instance of Forge4Flow-Core. Once you have an instance started, follow one of our SDK quick start guides or check out or documentation for more information.
 
 <!-- ROADMAP -->
 
-## Roadmap
+## Roadmap TO v1.0
 
-### Auth4Flow
+### Forge Cloud
+
+Once v1.0 is available the plan is to launch a service for hosting multiple Forge4Flow-Core environments with central management dashboard similar to Forge Manager
+
+### Forge Manager
+
+- [ ] Admin Dashboard
+- [x] Verify/Install Docker Installation
+- [ ] Launch Docker Images For Manager
+- [ ] Launch Docker Images For Forge4Flow-Core Environments
+- [ ] Manage SSL Certs
+- [ ] Proxy Traffic Through Manager To Environments
+
+### Forge4Flow-Core
+
+#### Auth4Flow
 
 - [x] Blockchain Native Login w/ Client & Server Sessions
 - [ ] Walletless Onboarding w/ Client & Server Sessions
   - [ ] Transaction Signing APIs
   - [ ] Parent/Child Account Linking
   - [ ] Forced Hybrid Authentication (Creating Flow Child Accounts for Blockchain Native Accounts)
-- [ ] NFT Gated Access Controll
+- [x] Blockchain Event Based/Gated Access Control
 - [ ] .find Name and Profile Integration
-- [] GO Server SDK
+- [ ] GO Server SDK
 - [x] [JS SDK](https://github.com/Forge4Flow/Forge4Flow-JS)
 - [x] [Node SDK](https://github.com/Forge4Flow/Forge4Flow-Node)
 - [x] [React SDK](https://github.com/Forge4Flow/Forge4Flow-React)
-- [x] [NextJS](https://github.com/Forge4Flow/Forge4Flow-NextJS)
-- [ ] Swift SDK
+- [x] [Next.js](https://github.com/Forge4Flow/Forge4Flow-NextJS)
+- [x] [Swift SDK](https://github.com/Forge4Flow/Forge4Flow-Swift)
 - [ ] Kotlin SDK
-- [x] Admin Dashboard
 - [x] Multi-Tenant Support
 
-### Alerts4Flow
+#### Alerts4Flow
 
 - [x] Custom Event Monitors
-- [x] Admin Dashboard
+- [x] Websocket Support
+- [ ] API Route To Configure Webhook Subscriptions To Events
 
 ### Ecosystem SDKs
 

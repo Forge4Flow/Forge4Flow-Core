@@ -8,26 +8,23 @@ Forge4Flow-Core is written in Go. Prior to cloning the repo and making any code 
 
 We follow GitHub's fork & pull request model. If you're looking to make code changes, it's easier to do so on your own fork and then contribute pull requests back to the Forge4Flow-Core repo. You can create your own fork of the repo [here](https://github.com/forge4flow/forge4flow-core/fork).
 
-If you'd just like to checkout the source to build & run, you can clone the repo directly:
+If you'd just like to check out the source to build & run, you can clone the repo directly:
 
 ```shell
 git clone git@github.com:forge4flow/forge4flow-core.git
 ```
 
-Note: It's recommended you clone the repository into a directory relative to your `GOPATH` (e.g. `$GOPATH/src/github.com/warrant-dev`)
-
 ## Server configuration
 
 To set up your server config file, refer to our [configuration doc](/configuration.md).
 
-## Build binary & start server
+## Start development server
 
 After the datastore, eventstore and configuration are set, build & start the server:
 
 ```shell
 cd cmd/forge4flow-core
-make dev
-./bin/forge4flow-core
+go run .
 ```
 
 ## Make requests
@@ -40,52 +37,4 @@ curl -g "http://localhost:port/v1/object-types" -H "Authorization: ApiKey YOUR_K
 
 # Running tests
 
-## Unit tests
-
-```shell
-go test -v ./...
-```
-
-## End-to-end API tests
-
-The Forge4Flow-Core repo contains a suite of e2e tests that test various combinations of API requests. These tests are defined in json files within the `tests/` dir and are executed using [APIRunner](https://github.com/warrant-dev/apirunner). These tests can be run locally:
-
-### Install APIRunner
-
-```shell
-go install github.com/warrant-dev/apirunner/cmd/apirunner@latest
-```
-
-### Define test configuration
-
-APIRunner tests run based on a simple config file that you need to create in the `tests/` directory:
-
-```shell
-touch tests/apirunner.conf
-```
-
-Add the following to your `tests/apirunner.conf` (replace with your server url and api key):
-
-```json
-{
-  "baseUrl": "YOUR_SERVER_URL",
-  "headers": {
-    "Authorization": "ApiKey YOUR_API_KEY"
-  }
-}
-```
-
-### Run tests
-
-First, make sure your server is running:
-
-```shell
-./bin/warrant
-```
-
-In a separate shell, run the tests:
-
-```shell
-cd tests/
-apirunner .
-```
+TODO
