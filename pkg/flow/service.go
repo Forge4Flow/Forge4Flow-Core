@@ -6,6 +6,8 @@ import (
 	"errors"
 	"fmt"
 
+	user "github.com/forge4flow/forge4flow-core/pkg/authz/user"
+	warrant "github.com/forge4flow/forge4flow-core/pkg/authz/warrant"
 	"github.com/forge4flow/forge4flow-core/pkg/config"
 	"github.com/forge4flow/forge4flow-core/pkg/service"
 
@@ -19,12 +21,14 @@ type FlowService struct {
 	service.BaseService
 	Config       config.Forge4FlowConfig
 	Repository   FlowEventRepository
+	UserSvc      *user.UserService
+	WarrantSvc   *warrant.WarrantService
 	FlowClient   *http.Client
 	queue        *Queue
 	eventMonitor *EventMonitorService
 }
 
-func NewService(env service.Env, cfg config.Forge4FlowConfig, flowEventsRepo FlowEventRepository) *FlowService {
+func NewService(env service.Env, cfg config.Forge4FlowConfig, flowEventsRepo FlowEventRepository, userSvc *user.UserService, warrantSvc *warrant.WarrantService) *FlowService {
 	flowClient, err := http.NewClient(cfg.GetFlowNetwork())
 	if err != nil {
 		log.Fatal().Err(err).Msg("Could not initialize and connect to the configured Flow Blockchain. Shutting down.")
@@ -34,6 +38,8 @@ func NewService(env service.Env, cfg config.Forge4FlowConfig, flowEventsRepo Flo
 		BaseService: service.NewBaseService(env),
 		Config:      cfg,
 		Repository:  flowEventsRepo,
+		UserSvc:     userSvc,
+		WarrantSvc:  warrantSvc,
 		FlowClient:  flowClient,
 	}
 

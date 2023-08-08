@@ -25,10 +25,20 @@ func (repo MySQLRepository) Create(ctx context.Context, model Model) (int64, err
 		ctx,
 		`
 			INSERT INTO flowEvent (
-				type
-			) VALUES (?)
+				type, objectType, objectId, objectIdField, objectRelation, subjectType, subjectId, subjectIdField, script, removeAction, actionEnabled
+			) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
 		`,
 		model.GetType(),
+		model.GetObjectType(),
+		model.GetObjectId(),
+		model.GetObjectIdField(),
+		model.GetObjectRelation(),
+		model.GetSubjectType(),
+		model.GetSubjectId(),
+		model.GetSubjectIdField(),
+		model.GetScript(),
+		model.GetRemoveAction(),
+		model.GetActionEnabled(),
 	)
 	if err != nil {
 		return -1, errors.Wrap(err, "error creating event type")
@@ -48,7 +58,7 @@ func (repo MySQLRepository) GetById(ctx context.Context, id int64) (Model, error
 		ctx,
 		&event,
 		`
-			SELECT id, type, lastBlockHeight, objectType, objectId, ownerField, script, removeAction, actionEnabled, createdAt, updatedAt, deletedAt
+			SELECT type, objectType, objectId, objectIdField, objectRelation, subjectType, subjectId, subjectIdField, script, removeAction, actionEnabled, createdAt, updatedAt, deletedAt
 			FROM flowEvent
 			WHERE
 				id = ? AND
@@ -74,7 +84,7 @@ func (repo MySQLRepository) GetByType(ctx context.Context, eventType string) (Mo
 		ctx,
 		&eventObject,
 		`
-			SELECT id, type, lastBlockHeight, objectType, objectId, ownerField, script, removeAction, actionEnabled, createdAt, updatedAt, deletedAt
+			SELECT type, objectType, objectId, objectIdField, objectRelation, subjectType, subjectId, subjectIdField, script, removeAction, actionEnabled, createdAt, updatedAt, deletedAt
 			FROM flowEvent
 			WHERE
 				type = ? AND
@@ -100,7 +110,7 @@ func (repo MySQLRepository) GetAllEvents(ctx context.Context) ([]Model, error) {
 		ctx,
 		&eventObjects,
 		`
-			SELECT id, type, lastBlockHeight, objectType, objectId, ownerField, script, removeAction, actionEnabled, createdAt, updatedAt, deletedAt
+			SELECT type, objectType, objectId, objectIdField, objectRelation, subjectType, subjectId, subjectIdField, script, removeAction, actionEnabled, createdAt, updatedAt, deletedAt
 			FROM flowEvent
 			WHERE
 				deletedAt IS NULL

@@ -36,7 +36,7 @@ func AddEventMonitorHandler(svc FlowService, w http.ResponseWriter, r *http.Requ
 	var event EventSpec
 	err := service.ParseJSONBody(r.Body, &event)
 	if err != nil {
-		return service.NewInvalidRequestError("Invalid JSON body")
+		return err
 	}
 
 	if event.Type == "" {

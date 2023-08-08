@@ -284,7 +284,7 @@ func main() {
 	if err != nil {
 		log.Fatal().Err(err).Msg("Could not initialize FlowEventRepository")
 	}
-	flowSerice := flow.NewService(&svcEnv, cfg, flowEventRepository)
+	flowSerice := flow.NewService(&svcEnv, cfg, flowEventRepository, userSvc, warrantSvc)
 
 	if cfg.CoreInstall {
 		// Verify admin role and initial user are configured

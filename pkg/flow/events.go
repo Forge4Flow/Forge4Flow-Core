@@ -4,6 +4,8 @@ import (
 	"context"
 	"errors"
 	"fmt"
+	user "github.com/forge4flow/forge4flow-core/pkg/authz/user"
+	warrant "github.com/forge4flow/forge4flow-core/pkg/authz/warrant"
 	"log"
 	"sync"
 	"time"
@@ -225,6 +227,7 @@ func (em *EventMonitor) runLoop() {
 				// Get last sealed block height from blockchain
 				latestBlock, err := em.flowSvc.FlowClient.GetLatestBlock(ctx, true)
 				if err != nil {
+					// TODO: Proper error handling
 					log.Println(err)
 				}
 
@@ -239,6 +242,7 @@ func (em *EventMonitor) runLoop() {
 				// Query events from block range
 				blocks, err := em.flowSvc.FlowClient.GetEventsForHeightRange(ctx, em.EventID, em.lastBlockHeight, latestBlock.Height)
 				if err != nil {
+					// TODO: Proper error handling
 					log.Println(err)
 				}
 
@@ -256,11 +260,63 @@ func (em *EventMonitor) runLoop() {
 						}
 
 						em.eventChannel <- event
+
+						// parse event action
+						dbEvent, err := em.flowSvc.Repository.GetByType(context.Background(), em.EventID)
+						if err != nil {
+							log.Println(err)
+						}
+						eventSpec := dbEvent.ToEventSpec()
+
+						if eventSpec.ActionEnabled {
+							eventData := event.Data.(map[string]any)
+							if eventSpec.ObjectIdField != "" {
+								eventSpec.ObjectId = eventData[eventSpec.ObjectIdField].(string)
+							}
+
+							if eventSpec.SubjectIdField != "" {
+								eventSpec.SubjectId = eventData[eventSpec.SubjectIdField].(string)
+							}
+
+							if eventSpec.ObjectType == "user" {
+								userSpec := user.UserSpec{
+									UserId: eventSpec.ObjectId,
+								}
+								_, err := em.flowSvc.UserSvc.Create(context.Background(), userSpec)
+								if err != nil {
+									// TODO: Ignore if user already exists error
+									// TODO: Proper error handling
+									log.Println(err)
+								}
+								continue
+							}
+
+							// Create Warrant
+							warrantSpec := warrant.WarrantSpec{
+								ObjectType: eventSpec.ObjectType,
+								ObjectId:   eventSpec.ObjectId,
+								Relation:   eventSpec.ObjectRelation,
+								Subject: &warrant.SubjectSpec{
+									ObjectType: eventSpec.SubjectType,
+									ObjectId:   eventSpec.SubjectId,
+								},
+							}
+
+							_, err = em.flowSvc.WarrantSvc.Create(context.Background(), warrantSpec)
+							if err != nil {
+								// TODO: Ignore if warrant already exists error
+								// TODO: Proper error handling
+								log.Println(err)
+							}
+						}
 					}
 				}
 			}
 
-			em.queue.CreateJob(job)
+			_, err := em.queue.CreateJob(job)
+			if err != nil {
+				log.Println(err)
+			}
 
 			// Wait for the job to complete
 			time.Sleep(5 * time.Second)
