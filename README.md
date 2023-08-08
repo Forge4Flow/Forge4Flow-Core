@@ -54,11 +54,11 @@ To get started using Forge4Flow, follow the deployment guide to self-host your o
 
 <!-- ROADMAP -->
 
-## Roadmap TO v1.0
+## Roadmap TO v0.1.0
 
 ### Forge Cloud
 
-Once v1.0 is available the plan is to launch a service for hosting multiple Forge4Flow-Core environments with central management dashboard similar to Forge Manager
+Once v0.1.0 is available the plan is to launch a service for hosting multiple Forge4Flow-Core environments with central management dashboard similar to Forge Manager
 
 ### Forge Manager
 
