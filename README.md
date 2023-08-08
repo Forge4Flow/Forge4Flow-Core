@@ -34,7 +34,7 @@ Developers face challenges in creating dApps due to issues like user authenticat
 
 ### Auth4Flow:
 
-> Blockchain-based authentication lacks comprehensive user verification, requiring custom solutions for advanced functionalities and role-based access control. Transitioning to a Web3 environment increases the complexity of achieving secure user access control, both within DApps and when interacting with Web2 technologies. Auth4Flow offers a simple, open-source Identity and Access Management platform that simplifies Web3 authentication. It supports various authorization schemes, including RBAC, FGAC, ReBAC, and NFT/FT gated access.
+> Blockchain-based authentication lacks comprehensive user verification, requiring custom solutions for advanced functionalities and role-based access control. Transitioning to a Web3 environment increases the complexity of achieving secure user access control, both within DApps and when interacting with Web2 technologies. Auth4Flow offers a simple, open-source Identity and Access Management platform that simplifies Web3 authentication. It supports various authorization schemes, including RBAC, FGAC, ReBAC, and NFT/FT/Event gated access.
 
 ### Alerts4Flow:
 
@@ -78,7 +78,7 @@ Once v0.1.0 is available the plan is to launch a service for hosting multiple Fo
   - [ ] Transaction Signing APIs
   - [ ] Parent/Child Account Linking
   - [ ] Forced Hybrid Authentication (Creating Flow Child Accounts for Blockchain Native Accounts)
-- [x] Blockchain Event Based/Gated Access Control
+- [x] Blockchain FT/NFT/Event Gated Access Control
 - [ ] .find Name and Profile Integration
 - [ ] GO Server SDK
 - [x] [JS SDK](https://github.com/Forge4Flow/Forge4Flow-JS)
