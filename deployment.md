@@ -24,7 +24,7 @@ services:
       test: ["CMD", "mysqladmin", "ping", "-h", "localhost"]
       timeout: 5s
       retries: 10
-
+      
   eventsDatabase:
     image: mysql:8.0.32
     environment:
@@ -62,8 +62,4 @@ services:
       FORGE4FLOW_EVENTSTORE_MYSQL_PASSWORD: replace_with_password
       FORGE4FLOW_EVENTSTORE_MYSQL_HOSTNAME: eventsDatabase
       FORGE4FLOW_EVENTSTORE_MYSQL_DATABASE: forge4FlowEvents
-      FORGE4FLOW_EVENTSTORE_MYSQL_USERNAME: replace_with_username"
-      FORGE4FLOW_EVENTSTORE_MYSQL_PASSWORD: replace_with_password"
-      FORGE4FLOW_EVENTSTORE_MYSQL_HOSTNAME: replace_with_hostname"
-      FORGE4FLOW_EVENTSTORE_MYSQL_DATABASE: warrantEvents"
 ```
