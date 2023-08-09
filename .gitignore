@@ -241,3 +241,4 @@ apirunner.conf
 bin/
 dist/
 .idea/
+.env
