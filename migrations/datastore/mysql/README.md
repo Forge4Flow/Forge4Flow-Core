@@ -16,24 +16,26 @@ The Forge4Flow server requires certain configuration, defined either within a `f
 
 ```yaml
 port: 8000
-logLevel: 1
-flowNetwork: emulator #Values can be `emulator`, `testnet`, or `mainnet`
+coreInstall: true
+flowNetwork: emulator
 adminAccount: "0xf8d6e0586b0a20c7"
+logLevel: 1
 enableAccessLog: true
 autoMigrate: true
 authentication:
-  apiKey: replace_with_api_key
+  apiKey: your_api_key
+  autoRegister: true
 datastore:
   mysql:
-    username: replace_with_username
-    password: replace_with_password
+    username: forge4flow
+    password: forge4flow
     hostname: 127.0.0.1
     database: forge4flow
 eventstore:
   synchronizeEvents: false
   mysql:
-    username: replace_with_username
-    password: replace_with_password
+    username: forge4flow
+    password: forge4flow
     hostname: 127.0.0.1
     database: forge4flowEvents
 ```

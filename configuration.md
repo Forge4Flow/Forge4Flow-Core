@@ -5,7 +5,7 @@ Forge4Flow-Core requires certain configuration variables to be set via either a 
 ## Common variables
 
 | Variable                      | Description                                                                                                                                                    | Required?        | Default  | YAML                                             | ENV VAR                                  |
-|-------------------------------|----------------------------------------------------------------------------------------------------------------------------------------------------------------|------------------|----------|--------------------------------------------------|------------------------------------------|
+| ----------------------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------- | ---------------- | -------- | ------------------------------------------------ | ---------------------------------------- |
 | `port`                        | Port where the server runs.                                                                                                                                    | no               | 8000     | `port: VALUE`                                    | `FORGE4FLOW_PORT=VALUE`                  |
 | `logLevel`                    | Log level (e.g. Debug, Info etc.) for the server. Forge4Flow uses zerolog, valid log levels are defined [here](https://github.com/rs/zerolog#leveled-logging). | no               | 0        | `logLevel: VALUE`                                | `FORGE4FLOW_LOGLEVEL=VALUE`              |
 | `enableAccessLog`             | Determines whether the built-in request logger is enabled or not.                                                                                              | no               | true     | `enableAccessLog: VALUE`                         | `FORGE4FLOW_ENABLEACCESSLOG=VALUE`       |
@@ -20,7 +20,7 @@ Forge4Flow-Core requires certain configuration variables to be set via either a 
 By default, you must configure an API key that Forge4Flow will use to authenticate all requests. You should follow standard security practices for generating and storing your API key.
 
 | Variable                | Description                                                                                              | Required? | Default | YAML                                       | ENV VAR                                  |
-|-------------------------|----------------------------------------------------------------------------------------------------------|-----------|---------|--------------------------------------------|------------------------------------------|
+| ----------------------- | -------------------------------------------------------------------------------------------------------- | --------- | ------- | ------------------------------------------ | ---------------------------------------- |
 | `authentication.apiKey` | The unique API key that all clients must pass to the server via the `Authorization: ApiKey VALUE` header | yes       | -       | `authentication:`<br>&emsp;`apiKey: VALUE` | `FORGE4FLOW_AUTHENTICATION_APIKEY=VALUE` |
 
 ## Client Side - Session Token Authentication
@@ -52,17 +52,17 @@ authentication:
   autoRegister: true
 datastore:
   mysql:
-    username: replace_with_username
-    password: replace_with_password
-    hostname: replace_with_hostname
-    database: warrant
+    username: forge4flow
+    password: forge4flow
+    hostname: 127.0.0.1
+    database: forge4flow
 eventstore:
   synchronizeEvents: false
   mysql:
-    username: replace_with_username
-    password: replace_with_password
-    hostname: replace_with_hostname
-    database: warrantEvents
+    username: forge4flow
+    password: forge4flow
+    hostname: 127.0.0.1
+    database: forge4flowEvents
 ```
 
 ### Sample environment variables config
@@ -80,10 +80,10 @@ export FORGE4FLOW_AUTHENTICATION_AUTOREGISTER=true
 export FORGE4FLOW_DATASTORE_MYSQL_USERNAME="replace_with_username"
 export FORGE4FLOW_DATASTORE_MYSQL_PASSWORD="replace_with_password"
 export FORGE4FLOW_DATASTORE_MYSQL_HOSTNAME="replace_with_hostname"
-export FORGE4FLOW_DATASTORE_MYSQL_DATABASE="warrant"
+export FORGE4FLOW_DATASTORE_MYSQL_DATABASE="forge4flow"
 export FORGE4FLOW_EVENTSTORE_SYNCHRONIZEEVENTS=false
 export FORGE4FLOW_EVENTSTORE_MYSQL_USERNAME="replace_with_username"
 export FORGE4FLOW_EVENTSTORE_MYSQL_PASSWORD="replace_with_password"
 export FORGE4FLOW_EVENTSTORE_MYSQL_HOSTNAME="replace_with_hostname"
-export FORGE4FLOW_EVENTSTORE_MYSQL_DATABASE="warrantEvents"
+export FORGE4FLOW_EVENTSTORE_MYSQL_DATABASE="forge4flowEvents"
 ```
