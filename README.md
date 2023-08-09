@@ -56,6 +56,10 @@ To get started using Forge4Flow, follow the deployment guide to self-host your o
 
 ## Roadmap To v0.1.0
 
+### Website
+
+Ya... Let's not talk about it, it's bad currently, is mostly there just to hold the blog and link to the documentation sites, and simply... needs to be replaced. Anyone interested in helping with this, or giving the Admin Dashboard a face life, please reach out in [Discord](https://discord.gg/S85mDy2qxE)
+
 ### Forge Cloud
 
 Once v0.1.0 is available the plan is to launch a service for hosting multiple Forge4Flow-Core environments with central management dashboard similar to Forge Manager
