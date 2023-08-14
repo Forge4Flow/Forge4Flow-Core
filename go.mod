@@ -3,7 +3,7 @@ module github.com/forge4flow/forge4flow-core
 go 1.20
 
 require (
-	github.com/antonmedv/expr v1.12.7
+	github.com/antonmedv/expr v1.13.0
 	github.com/go-playground/validator/v10 v10.15.0
 	github.com/golang-migrate/migrate/v4 v4.16.2
 	github.com/google/go-cmp v0.5.9
