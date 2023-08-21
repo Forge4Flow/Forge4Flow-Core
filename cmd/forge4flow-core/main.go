@@ -288,7 +288,7 @@ func main() {
 
 	if cfg.CoreInstall {
 		// Verify admin role and initial user are configured
-		setup.InitialSetup(&cfg, permissionSvc, roleSvc, userSvc, warrantSvc)
+		setup.InitialSetup(&cfg, featureSvc, userSvc, warrantSvc)
 	}
 
 	svcs := []service.Service{

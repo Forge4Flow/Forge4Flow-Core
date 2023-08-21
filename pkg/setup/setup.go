@@ -2,56 +2,31 @@ package setup
 
 import (
 	"context"
-	"log"
-
-	permission "github.com/forge4flow/forge4flow-core/pkg/authz/permission"
-	role "github.com/forge4flow/forge4flow-core/pkg/authz/role"
+	feature "github.com/forge4flow/forge4flow-core/pkg/authz/feature"
 	user "github.com/forge4flow/forge4flow-core/pkg/authz/user"
 	warrant "github.com/forge4flow/forge4flow-core/pkg/authz/warrant"
 	"github.com/forge4flow/forge4flow-core/pkg/config"
+	"log"
 )
 
-func InitialSetup(cfg *config.Forge4FlowConfig, permissionSvc *permission.PermissionService, roleSvc *role.RoleService, userSvc *user.UserService, warrantSvc *warrant.WarrantService) {
+func InitialSetup(cfg *config.Forge4FlowConfig, featureSvc *feature.FeatureService, userSvc *user.UserService, warrantSvc *warrant.WarrantService) {
 	ctx := context.Background()
-	permRoleName := "forge4flow-admin"
+	featureId := "forge4flow-admin"
+	featureName := "Forge4Flow Admin"
+	featureDesc := "Enables access to the Forge4Flow Admin Dashboard"
 
-	// Check if the forge4flow-admin role & Permission exist and create if needed
-	_, err := roleSvc.GetByRoleId(ctx, permRoleName)
+	// Check if the feature exists and create if needed
+	_, err := featureSvc.GetByFeatureId(ctx, featureId)
 	if err != nil {
-		newRoleSpec := role.RoleSpec{
-			RoleId: permRoleName,
-			Name:   &permRoleName,
-		}
-		_, err := roleSvc.Create(ctx, newRoleSpec)
-		if err != nil {
-			log.Fatalln("Unable to create admin role")
-		}
-	}
-
-	_, err = permissionSvc.GetByPermissionId(ctx, "forge4flow-admin")
-	if err != nil {
-		newPermissionSpec := permission.PermissionSpec{
-			PermissionId: permRoleName,
-			Name:         &permRoleName,
+		newFeatureSpec := feature.FeatureSpec{
+			FeatureId:   featureId,
+			Name:        &featureName,
+			Description: &featureDesc,
 		}
 
-		_, err := permissionSvc.Create(ctx, newPermissionSpec)
+		_, err := featureSvc.Create(ctx, newFeatureSpec)
 		if err != nil {
-			log.Fatalln("Unable to create admin permission")
-		}
-
-		newWarrantSpec := warrant.WarrantSpec{
-			ObjectType: "permission",
-			ObjectId:   permRoleName,
-			Relation:   "member",
-			Subject: &warrant.SubjectSpec{
-				ObjectType: "role",
-				ObjectId:   permRoleName,
-			},
-		}
-		_, err = warrantSvc.Create(ctx, newWarrantSpec)
-		if err != nil {
-			log.Fatalln("Unable to assign permission role to role")
+			log.Fatalln("Unable to create admin feature")
 		}
 	}
 
@@ -67,10 +42,10 @@ func InitialSetup(cfg *config.Forge4FlowConfig, permissionSvc *permission.Permis
 			log.Fatalln("Unable to create admin role")
 		}
 
-		// Add role to the user
+		// Add feature to the user
 		newWarrantSpecUser := warrant.WarrantSpec{
-			ObjectType: "role",
-			ObjectId:   permRoleName,
+			ObjectType: "feature",
+			ObjectId:   featureId,
 			Relation:   "member",
 			Subject: &warrant.SubjectSpec{
 				ObjectType: "user",
@@ -80,7 +55,7 @@ func InitialSetup(cfg *config.Forge4FlowConfig, permissionSvc *permission.Permis
 
 		_, err = warrantSvc.Create(ctx, newWarrantSpecUser)
 		if err != nil {
-			log.Fatalln("Unable to assign admin role to user")
+			log.Fatalln("Unable to assign admin feature to user")
 		}
 	}
 }
