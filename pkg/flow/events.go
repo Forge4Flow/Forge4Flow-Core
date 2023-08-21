@@ -38,6 +38,14 @@ func (svc *FlowService) AddEventMonitor(ctx context.Context, event EventSpec) er
 		// 	return err
 		// }
 
+		for _, eventAction := range event.EventActions {
+			eventAction.Type = newEvent.GetType()
+			_, err := svc.Repository.CreateEventAction(txCtx, eventAction.ToEventAction())
+			if err != nil {
+				return err
+			}
+		}
+
 		return nil
 	})
 	if err != nil {
@@ -261,53 +269,16 @@ func (em *EventMonitor) runLoop() {
 
 						em.eventChannel <- event
 
-						// parse event action
-						dbEvent, err := em.flowSvc.Repository.GetByType(context.Background(), em.EventID)
+						// Get Event Actions
+						eventActions, err := em.flowSvc.Repository.GetActionsForEvent(context.Background(), em.EventID)
 						if err != nil {
 							log.Println(err)
 						}
-						eventSpec := dbEvent.ToEventSpec()
 
-						if eventSpec.ActionEnabled {
-							eventData := event.Data.(map[string]any)
-							if eventSpec.ObjectIdField != "" {
-								eventSpec.ObjectId = eventData[eventSpec.ObjectIdField].(string)
-							}
-
-							if eventSpec.SubjectIdField != "" {
-								eventSpec.SubjectId = eventData[eventSpec.SubjectIdField].(string)
-							}
-
-							if eventSpec.ObjectType == "user" {
-								userSpec := user.UserSpec{
-									UserId: eventSpec.ObjectId,
-								}
-								_, err := em.flowSvc.UserSvc.Create(context.Background(), userSpec)
-								if err != nil {
-									// TODO: Ignore if user already exists error
-									// TODO: Proper error handling
-									log.Println(err)
-								}
-								continue
-							}
-
-							// Create Warrant
-							warrantSpec := warrant.WarrantSpec{
-								ObjectType: eventSpec.ObjectType,
-								ObjectId:   eventSpec.ObjectId,
-								Relation:   eventSpec.ObjectRelation,
-								Subject: &warrant.SubjectSpec{
-									ObjectType: eventSpec.SubjectType,
-									ObjectId:   eventSpec.SubjectId,
-								},
-							}
-
-							_, err = em.flowSvc.WarrantSvc.Create(context.Background(), warrantSpec)
-							if err != nil {
-								// TODO: Ignore if warrant already exists error
-								// TODO: Proper error handling
-								log.Println(err)
-							}
+						// For Each Action Process
+						for _, eventAction := range eventActions {
+							action := *eventAction.ToEventActionSpec()
+							em.performEventAction(action, event.Data.(map[string]any))
 						}
 					}
 				}
@@ -320,6 +291,49 @@ func (em *EventMonitor) runLoop() {
 
 			// Wait for the job to complete
 			time.Sleep(5 * time.Second)
+		}
+	}
+}
+
+func (em *EventMonitor) performEventAction(eventSpec EventActionsSpec, eventData map[string]any) {
+	if eventSpec.ActionEnabled {
+		if eventSpec.ObjectIdField != "" {
+			eventSpec.ObjectId = eventData[eventSpec.ObjectIdField].(string)
+		}
+
+		if eventSpec.SubjectIdField != "" {
+			eventSpec.SubjectId = eventData[eventSpec.SubjectIdField].(string)
+		}
+
+		if eventSpec.ObjectType == "user" {
+			userSpec := user.UserSpec{
+				UserId: eventSpec.ObjectId,
+			}
+			_, err := em.flowSvc.UserSvc.Create(context.Background(), userSpec)
+			if err != nil {
+				// TODO: Ignore if user already exists error
+				// TODO: Proper error handling
+				log.Println(err)
+			}
+			return
+		}
+
+		// Create Warrant
+		warrantSpec := warrant.WarrantSpec{
+			ObjectType: eventSpec.ObjectType,
+			ObjectId:   eventSpec.ObjectId,
+			Relation:   eventSpec.ObjectRelation,
+			Subject: &warrant.SubjectSpec{
+				ObjectType: eventSpec.SubjectType,
+				ObjectId:   eventSpec.SubjectId,
+			},
+		}
+
+		_, err := em.flowSvc.WarrantSvc.Create(context.Background(), warrantSpec)
+		if err != nil {
+			// TODO: Ignore if warrant already exists error
+			// TODO: Proper error handling
+			log.Println(err)
 		}
 	}
 }

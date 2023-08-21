@@ -25,20 +25,11 @@ func (repo MySQLRepository) Create(ctx context.Context, model Model) (int64, err
 		ctx,
 		`
 			INSERT INTO flowEvent (
-				type, objectType, objectId, objectIdField, objectRelation, subjectType, subjectId, subjectIdField, script, removeAction, actionEnabled
-			) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+				type, monitorEnabled
+			) VALUES (?, ?)
 		`,
 		model.GetType(),
-		model.GetObjectType(),
-		model.GetObjectId(),
-		model.GetObjectIdField(),
-		model.GetObjectRelation(),
-		model.GetSubjectType(),
-		model.GetSubjectId(),
-		model.GetSubjectIdField(),
-		model.GetScript(),
-		model.GetRemoveAction(),
-		model.GetActionEnabled(),
+		model.GetMonitorEnabled(),
 	)
 	if err != nil {
 		return -1, errors.Wrap(err, "error creating event type")
@@ -52,13 +43,45 @@ func (repo MySQLRepository) Create(ctx context.Context, model Model) (int64, err
 	return newEventId, nil
 }
 
+func (repo MySQLRepository) CreateEventAction(ctx context.Context, model ActionModel) (int64, error) {
+	result, err := repo.DB(ctx).ExecContext(
+		ctx,
+		`INSERT INTO flowEventActions (
+                              type, objectType, objectId, objectIdField, objectRelation, subjectType, subjectId, subjectIdField, script, orderWeight, removeAction, actionEnabled
+					) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+			`,
+		model.GetType(),
+		model.GetObjectType(),
+		model.GetObjectId(),
+		model.GetObjectIdField(),
+		model.GetObjectRelation(),
+		model.GetSubjectType(),
+		model.GetSubjectId(),
+		model.GetSubjectIdField(),
+		model.GetScript(),
+		model.GetOrderWeight(),
+		model.GetRemoveAction(),
+		model.GetActionEnabled(),
+	)
+	if err != nil {
+		return -1, errors.Wrap(err, "error creating event action")
+	}
+
+	newEventActionId, err := result.LastInsertId()
+	if err != nil {
+		return -1, errors.Wrap(err, "error creating event type")
+	}
+
+	return newEventActionId, nil
+}
+
 func (repo MySQLRepository) GetById(ctx context.Context, id int64) (Model, error) {
 	var event Event
 	err := repo.DB(ctx).GetContext(
 		ctx,
 		&event,
 		`
-			SELECT type, objectType, objectId, objectIdField, objectRelation, subjectType, subjectId, subjectIdField, script, removeAction, actionEnabled, createdAt, updatedAt, deletedAt
+			SELECT type, lastBlockHeight, monitorEnabled, createdAt, updatedAt, deletedAt
 			FROM flowEvent
 			WHERE
 				id = ? AND
@@ -84,7 +107,7 @@ func (repo MySQLRepository) GetByType(ctx context.Context, eventType string) (Mo
 		ctx,
 		&eventObject,
 		`
-			SELECT type, objectType, objectId, objectIdField, objectRelation, subjectType, subjectId, subjectIdField, script, removeAction, actionEnabled, createdAt, updatedAt, deletedAt
+			SELECT type, lastBlockHeight, monitorEnabled, createdAt, updatedAt, deletedAt
 			FROM flowEvent
 			WHERE
 				type = ? AND
@@ -110,7 +133,7 @@ func (repo MySQLRepository) GetAllEvents(ctx context.Context) ([]Model, error) {
 		ctx,
 		&eventObjects,
 		`
-			SELECT type, objectType, objectId, objectIdField, objectRelation, subjectType, subjectId, subjectIdField, script, removeAction, actionEnabled, createdAt, updatedAt, deletedAt
+			SELECT type, lastBlockHeight, monitorEnabled, createdAt, updatedAt, deletedAt
 			FROM flowEvent
 			WHERE
 				deletedAt IS NULL
@@ -126,6 +149,40 @@ func (repo MySQLRepository) GetAllEvents(ctx context.Context) ([]Model, error) {
 	}
 
 	var models []Model
+	for _, event := range eventObjects {
+		eventModel := event
+		models = append(models, &eventModel)
+	}
+
+	return models, nil
+}
+
+func (repo MySQLRepository) GetActionsForEvent(ctx context.Context, eventType string) ([]ActionModel, error) {
+	var eventObjects []EventAction
+	err := repo.DB(ctx).SelectContext(
+		ctx,
+		&eventObjects,
+		`
+			SELECT type, objectType, objectId, objectIdField, objectRelation, subjectType, subjectId, subjectIdField, script, orderWeight, removeAction, actionEnabled
+			FROM flowEventActions
+			ORDER BY orderWeight
+			WHERE
+			    type = ? AND
+			    actionEnabled = 1 AND
+				deletedAt IS NULL
+		`,
+		eventType,
+	)
+	if err != nil {
+		switch err {
+		case sql.ErrNoRows:
+			return nil, service.NewRecordNotFoundError("Event", "None")
+		default:
+			return nil, errors.Wrapf(err, "error getting events")
+		}
+	}
+
+	var models []ActionModel
 	for _, event := range eventObjects {
 		eventModel := event
 		models = append(models, &eventModel)

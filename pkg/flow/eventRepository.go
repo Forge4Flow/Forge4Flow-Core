@@ -10,9 +10,11 @@ import (
 
 type FlowEventRepository interface {
 	Create(ctx context.Context, event Model) (int64, error)
+	CreateEventAction(ctx context.Context, eventAction ActionModel) (int64, error)
 	GetById(ctx context.Context, id int64) (Model, error)
 	GetByType(ctx context.Context, eventType string) (Model, error)
 	GetAllEvents(ctx context.Context) ([]Model, error)
+	GetActionsForEvent(ctx context.Context, eventType string) ([]ActionModel, error)
 	DeleteById(ctx context.Context, id int64) error
 	DeleteByType(ctx context.Context, eventType string) error
 	UpdateLastBlockHeightByType(ctx context.Context, eventType string, lastBlockHeight uint64) error
