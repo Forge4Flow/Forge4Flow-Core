@@ -36,11 +36,11 @@ func SessionAuthMiddleware(cfg config.Config, next http.Handler, svcs ...service
 
 		// TODO: FIX SESSION EXPERATION CHECKS
 		// Check If Session Has Expired
-		// if session.IsExpired() {
-		// 	sessionService.Repository.DeleteById(r.Context(), session.GetID())
-		// 	service.SendErrorResponse(w, service.NewTokenExpiredError())
-		// 	return
-		// }
+		if session.IsExpired() {
+			sessionService.Repository.DeleteById(r.Context(), session.GetID())
+			service.SendErrorResponse(w, service.NewTokenExpiredError())
+			return
+		}
 
 		// Verify User Agent Matches
 		if !service.SecureCompareEqual(r.UserAgent(), session.GetUserAgent()) {
@@ -134,11 +134,11 @@ func ApiKeyAndSessionAuthMiddleware(cfg config.Config, next http.Handler, svcs .
 
 			// TODO: FIX SESSION EXPERATION CHECKS
 			// Check If Session Has Expired
-			// if session.IsExpired() {
-			// 	sessionService.Repository.DeleteById(r.Context(), session.GetID())
-			// 	service.SendErrorResponse(w, service.NewTokenExpiredError())
-			// 	return
-			// }
+			if session.IsExpired() {
+				sessionService.Repository.DeleteById(r.Context(), session.GetID())
+				service.SendErrorResponse(w, service.NewTokenExpiredError())
+				return
+			}
 
 			// Verify User Agent Matches
 			if !service.SecureCompareEqual(r.UserAgent(), session.GetUserAgent()) {

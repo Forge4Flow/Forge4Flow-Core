@@ -1,7 +1,6 @@
 package authn
 
 import (
-	"fmt"
 	"time"
 )
 
@@ -68,8 +67,12 @@ func (session Session) GetClientIp() string {
 }
 
 func (session Session) IsExpired() bool {
-	fmt.Println(session.GetLastActivity().Add(session.GetIdleTimeout()).After(time.Now()))
-	return session.GetLastActivity().Add(session.GetIdleTimeout()).After(time.Now())
+	now := time.Now()
+	idleExpired := now.After(session.GetLastActivity().Add(session.GetIdleTimeout()))
+	absoluteExpired := now.After(session.GetExpTime())
+
+	// The session is expired if it's either idle expired or absolute expired
+	return idleExpired || absoluteExpired
 }
 
 func (session Session) GetCreatedAt() time.Time {
