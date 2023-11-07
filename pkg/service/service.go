@@ -17,6 +17,7 @@ const (
 	SessionService     = "SessionService"
 	NonceService       = "NonceService"
 	FlowService        = "FlowService"
+	ApiService         = "ApiService"
 )
 
 type Env interface {
