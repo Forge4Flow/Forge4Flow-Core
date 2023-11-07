@@ -2,13 +2,11 @@ package authn
 
 import (
 	"context"
-	"crypto/rand"
-	"encoding/hex"
-	"fmt"
 
 	"github.com/forge4flow/forge4flow-core/pkg/config"
 	"github.com/forge4flow/forge4flow-core/pkg/event"
 	"github.com/forge4flow/forge4flow-core/pkg/service"
+	"github.com/forge4flow/forge4flow-core/utils"
 )
 
 type NonceService struct {
@@ -33,7 +31,7 @@ func (svc NonceService) ID() string {
 
 func (svc NonceService) Create(ctx context.Context) (*NonceSpec, error) {
 	//Generate nonce and nonceSpec
-	nonce, err := generateNonce()
+	nonce, err := utils.GenerateRandomKey()
 	if err != nil {
 		return nil, err
 	}
@@ -87,14 +85,4 @@ func (svc NonceService) IsValid(ctx context.Context, nonce string) (bool, error)
 	err = svc.Repository.DeleteByNonce(ctx, nonce)
 
 	return validNonce, err
-}
-
-func generateNonce() (string, error) {
-	nonceBytes := make([]byte, 32)
-	_, err := rand.Read(nonceBytes)
-	if err != nil {
-		return "", fmt.Errorf("could not generate nonce")
-	}
-
-	return hex.EncodeToString(nonceBytes), nil
 }
