@@ -24,7 +24,7 @@ func (repo MySQLRepository) Create(ctx context.Context, model Model) (int64, err
 	result, err := repo.DB(ctx).ExecContext(
 		ctx,
 		`
-			INSERT INTO keys (
+			INSERT INTO apiKey (
 				displayName,
 				key,
 				expDate
@@ -32,7 +32,7 @@ func (repo MySQLRepository) Create(ctx context.Context, model Model) (int64, err
 		`,
 		model.GetName(),
 		model.GetKey(),
-		model.GetExpDate(),
+		model.GetExpDate().UTC(),
 	)
 	if err != nil {
 		return -1, errors.Wrap(err, "error creating nonce")
@@ -53,7 +53,7 @@ func (repo MySQLRepository) GetById(ctx context.Context, id int64) (Model, error
 		&key,
 		`
 			SELECT id, displayName, nonce, expDate, createdAt, updatedAt, deletedAt
-			FROM keys
+			FROM apiKey
 			WHERE
 				id = ? AND
 				deletedAt IS NULL
@@ -79,7 +79,7 @@ func (repo MySQLRepository) GetByKey(ctx context.Context, key string) (Model, er
 		&keyObject,
 		`
 			SELECT id, displayName, nonce, expDate, createdAt, updatedAt, deletedAt
-			FROM keys
+			FROM apiKey
 			WHERE
 				nonce = ? AND
 				deletedAt IS NULL
@@ -102,7 +102,7 @@ func (repo MySQLRepository) DeleteById(ctx context.Context, id int64) error {
 	_, err := repo.DB(ctx).ExecContext(
 		ctx,
 		`
-			UPDATE keys
+			UPDATE apiKey
 			SET deletedAt = ?
 			WHERE
 				id = ? AND
@@ -116,7 +116,7 @@ func (repo MySQLRepository) DeleteById(ctx context.Context, id int64) error {
 		case sql.ErrNoRows:
 			return service.NewRecordNotFoundError("NonceID", id)
 		default:
-			return errors.Wrapf(err, "error deleting nonce with ID %s", id)
+			return errors.Wrapf(err, "error deleting nonce with ID %d", id)
 		}
 	}
 
@@ -127,7 +127,7 @@ func (repo MySQLRepository) DeleteByKey(ctx context.Context, key string) error {
 	_, err := repo.DB(ctx).ExecContext(
 		ctx,
 		`
-			UPDATE keys
+			UPDATE apiKey
 			SET deletedAt = ?
 			WHERE
 				key = ? AND

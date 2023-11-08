@@ -29,7 +29,7 @@ import (
 )
 
 const (
-	MySQLDatastoreMigrationVersion     = 8
+	MySQLDatastoreMigrationVersion     = 9
 	MySQLEventstoreMigrationVersion    = 3
 	PostgresDatastoreMigrationVersion  = 5
 	PostgresEventstoreMigrationVersion = 4

@@ -3,15 +3,15 @@ package authn
 import "time"
 
 type ApiSpec struct {
-	DisplayName string `json:"displayName"`
-	Key         string `json:"key"`
-	ExpDate     string `json:"expDate"`
+	DisplayName string    `json:"displayName"`
+	Key         string    `json:"key"`
+	ExpDate     time.Time `json:"expDate"`
 }
 
-func (spec ApiSpec) ToNonce() *ApiKey {
+func (spec ApiSpec) ToApiKey() *ApiKey {
 	return &ApiKey{
 		DisplayName: spec.DisplayName,
-		Key:         spec.Key,
-		ExpDate:     time.Now().Add(time.Hour * 24 * 90),
+		ApiKey:      spec.Key,
+		ExpDate:     spec.ExpDate,
 	}
 }

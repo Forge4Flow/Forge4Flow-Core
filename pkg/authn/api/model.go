@@ -19,7 +19,7 @@ type Model interface {
 type ApiKey struct {
 	ID          int64      `mysql:"id" postgres:"id" sqlite:"id"`
 	DisplayName string     `mysql:"displayName" postgres:"display_name" sqlite:"displayName"`
-	Key         string     `mysql:"key" postgres:"key" sqlite:"key"`
+	ApiKey      string     `mysql:"apikey" postgres:"api_key" sqlite:"apikey"`
 	ExpDate     time.Time  `mysql:"expDate" postgres:"exp_date" sqlite:"expDate"`
 	CreatedAt   time.Time  `mysql:"createdAt" postgres:"created_at" sqlite:"createdAt"`
 	UpdatedAt   time.Time  `mysql:"updatedAt" postgres:"updated_at" sqlite:"updatedAt"`
@@ -38,7 +38,7 @@ func (key ApiKey) GetKey() *string {
 	if key.IsExpired() {
 		return nil
 	} else {
-		return &key.Key
+		return &key.ApiKey
 	}
 }
 
@@ -65,7 +65,7 @@ func (key ApiKey) GetDeletedAt() *time.Time {
 func (key ApiKey) ToApiSpec() *ApiSpec {
 	return &ApiSpec{
 		DisplayName: key.DisplayName,
-		Key:         key.Key,
-		ExpDate:     key.ExpDate.Format(time.RFC3339),
+		Key:         key.ApiKey,
+		ExpDate:     key.ExpDate,
 	}
 }
