@@ -27,16 +27,18 @@ func (repo MySQLRepository) Create(ctx context.Context, model Model) (int64, err
 			INSERT INTO session (
 				sessionId,
 				userId,
+				lastActivity,
 				idleTimeout,
 				expTime,
 				userAgent,
 				clientIp
-			) VALUES (?, ?, ?, ?, ?, ?)
+			) VALUES (?, ?, ?, ?, ?, ?, ?)
 		`,
 		model.GetSessionId(),
 		model.GetUserId(),
+		time.Now().UTC(),
 		model.GetIdleTimeout(),
-		model.GetExpTime(),
+		model.GetExpTime().UTC(),
 		model.GetUserAgent(),
 		model.GetClientIp(),
 	)

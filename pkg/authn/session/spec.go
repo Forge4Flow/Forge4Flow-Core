@@ -19,7 +19,7 @@ func (s SessionCreationSpec) ToSession() *Session {
 	return &Session{
 		SessionId:   s.SessionId,
 		UserId:      s.UserId,
-		IdleTimeout: int64(s.IdleTimeout.Seconds()),
+		IdleTimeout: int64(s.IdleTimeout.Nanoseconds()),
 		ExpTime:     s.ExpTime,
 		UserAgent:   s.UserAgent,
 		ClientIp:    s.ClientIp,

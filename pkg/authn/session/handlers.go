@@ -75,7 +75,7 @@ func CreateSessionHandler(svc SessionService, w http.ResponseWriter, r *http.Req
 			SessionId:   sessionToken,
 			UserId:      authInfo.UserId,
 			IdleTimeout: svc.Config.GetAuthentication().SessionIdleTimeout,
-			ExpTime:     time.Now().Add(time.Duration(svc.Config.GetAuthentication().SessionExpTimeout)),
+			ExpTime:     time.Now().Add(time.Duration(svc.Config.GetAuthentication().SessionExpTimeout)).UTC(),
 			ClientIp:    service.GetClientIpAddress(r),
 			UserAgent:   r.UserAgent(),
 		}

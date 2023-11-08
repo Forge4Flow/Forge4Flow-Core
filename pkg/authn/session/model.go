@@ -67,9 +67,9 @@ func (session Session) GetClientIp() string {
 }
 
 func (session Session) IsExpired() bool {
-	now := time.Now()
-	idleExpired := now.After(session.GetLastActivity().Add(session.GetIdleTimeout()))
-	absoluteExpired := now.After(session.GetExpTime())
+	now := time.Now().UTC()
+	idleExpired := now.After(session.LastActivity.Add(session.GetIdleTimeout()))
+	absoluteExpired := now.After(session.ExpTime)
 
 	// The session is expired if it's either idle expired or absolute expired
 	return idleExpired || absoluteExpired

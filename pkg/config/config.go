@@ -24,7 +24,7 @@ const (
 	DefaultAuthenticationUserIdClaim         = "sub"
 	DefaultSessionTokenLength                = 32
 	DefaultSessionIdleTimeout                = 15 * time.Minute
-	DefaultSessionExpTimeout                 = time.Hour
+	DefaultSessionExpTimeout                 = 24 * time.Hour
 	DefaultAppIdentifier                     = "Forge4Flow IAM Service"
 	DefaultFlowNetwork                       = "emulator"
 	DefaultAutoRegister                      = false
