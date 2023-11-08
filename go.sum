@@ -304,12 +304,12 @@ github.com/olekukonko/tablewriter v0.0.1/go.mod h1:vsDQFd/mU46D+Z4whnwzcISnGGzXW
 github.com/olekukonko/tablewriter v0.0.2-0.20190409134802-7e037d187b0c/go.mod h1:vsDQFd/mU46D+Z4whnwzcISnGGzXWMclvtLoiIKAKIo=
 github.com/onflow/atree v0.6.0 h1:j7nQ2r8npznx4NX39zPpBYHmdy45f4xwoi+dm37Jk7c=
 github.com/onflow/atree v0.6.0/go.mod h1:gBHU0M05qCbv9NN0kijLWMgC47gHVNBIp4KmsVFi0tc=
-github.com/onflow/cadence v0.40.0 h1:3pTdkyVTjMx2U5+YZYvIpyw74CSxabjk9PdAZUkJ1GU=
-github.com/onflow/cadence v0.40.0/go.mod h1:OIJLyVBPa339DCBQXBfGaorT4tBjQh9gSKe+ZAIyyh0=
+github.com/onflow/cadence v0.41.1 h1:bS7hAf295r2aCNftWDINpYAIC4OUoieJwQb//MAKcNo=
+github.com/onflow/cadence v0.41.1/go.mod h1:2ggmhENvPPZXRnv9SmqN2xiYvluu4wx/96GCpeRh8lU=
 github.com/onflow/crypto v0.24.9 h1:jYP1qdwid0qCineFzBFlxBchg710A7RuSWpTqxaOdog=
 github.com/onflow/crypto v0.24.9/go.mod h1:J/V7IEVaqjDajvF8K0B/SJPJDgAOP2G+LVLeb0hgmbg=
-github.com/onflow/flow-go-sdk v0.43.0 h1:EXnnzkT7olJ5WdGvbVf69puZBMmDbdBu6uUzG9bJUBc=
-github.com/onflow/flow-go-sdk v0.43.0/go.mod h1:/c/HsIgp5Ss3A2hcU4AKaaB4BITWKjgb7dZnrzzwpDs=
+github.com/onflow/flow-go-sdk v0.44.0 h1:gVRLcZ6LUNs/5mzHDx0mp4mEnBAWD62O51P4/nYm4rE=
+github.com/onflow/flow-go-sdk v0.44.0/go.mod h1:mm1Fi2hiMrexNMwRzTrAN2zwTvlP8iQ5CF2JSAgJR8U=
 github.com/onsi/ginkgo v1.6.0/go.mod h1:lLunBs/Ym6LB5Z9jYTR76FiuTmxDTDusOGeTQH+WWjE=
 github.com/onsi/ginkgo v1.7.0/go.mod h1:lLunBs/Ym6LB5Z9jYTR76FiuTmxDTDusOGeTQH+WWjE=
 github.com/onsi/gomega v1.4.3/go.mod h1:ex+gbHU/CVuBBDIJjb2X0qEXbFg53c61hWP/1CpauHY=
