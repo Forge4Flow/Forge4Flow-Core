@@ -34,7 +34,6 @@ func SessionAuthMiddleware(cfg config.Config, next http.Handler, svcs ...service
 			return
 		}
 
-		// TODO: FIX SESSION EXPERATION CHECKS
 		// Check If Session Has Expired
 		if session.IsExpired() {
 			sessionService.Repository.DeleteById(r.Context(), session.GetID())
