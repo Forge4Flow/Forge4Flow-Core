@@ -131,7 +131,6 @@ func ApiKeyAndSessionAuthMiddleware(cfg config.Config, next http.Handler, svcs .
 				return
 			}
 
-			// TODO: FIX SESSION EXPERATION CHECKS
 			// Check If Session Has Expired
 			if session.IsExpired() {
 				sessionService.Repository.DeleteById(r.Context(), session.GetID())
