@@ -6,7 +6,7 @@ import (
 	"github.com/forge4flow/forge4flow-core/pkg/service"
 )
 
-// TODO: NONE OF THIS SHOULD BE HARD CODED!! - TESTING ONLY
+// TODO: NONE OF THIS SHOULDN'T BE HARD CODED!! - TESTING ONLY
 var GOOGLE = OauthProvider{
 	ID:           "google",
 	Name:         "Google",
@@ -29,24 +29,21 @@ func (svc OauthService) Routes() ([]service.Route, error) {
 		},
 
 		service.WarrantRoute{
-			Pattern:                    "/v1/oidc/configuration",
-			Method:                     "GET",
-			Handler:                    service.NewRouteHandler(svc, GetProvidersHandler),
-			OverrideAuthMiddlewareFunc: service.ApiKeyAuthMiddleware,
+			Pattern: "/v1/oidc/configuration",
+			Method:  "GET",
+			Handler: service.NewRouteHandler(svc, GetProvidersHandler),
 		},
 
 		service.WarrantRoute{
-			Pattern:                    "/v1/oidc/provider",
-			Method:                     "POST",
-			Handler:                    service.NewRouteHandler(svc, GetProvidersHandler),
-			OverrideAuthMiddlewareFunc: service.ApiKeyAuthMiddleware,
+			Pattern: "/v1/oidc/provider",
+			Method:  "POST",
+			Handler: service.NewRouteHandler(svc, GetProvidersHandler),
 		},
 
 		service.WarrantRoute{
-			Pattern:                    "/v1/oidc/provider",
-			Method:                     "PUT",
-			Handler:                    service.NewRouteHandler(svc, GetProvidersHandler),
-			OverrideAuthMiddlewareFunc: service.ApiKeyAuthMiddleware,
+			Pattern: "/v1/oidc/provider",
+			Method:  "PUT",
+			Handler: service.NewRouteHandler(svc, GetProvidersHandler),
 		},
 	}, nil
 }

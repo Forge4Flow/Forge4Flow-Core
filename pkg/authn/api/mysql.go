@@ -89,7 +89,7 @@ func (repo MySQLRepository) GetByKey(ctx context.Context, key string) (Model, er
 	if err != nil {
 		switch err {
 		case sql.ErrNoRows:
-			return nil, service.NewRecordNotFoundError("User", key)
+			return nil, service.NewRecordNotFoundError("API Key", key)
 		default:
 			return nil, errors.Wrapf(err, "error getting user %s", key)
 		}

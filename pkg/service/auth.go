@@ -3,7 +3,6 @@ package service
 import (
 	"context"
 	"crypto/subtle"
-	"errors"
 	"fmt"
 	"net/http"
 	"strings"
@@ -31,29 +30,6 @@ type AuthInfo struct {
 }
 
 type AuthMiddlewareFunc func(config config.Config, next http.Handler, svcs ...Service) (http.Handler, error)
-
-func ApiKeyAuthMiddleware(cfg config.Config, next http.Handler, svcs ...Service) (http.Handler, error) {
-	warrantCfg, ok := cfg.(config.Forge4FlowConfig)
-	if !ok {
-		return nil, errors.New("cfg parameter on DefaultAuthMiddleware must be a Forge4FlowConfig")
-	}
-
-	return http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
-		_, tokenString, err := ParseAuthTokenFromRequest(r, []string{AuthTypeApiKey})
-		if err != nil {
-			SendErrorResponse(w, NewUnauthorizedError(fmt.Sprintf("Invalid authorization header: %s", err.Error())))
-			return
-		}
-
-		if !SecureCompareEqual(tokenString, warrantCfg.GetAuthentication().ApiKey) {
-			SendErrorResponse(w, NewUnauthorizedError("Invalid API key"))
-			return
-		}
-
-		newContext := context.WithValue(r.Context(), AuthInfoKey, &AuthInfo{})
-		next.ServeHTTP(w, r.WithContext(newContext))
-	}), nil
-}
 
 func PassthroughAuthMiddleware(cfg config.Config, next http.Handler, svcs ...Service) (http.Handler, error) {
 	return http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
