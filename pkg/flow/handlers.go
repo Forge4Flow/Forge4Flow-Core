@@ -9,21 +9,21 @@ import (
 
 func (svc FlowService) Routes() ([]service.Route, error) {
 	return []service.Route{
-		service.WarrantRoute{
+		service.ForgeRoute{
 			Pattern:                    "/v1/flow/events",
 			Method:                     "GET",
 			Handler:                    service.NewRouteHandler(svc, GetEventsHandler),
 			OverrideAuthMiddlewareFunc: service.PassthroughAuthMiddleware,
 		},
 
-		service.WarrantRoute{
+		service.ForgeRoute{
 			Pattern:                    "/v1/flow/events",
 			Method:                     "POST",
 			Handler:                    service.NewRouteHandler(svc, AddEventMonitorHandler),
 			OverrideAuthMiddlewareFunc: service.PassthroughAuthMiddleware,
 		},
 
-		service.WarrantRoute{
+		service.ForgeRoute{
 			Pattern:                    "/v1/flow/events",
 			Method:                     "DELETE",
 			Handler:                    service.NewRouteHandler(svc, RemoveEventMonitorHandler),

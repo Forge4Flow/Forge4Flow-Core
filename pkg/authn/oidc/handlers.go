@@ -21,26 +21,26 @@ var GOOGLE = OauthProvider{
 
 func (svc OauthService) Routes() ([]service.Route, error) {
 	return []service.Route{
-		service.WarrantRoute{
+		service.ForgeRoute{
 			Pattern:                    "/v1/oidc/providers",
 			Method:                     "GET",
 			Handler:                    service.NewRouteHandler(svc, GetProvidersHandler),
 			OverrideAuthMiddlewareFunc: service.PassthroughAuthMiddleware,
 		},
 
-		service.WarrantRoute{
+		service.ForgeRoute{
 			Pattern: "/v1/oidc/configuration",
 			Method:  "GET",
 			Handler: service.NewRouteHandler(svc, GetProvidersHandler),
 		},
 
-		service.WarrantRoute{
+		service.ForgeRoute{
 			Pattern: "/v1/oidc/provider",
 			Method:  "POST",
 			Handler: service.NewRouteHandler(svc, GetProvidersHandler),
 		},
 
-		service.WarrantRoute{
+		service.ForgeRoute{
 			Pattern: "/v1/oidc/provider",
 			Method:  "PUT",
 			Handler: service.NewRouteHandler(svc, GetProvidersHandler),

@@ -11,14 +11,14 @@ import (
 func (svc PricingTierService) Routes() ([]service.Route, error) {
 	return []service.Route{
 		// create
-		service.WarrantRoute{
+		service.ForgeRoute{
 			Pattern: "/v1/pricing-tiers",
 			Method:  "POST",
 			Handler: service.NewRouteHandler(svc, CreateHandler),
 		},
 
 		// get
-		service.WarrantRoute{
+		service.ForgeRoute{
 			Pattern: "/v1/pricing-tiers",
 			Method:  "GET",
 			Handler: service.ChainMiddleware(
@@ -26,26 +26,26 @@ func (svc PricingTierService) Routes() ([]service.Route, error) {
 				service.ListMiddleware[PricingTierListParamParser],
 			),
 		},
-		service.WarrantRoute{
+		service.ForgeRoute{
 			Pattern: "/v1/pricing-tiers/{pricingTierId}",
 			Method:  "GET",
 			Handler: service.NewRouteHandler(svc, GetHandler),
 		},
 
 		// update
-		service.WarrantRoute{
+		service.ForgeRoute{
 			Pattern: "/v1/pricing-tiers/{pricingTierId}",
 			Method:  "POST",
 			Handler: service.NewRouteHandler(svc, UpdateHandler),
 		},
-		service.WarrantRoute{
+		service.ForgeRoute{
 			Pattern: "/v1/pricing-tiers/{pricingTierId}",
 			Method:  "PUT",
 			Handler: service.NewRouteHandler(svc, UpdateHandler),
 		},
 
 		// delete
-		service.WarrantRoute{
+		service.ForgeRoute{
 			Pattern: "/v1/pricing-tiers/{pricingTierId}",
 			Method:  "DELETE",
 			Handler: service.NewRouteHandler(svc, DeleteHandler),

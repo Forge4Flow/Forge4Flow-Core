@@ -11,14 +11,14 @@ import (
 func (svc FeatureService) Routes() ([]service.Route, error) {
 	return []service.Route{
 		// create
-		service.WarrantRoute{
+		service.ForgeRoute{
 			Pattern: "/v1/features",
 			Method:  "POST",
 			Handler: service.NewRouteHandler(svc, CreateHandler),
 		},
 
 		// get
-		service.WarrantRoute{
+		service.ForgeRoute{
 			Pattern: "/v1/features",
 			Method:  "GET",
 			Handler: service.ChainMiddleware(
@@ -26,26 +26,26 @@ func (svc FeatureService) Routes() ([]service.Route, error) {
 				service.ListMiddleware[FeatureListParamParser],
 			),
 		},
-		service.WarrantRoute{
+		service.ForgeRoute{
 			Pattern: "/v1/features/{featureId}",
 			Method:  "GET",
 			Handler: service.NewRouteHandler(svc, GetHandler),
 		},
 
 		// update
-		service.WarrantRoute{
+		service.ForgeRoute{
 			Pattern: "/v1/features/{featureId}",
 			Method:  "POST",
 			Handler: service.NewRouteHandler(svc, UpdateHandler),
 		},
-		service.WarrantRoute{
+		service.ForgeRoute{
 			Pattern: "/v1/features/{featureId}",
 			Method:  "PUT",
 			Handler: service.NewRouteHandler(svc, UpdateHandler),
 		},
 
 		// delete
-		service.WarrantRoute{
+		service.ForgeRoute{
 			Pattern: "/v1/features/{featureId}",
 			Method:  "DELETE",
 			Handler: service.NewRouteHandler(svc, DeleteHandler),

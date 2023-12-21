@@ -14,7 +14,7 @@ import (
 func (svc SessionService) Routes() ([]service.Route, error) {
 	return []service.Route{
 		// Create Session
-		service.WarrantRoute{
+		service.ForgeRoute{
 			Pattern:                    "/v1/session",
 			Method:                     "POST",
 			Handler:                    service.NewRouteHandler(svc, CreateSessionHandler),
@@ -22,13 +22,13 @@ func (svc SessionService) Routes() ([]service.Route, error) {
 		},
 
 		// Verify Session
-		service.WarrantRoute{
+		service.ForgeRoute{
 			Pattern:                    "/v1/session/verify",
 			Method:                     "GET",
 			Handler:                    service.NewRouteHandler(svc, VerifySessionHandler),
 			OverrideAuthMiddlewareFunc: SessionAuthMiddleware,
 		},
-		service.WarrantRoute{
+		service.ForgeRoute{
 			Pattern:                    "/v1/session/verify",
 			Method:                     "POST",
 			Handler:                    service.NewRouteHandler(svc, VerifySessionHandler),
