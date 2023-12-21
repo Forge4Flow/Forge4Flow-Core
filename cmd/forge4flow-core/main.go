@@ -287,6 +287,13 @@ func main() {
 	}
 	flowSerice := flow.NewService(&svcEnv, cfg, flowEventRepository, userSvc, warrantSvc)
 
+	// Init the API Key repo and service
+	apiKeyRepository, err := api.NewRepository(svcEnv.DB())
+	if err != nil {
+		log.Fatal().Err(err).Msg("Could not initialize ApiKeyRepository")
+	}
+	apiKeyService := api.NewService(&svcEnv, cfg, apiKeyRepository, objectSvc, eventSvc)
+
 	if cfg.CoreInstall {
 		// Verify admin role and initial user are configured
 		setup.InitialSetup(&cfg, featureSvc, userSvc, warrantSvc)
@@ -307,6 +314,7 @@ func main() {
 		nonceSvc,
 		sessionSvc,
 		flowSerice,
+		apiKeyService,
 	}
 
 	router, err := service.NewRouter(cfg, "", svcs, api.MasterAndApiKeyAuthMiddleware, []service.Middleware{}, []service.Middleware{})
