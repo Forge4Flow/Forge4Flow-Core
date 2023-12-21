@@ -21,7 +21,7 @@ type ApiKey struct {
 	ID          int64      `mysql:"id" postgres:"id" sqlite:"id"`
 	ObjectId    int64      `mysql:"objectId" postgres:"object_id" sqlite:"objectId"`
 	DisplayName string     `mysql:"displayName" postgres:"display_name" sqlite:"displayName"`
-	ApiKey      string     `mysql:"apikey" postgres:"api_key" sqlite:"apikey"`
+	ApiKey      string     `mysql:"apiKey" postgres:"api_key" sqlite:"apiKey"`
 	ExpDate     time.Time  `mysql:"expDate" postgres:"exp_date" sqlite:"expDate"`
 	CreatedAt   time.Time  `mysql:"createdAt" postgres:"created_at" sqlite:"createdAt"`
 	UpdatedAt   time.Time  `mysql:"updatedAt" postgres:"updated_at" sqlite:"updatedAt"`
@@ -71,7 +71,7 @@ func (key ApiKey) GetDeletedAt() *time.Time {
 func (key ApiKey) ToApiSpec() *ApiSpec {
 	return &ApiSpec{
 		DisplayName: key.DisplayName,
-		Key:         &key.ApiKey,
+		ApiKey:      key.ApiKey,
 		ExpDate:     key.ExpDate,
 	}
 }

@@ -107,7 +107,7 @@ func NewRouter(config config.Config, pathPrefix string, svcs []Service, authMidd
 		if route.GetOverrideAuthMiddlewareFunc() != nil {
 			middlewareWrappedHandler, err = route.GetOverrideAuthMiddlewareFunc()(config, middlewareWrappedHandler, svcs...)
 		} else {
-			middlewareWrappedHandler, err = authMiddleware(config, middlewareWrappedHandler)
+			middlewareWrappedHandler, err = authMiddleware(config, middlewareWrappedHandler, svcs...)
 		}
 		if err != nil {
 			return nil, err

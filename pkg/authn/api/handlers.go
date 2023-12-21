@@ -49,7 +49,7 @@ func DeleteApiKey(svc ApiService, w http.ResponseWriter, r *http.Request) error 
 		return err
 	}
 
-	err = svc.DeleteByKey(r.Context(), *request.Key)
+	err = svc.DeleteByKey(r.Context(), request.ApiKey)
 	if err != nil {
 		return err
 	}

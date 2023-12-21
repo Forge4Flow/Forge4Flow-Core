@@ -8,15 +8,15 @@ import (
 )
 
 type ApiSpec struct {
-	DisplayName string    `json:"displayName"`
-	Key         *string   `json:"key"`
-	ExpDate     time.Time `json:"expDate"`
+	DisplayName string    `json:"displayName" validate:"required"`
+	ApiKey      string    `json:"apiKey" validate:"omitempty"`
+	ExpDate     time.Time `json:"expDate" validate:"omitempty"`
 }
 
 func (spec ApiSpec) ToObjectSpec() *object.ObjectSpec {
 	return &object.ObjectSpec{
 		ObjectType: objecttype.ObjectTypeApiKey,
-		ObjectId:   *spec.Key,
+		ObjectId:   spec.ApiKey,
 	}
 }
 
@@ -24,7 +24,7 @@ func (spec ApiSpec) ToApiKey(objectId int64) *ApiKey {
 	return &ApiKey{
 		ObjectId:    objectId,
 		DisplayName: spec.DisplayName,
-		ApiKey:      *spec.Key,
+		ApiKey:      spec.ApiKey,
 		ExpDate:     spec.ExpDate,
 	}
 }

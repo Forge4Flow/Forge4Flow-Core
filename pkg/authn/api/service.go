@@ -43,11 +43,11 @@ func (svc ApiService) Create(ctx context.Context, displayName string) (*ApiSpec,
 		return nil, err
 	}
 
-	apiKey := &key
+	apiKey := key
 
 	apiSpec := &ApiSpec{
 		DisplayName: displayName,
-		Key:         apiKey,
+		ApiKey:      apiKey,
 		ExpDate:     time.Now().Add(time.Hour * 24 * 90),
 	}
 
@@ -57,15 +57,15 @@ func (svc ApiService) Create(ctx context.Context, displayName string) (*ApiSpec,
 		if err != nil {
 			switch err.(type) {
 			case *service.DuplicateRecordError:
-				return service.NewDuplicateRecordError("API Key", apiSpec.Key, "An api key with the given key already exists")
+				return service.NewDuplicateRecordError("API Key", apiSpec.ApiKey, "An api key with the given key already exists")
 			default:
 				return err
 			}
 		}
 
-		_, err = svc.Repository.GetByKey(txCtx, *apiSpec.Key)
+		_, err = svc.Repository.GetByKey(txCtx, apiSpec.ApiKey)
 		if err == nil {
-			return service.NewDuplicateRecordError("API Key", apiSpec.Key, "An api key with the given key already exists")
+			return service.NewDuplicateRecordError("API Key", apiSpec.ApiKey, "An api key with the given key already exists")
 		}
 
 		newApiKeyId, err := svc.Repository.Create(txCtx, apiSpec.ToApiKey(createdObject.ID))
@@ -126,7 +126,7 @@ func (svc ApiService) DeleteByKey(ctx context.Context, apiKey string) error {
 			return err
 		}
 
-		err = svc.ObjectSvc.DeleteByObjectTypeAndId(txCtx, objecttype.ObjectTypeUser, apiKey)
+		err = svc.ObjectSvc.DeleteByObjectTypeAndId(txCtx, objecttype.ObjectTypeApiKey, apiKey)
 		if err != nil {
 			return err
 		}

@@ -25,11 +25,13 @@ func (repo MySQLRepository) Create(ctx context.Context, model Model) (int64, err
 		ctx,
 		`
 			INSERT INTO apiKey (
+				objectId,
 				displayName,
-				key,
+				apiKey,
 				expDate
-			) VALUES (?, ?)
+			) VALUES (?, ?, ?, ?)
 		`,
+		model.GetObjectId(),
 		model.GetName(),
 		model.GetKey(),
 		model.GetExpDate().UTC(),
@@ -52,7 +54,7 @@ func (repo MySQLRepository) GetById(ctx context.Context, id int64) (Model, error
 		ctx,
 		&key,
 		`
-			SELECT id, displayName, nonce, expDate, createdAt, updatedAt, deletedAt
+			SELECT id, objectId, displayName, apiKey, expDate, createdAt, updatedAt, deletedAt
 			FROM apiKey
 			WHERE
 				id = ? AND
@@ -78,10 +80,10 @@ func (repo MySQLRepository) GetByKey(ctx context.Context, key string) (Model, er
 		ctx,
 		&keyObject,
 		`
-			SELECT id, displayName, nonce, expDate, createdAt, updatedAt, deletedAt
+			SELECT id, objectId, displayName, apiKey, expDate, createdAt, updatedAt, deletedAt
 			FROM apiKey
 			WHERE
-				nonce = ? AND
+				apiKey = ? AND
 				deletedAt IS NULL
 		`,
 		key,
@@ -130,7 +132,7 @@ func (repo MySQLRepository) DeleteByKey(ctx context.Context, key string) error {
 			UPDATE apiKey
 			SET deletedAt = ?
 			WHERE
-				key = ? AND
+				apiKey = ? AND
 				deletedAt IS NULL
 		`,
 		time.Now().UTC(),

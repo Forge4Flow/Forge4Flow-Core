@@ -66,7 +66,7 @@ func MasterAndApiKeyAuthMiddleware(cfg config.Config, next http.Handler, svcs ..
 			return
 		}
 
-		if !service.SecureCompareEqual(tokenString, *dbKey.Key) {
+		if !service.SecureCompareEqual(tokenString, dbKey.ApiKey) {
 			service.SendErrorResponse(w, service.NewUnauthorizedError("Invalid API key"))
 			return
 		}
