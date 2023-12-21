@@ -17,13 +17,13 @@ const (
 func (svc EventService) Routes() ([]service.Route, error) {
 	return []service.Route{
 		// get
-		service.WarrantRoute{
+		service.ForgeRoute{
 			Pattern: "/v1/resource-events",
 			Method:  "GET",
 			Handler: service.NewRouteHandler(svc, ListResourceEvents),
 		},
 
-		service.WarrantRoute{
+		service.ForgeRoute{
 			Pattern: "/v1/access-events",
 			Method:  "GET",
 			Handler: service.NewRouteHandler(svc, ListAccessEvents),

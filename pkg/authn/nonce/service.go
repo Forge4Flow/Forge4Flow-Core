@@ -9,6 +9,8 @@ import (
 	"github.com/forge4flow/forge4flow-core/utils"
 )
 
+const ResourceTypeNonce = "nonce"
+
 type NonceService struct {
 	service.BaseService
 	Config     config.Forge4FlowConfig
@@ -52,11 +54,10 @@ func (svc NonceService) Create(ctx context.Context) (*NonceSpec, error) {
 			return err
 		}
 
-		//TODO: Update for proper logging of nonce creation
-		// err = svc.EventSvc.TrackResourceCreated(txCtx, ResourceTypeUser, newUser.GetUserId(), newUser.ToUserSpec())
-		// if err != nil {
-		// 	return err
-		// }
+		err = svc.EventSvc.TrackResourceCreated(txCtx, ResourceTypeNonce, *newNonce.GetNonce(), newNonce.ToNonceSpec())
+		if err != nil {
+			return err
+		}
 
 		return nil
 	})

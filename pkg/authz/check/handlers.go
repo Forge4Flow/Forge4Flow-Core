@@ -12,7 +12,7 @@ import (
 func (svc CheckService) Routes() ([]service.Route, error) {
 	return []service.Route{
 		// Standard Authorization
-		service.WarrantRoute{
+		service.ForgeRoute{
 			Pattern:                    "/v2/authorize",
 			Method:                     "POST",
 			Handler:                    service.NewRouteHandler(svc, AuthorizeHandler),

@@ -10,7 +10,7 @@ import (
 func (svc WarrantService) Routes() ([]service.Route, error) {
 	return []service.Route{
 		// create
-		service.WarrantRoute{
+		service.ForgeRoute{
 			Pattern: "/v1/warrants",
 			Method:  "POST",
 			Handler: service.ChainMiddleware(
@@ -19,7 +19,7 @@ func (svc WarrantService) Routes() ([]service.Route, error) {
 		},
 
 		// list
-		service.WarrantRoute{
+		service.ForgeRoute{
 			Pattern: "/v1/warrants",
 			Method:  "GET",
 			Handler: service.ChainMiddleware(
@@ -29,7 +29,7 @@ func (svc WarrantService) Routes() ([]service.Route, error) {
 		},
 
 		// delete
-		service.WarrantRoute{
+		service.ForgeRoute{
 			Pattern: "/v1/warrants",
 			Method:  "DELETE",
 			Handler: service.ChainMiddleware(

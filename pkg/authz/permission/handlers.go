@@ -11,14 +11,14 @@ import (
 func (svc PermissionService) Routes() ([]service.Route, error) {
 	return []service.Route{
 		// create
-		service.WarrantRoute{
+		service.ForgeRoute{
 			Pattern: "/v1/permissions",
 			Method:  "POST",
 			Handler: service.NewRouteHandler(svc, CreateHandler),
 		},
 
 		// get
-		service.WarrantRoute{
+		service.ForgeRoute{
 			Pattern: "/v1/permissions",
 			Method:  "GET",
 			Handler: service.ChainMiddleware(
@@ -26,26 +26,26 @@ func (svc PermissionService) Routes() ([]service.Route, error) {
 				service.ListMiddleware[PermissionListParamParser],
 			),
 		},
-		service.WarrantRoute{
+		service.ForgeRoute{
 			Pattern: "/v1/permissions/{permissionId}",
 			Method:  "GET",
 			Handler: service.NewRouteHandler(svc, GetHandler),
 		},
 
 		// update
-		service.WarrantRoute{
+		service.ForgeRoute{
 			Pattern: "/v1/permissions/{permissionId}",
 			Method:  "POST",
 			Handler: service.NewRouteHandler(svc, UpdateHandler),
 		},
-		service.WarrantRoute{
+		service.ForgeRoute{
 			Pattern: "/v1/permissions/{permissionId}",
 			Method:  "PUT",
 			Handler: service.NewRouteHandler(svc, UpdateHandler),
 		},
 
 		// delete
-		service.WarrantRoute{
+		service.ForgeRoute{
 			Pattern: "/v1/permissions/{permissionId}",
 			Method:  "DELETE",
 			Handler: service.NewRouteHandler(svc, DeleteHandler),

@@ -11,14 +11,14 @@ import (
 func (svc ObjectTypeService) Routes() ([]service.Route, error) {
 	return []service.Route{
 		// create
-		service.WarrantRoute{
+		service.ForgeRoute{
 			Pattern: "/v1/object-types",
 			Method:  "POST",
 			Handler: service.NewRouteHandler(svc, CreateHandler),
 		},
 
 		// get
-		service.WarrantRoute{
+		service.ForgeRoute{
 			Pattern: "/v1/object-types",
 			Method:  "GET",
 			Handler: service.ChainMiddleware(
@@ -28,26 +28,26 @@ func (svc ObjectTypeService) Routes() ([]service.Route, error) {
 		},
 
 		// list
-		service.WarrantRoute{
+		service.ForgeRoute{
 			Pattern: "/v1/object-types/{type}",
 			Method:  "GET",
 			Handler: service.NewRouteHandler(svc, GetHandler),
 		},
 
 		// update
-		service.WarrantRoute{
+		service.ForgeRoute{
 			Pattern: "/v1/object-types/{type}",
 			Method:  "POST",
 			Handler: service.NewRouteHandler(svc, UpdateHandler),
 		},
-		service.WarrantRoute{
+		service.ForgeRoute{
 			Pattern: "/v1/object-types/{type}",
 			Method:  "PUT",
 			Handler: service.NewRouteHandler(svc, UpdateHandler),
 		},
 
 		// delete
-		service.WarrantRoute{
+		service.ForgeRoute{
 			Pattern: "/v1/object-types/{type}",
 			Method:  "DELETE",
 			Handler: service.NewRouteHandler(svc, DeleteHandler),

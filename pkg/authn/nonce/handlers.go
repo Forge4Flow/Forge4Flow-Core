@@ -9,7 +9,7 @@ import (
 func (svc NonceService) Routes() ([]service.Route, error) {
 	return []service.Route{
 		// Get Nonce
-		service.WarrantRoute{
+		service.ForgeRoute{
 			Pattern:                    "/v1/nonce",
 			Method:                     "GET",
 			Handler:                    service.NewRouteHandler(svc, GenerateNonceHandler),

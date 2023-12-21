@@ -12,14 +12,14 @@ import (
 func (svc RoleService) Routes() ([]service.Route, error) {
 	return []service.Route{
 		// create
-		service.WarrantRoute{
+		service.ForgeRoute{
 			Pattern: "/v1/roles",
 			Method:  "POST",
 			Handler: service.NewRouteHandler(svc, CreateHandler),
 		},
 
 		// get
-		service.WarrantRoute{
+		service.ForgeRoute{
 			Pattern: "/v1/roles",
 			Method:  "GET",
 			Handler: service.ChainMiddleware(
@@ -27,12 +27,12 @@ func (svc RoleService) Routes() ([]service.Route, error) {
 				service.ListMiddleware[RoleListParamParser],
 			),
 		},
-		service.WarrantRoute{
+		service.ForgeRoute{
 			Pattern: "/v1/roles/{roleId}",
 			Method:  "GET",
 			Handler: service.NewRouteHandler(svc, GetHandler),
 		},
-		service.WarrantRoute{
+		service.ForgeRoute{
 			Pattern:                    "/v1/roles/{roleId}/permissions",
 			Method:                     "GET",
 			Handler:                    service.NewRouteHandler(svc, GetPermissionsForRoleHandler),
@@ -40,19 +40,19 @@ func (svc RoleService) Routes() ([]service.Route, error) {
 		},
 
 		// update
-		service.WarrantRoute{
+		service.ForgeRoute{
 			Pattern: "/v1/roles/{roleId}",
 			Method:  "POST",
 			Handler: service.NewRouteHandler(svc, UpdateHandler),
 		},
-		service.WarrantRoute{
+		service.ForgeRoute{
 			Pattern: "/v1/roles/{roleId}",
 			Method:  "PUT",
 			Handler: service.NewRouteHandler(svc, UpdateHandler),
 		},
 
 		// delete
-		service.WarrantRoute{
+		service.ForgeRoute{
 			Pattern: "/v1/roles/{roleId}",
 			Method:  "DELETE",
 			Handler: service.NewRouteHandler(svc, DeleteHandler),

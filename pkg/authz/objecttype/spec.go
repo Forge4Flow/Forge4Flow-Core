@@ -7,6 +7,7 @@ import (
 )
 
 const (
+	ObjectTypeApiKey      = "api-key"
 	ObjectTypeFeature     = "feature"
 	ObjectTypePermission  = "permission"
 	ObjectTypePricingTier = "pricing-tier"
