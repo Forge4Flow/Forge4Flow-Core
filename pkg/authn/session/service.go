@@ -10,6 +10,8 @@ import (
 	"github.com/forge4flow/forge4flow-core/pkg/service"
 )
 
+const ResourceTypeSession = "session"
+
 type SessionService struct {
 	service.BaseService
 	Config     config.Forge4FlowConfig
@@ -47,11 +49,10 @@ func (svc SessionService) Create(ctx context.Context, sessionDetails SessionCrea
 			return err
 		}
 
-		//TODO: Update for proper logging of session creation
-		// err = svc.EventSvc.TrackResourceCreated(txCtx, ResourceTypeUser, newUser.GetUserId(), newUser.ToUserSpec())
-		// if err != nil {
-		// 	return err
-		// }
+		err = svc.EventSvc.TrackResourceCreated(txCtx, ResourceTypeSession, newSession.GetSessionId(), newSession.ToSessionSpec())
+		if err != nil {
+			return err
+		}
 
 		return nil
 	})
