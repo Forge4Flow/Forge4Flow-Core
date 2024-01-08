@@ -30,7 +30,7 @@ import (
 )
 
 const (
-	MySQLDatastoreMigrationVersion     = 9
+	MySQLDatastoreMigrationVersion     = 10
 	MySQLEventstoreMigrationVersion    = 3
 	PostgresDatastoreMigrationVersion  = 5
 	PostgresEventstoreMigrationVersion = 4
@@ -280,12 +280,8 @@ func main() {
 	}
 	sessionSvc := session.NewService(&svcEnv, cfg, sessionRepository, nonceSvc, userSvc, eventSvc)
 
-	// Init the flow repos and service
-	flowEventRepository, err := flow.NewEventRepository(svcEnv.DB())
-	if err != nil {
-		log.Fatal().Err(err).Msg("Could not initialize FlowEventRepository")
-	}
-	flowSerice := flow.NewService(&svcEnv, cfg, flowEventRepository, userSvc, warrantSvc)
+	// Init the flow service
+	flowSerice := flow.NewService(&svcEnv, cfg)
 
 	// Init the API Key repo and service
 	apiKeyRepository, err := api.NewRepository(svcEnv.DB())
@@ -324,8 +320,5 @@ func main() {
 
 	log.Info().Msgf("Listening on port %d", cfg.GetPort())
 	shutdownErr := http.ListenAndServe(fmt.Sprintf(":%d", cfg.GetPort()), router)
-
-	flowSerice.Wait()
-
 	log.Fatal().Err(shutdownErr).Msg("")
 }
