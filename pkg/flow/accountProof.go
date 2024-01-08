@@ -1,7 +1,6 @@
 package flow
 
 import (
-	"errors"
 	"fmt"
 
 	"github.com/onflow/flow-go-sdk/access/http"
@@ -23,7 +22,7 @@ type SignaturesSpec struct {
 	Signature string `json:"signature"`
 }
 
-func getVerifyAccountProofScript(network string) (string, error) {
+func getVerifyAccountProofScript(network string) string {
 	var fclCryptoContract string
 	switch network {
 	case http.EmulatorHost:
@@ -33,7 +32,7 @@ func getVerifyAccountProofScript(network string) (string, error) {
 	case http.MainnetHost:
 		fclCryptoContract = "0xb4b82a1c9d21d284"
 	default:
-		return "", errors.New("network is not supported")
+		fclCryptoContract = "0xf8d6e0586b0a20c7"
 	}
 
 	script := fmt.Sprintf(`
@@ -49,5 +48,5 @@ func getVerifyAccountProofScript(network string) (string, error) {
 		}
 	`, fclCryptoContract, "verifyAccountProofSignatures")
 
-	return script, nil
+	return script
 }
