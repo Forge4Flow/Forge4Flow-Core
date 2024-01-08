@@ -2,6 +2,7 @@ package config
 
 import (
 	"fmt"
+	"net/url"
 	"os"
 	"reflect"
 	"strings"
@@ -224,10 +225,20 @@ func NewConfig() Forge4FlowConfig {
 	case "mainnet":
 		config.FlowNetwork = http.MainnetHost
 	default:
-		log.Fatal().Msgf("Invalid flowNetwork parameter: %s - valid options are: emulator, testnet, mainnet", flowNetwork)
+		if !isValidFlowURL(flowNetwork) {
+			log.Fatal().Msgf("Invalid flowNetwork parameter: %s - valid options are: emulator, testnet, mainnet, or valid Access Note HTTP URL", flowNetwork)
+		}
 	}
 
 	return config
+}
+
+func isValidFlowURL(flowURL string) bool {
+	_, err := url.ParseRequestURI(flowURL)
+
+	// TODO: Check is valid access node
+
+	return err == nil
 }
 
 func getFlattenedStructFields(t reflect.Type) []string {

@@ -111,12 +111,7 @@ func (svc *FlowService) VerifyAccountProof(ctx context.Context, accountProof Acc
 		keyIndices = append(keyIndices, el.KeyId)
 	}
 
-	script, err := getVerifyAccountProofScript(svc.Config.GetFlowNetwork())
-	if err != nil {
-		return false, err
-	}
-
-	scriptBytes := []byte(script)
+	scriptBytes := []byte(getVerifyAccountProofScript(svc.Config.GetFlowNetwork()))
 
 	cadenceSignaturesArr, err := InputToCadence(signaturesArr, resolver)
 	if err != nil {
