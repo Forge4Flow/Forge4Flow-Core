@@ -1,0 +1,7 @@
+provider:
+  name: openfaas
+functions:
+  forge4flow-core:
+    handler: ./
+    image: docker.io/forge4flow/forge4flow-core:0.0.4-alpha
+    lang: dockerfile
