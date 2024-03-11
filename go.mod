@@ -22,12 +22,13 @@ require (
 	github.com/k0kubun/pp/v3 v3.2.0 // indirect
 	github.com/kr/pretty v0.3.1 // indirect
 	github.com/kr/text v0.2.0 // indirect
-	github.com/onflow/crypto v0.24.9 // indirect
+	github.com/onflow/crypto v0.25.0 // indirect
 	github.com/rogpeppe/go-internal v1.9.0 // indirect
 	github.com/sagikazarmark/locafero v0.4.0 // indirect
 	github.com/sagikazarmark/slog-shim v0.1.0 // indirect
 	github.com/sourcegraph/conc v0.3.0 // indirect
 	go.uber.org/multierr v1.9.0 // indirect
+	gonum.org/v1/gonum v0.13.0 // indirect
 )
 
 require (
@@ -61,7 +62,7 @@ require (
 	github.com/mitchellh/mapstructure v1.5.0 // indirect
 	github.com/onflow/atree v0.6.0 // indirect
 	github.com/onflow/cadence v0.42.9
-	github.com/onflow/flow-go-sdk v0.44.0
+	github.com/onflow/flow-go-sdk v0.46.0
 	github.com/pelletier/go-toml/v2 v2.1.0 // indirect
 	github.com/pmezard/go-difflib v1.0.1-0.20181226105442-5d4384ee4fb2 // indirect
 	github.com/rivo/uniseg v0.4.4 // indirect
