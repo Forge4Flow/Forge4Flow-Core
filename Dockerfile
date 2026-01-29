@@ -8,7 +8,7 @@ RUN go mod download
 RUN GOARCH=amd64 GOOS=linux CGO_ENABLED=0 go build -v -o forge4flow-core cmd/forge4flow-core/main.go
 
 # Stage 2: Create the final image
-FROM alpine:latest
+FROM alpine:3.23.3
 
 RUN addgroup -S forge4flow-core && adduser -S forge4flow-core -G forge4flow-core
 USER forge4flow-core
